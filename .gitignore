@@ -1,0 +1,6 @@
+#Virtual Environment
+RotcetEnv
+
+.vscode
+
+src/RotcetReact/node_modules
