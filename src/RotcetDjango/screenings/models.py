@@ -7,6 +7,9 @@ class Room(models.Model):
     seats = models.PositiveSmallIntegerField()
     room_image = models.FileField(upload_to='rooms/')
 
+    def __str__(self):
+        return str(self.number)
+
 class Show(models.Model):
     MOVIE = 'MV'
     MARATHON = 'MR'
@@ -17,14 +20,21 @@ class Show(models.Model):
     ]
 
     type = models.CharField(max_length=2, choices=SHOWS_CHOICES)
-    movie = models.OneToOneField(Movie, on_delete=models.CASCADE)
-    marathon = models.OneToOneField(Marathon, on_delete=models.CASCADE)
+    movie = models.OneToOneField(Movie, blank=True, null=True, on_delete=models.CASCADE)
+    marathon = models.OneToOneField(Marathon, blank=True, null=True, on_delete=models.CASCADE)
+
+    def __str__(self):
+        if self.movie:
+            return self.movie.name
+        return self.marathon.title
 
 class Screening(models.Model):
     show = models.ForeignKey(Show, related_name='screenings', on_delete=models.CASCADE)
     date = models.DateTimeField()
     room = models.ForeignKey(Room, related_name='screenings', on_delete=models.CASCADE)
-    occupied_seats = models.CharField(max_length=1000, validators=[int_list_validator])
+    occupied_seats = models.CharField(max_length=1000, blank=True, null=True, validators=[int_list_validator])
     in_3D = models.BooleanField()
     
+    def __str__(self):
+        return f'{self.date} {self.room}'
     

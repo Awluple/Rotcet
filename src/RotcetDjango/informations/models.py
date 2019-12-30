@@ -1,7 +1,7 @@
 from django.db import models
 
 def news_directory_path(instance, filename):
-    return f'news/{instance.id}/{filename}'
+    return f'news/{instance.pk}/{filename}'
 
 
 class News(models.Model):
@@ -11,6 +11,12 @@ class News(models.Model):
     short_description = models.CharField(max_length=250)
     description_html = models.FileField(upload_to=news_directory_path, blank=True, null=True)
 
+    def __str__(self):
+        return self.title
+
 class FAQ(models.Model):
     question = models.CharField(max_length=200)
     anwser = models.CharField(max_length=500)
+
+    def __str__(self):
+        return self.question

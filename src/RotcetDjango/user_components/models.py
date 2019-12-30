@@ -17,9 +17,11 @@ class Ticket(models.Model):
     user = models.ForeignKey(User, related_name='tickets', on_delete=models.CASCADE)
     type = models.CharField(max_length=2, choices=TICKETS_CHOICES)
     screening = models.ForeignKey(Screening, related_name='tickets', on_delete=models.CASCADE)
-    seat = models.SmallIntegerField()
+    seat = models.PositiveSmallIntegerField()
     #code = models.CharField(max_length=200)
 
+    def __str__(self):
+        return f'{self.user} {self.screening.show} {self.screening.date}'
 
 class Membership(models.Model):
 
@@ -36,3 +38,6 @@ class Membership(models.Model):
     is_active = models.BooleanField()
     is_continued = models.BooleanField()
     next_payment = models.DateField()
+
+    def __str__(self):
+        return f'{self.user} {self.type}'
