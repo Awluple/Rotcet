@@ -1,13 +1,13 @@
 from django.db import models
-from django.core.validators import int_list_validator
 from django.core.exceptions import ValidationError
-from .validators import validate_show, validate_occupied_seats
+from django.core.validators import FileExtensionValidator
+from .validators import validate_show, validate_occupied_seats, validate_positive_integers_list
 from shows.models import Movie, Marathon
 
 class Room(models.Model):
     number = models.PositiveSmallIntegerField(unique=True)
     seats = models.PositiveSmallIntegerField()
-    room_image = models.FileField(upload_to='rooms/')
+    room_scheme = models.FileField(upload_to='rooms/', validators=[FileExtensionValidator(['html'])])
 
     def __str__(self):
         return str(self.number)
@@ -38,7 +38,7 @@ class Screening(models.Model):
     show = models.ForeignKey(Show, related_name='screenings', on_delete=models.CASCADE)
     date = models.DateTimeField()
     room = models.ForeignKey(Room, related_name='screenings', on_delete=models.CASCADE)
-    occupied_seats = models.CharField(max_length=1000, blank=True, null=True)
+    occupied_seats = models.CharField(max_length=1000, blank=True, null=True, validators=[validate_positive_integers_list])
     in_3D = models.BooleanField()
     
     def __str__(self):
