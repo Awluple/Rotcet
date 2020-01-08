@@ -2,6 +2,7 @@ from django.db import models
 from django.core.exceptions import ValidationError
 from django.core.validators import FileExtensionValidator
 from .validators import validate_show, validate_occupied_seats, validate_positive_integers_list
+from scripts.validators import validate_not_before_today
 from shows.models import Movie, Marathon
 
 class Room(models.Model):
@@ -13,8 +14,6 @@ class Room(models.Model):
         return str(self.number)
 
 class Show(models.Model):
-    # MOVIE = 'MV'
-    # MARATHON = 'MR'
 
     SHOWS_CHOICES = [
         ('MV', 'Movie'),
@@ -44,5 +43,11 @@ class Screening(models.Model):
     def __str__(self):
         return f'{self.date} {self.room}'
     def clean(self, *args, **kwargs):
+        old_instance = Screening.objects.filter(pk=self.pk).first()
+        if not old_instance:
+            validate_not_before_today(self.date.date())
+        # prevent an error rise on edit wihout date change
+        elif old_instance.date.date() != self.date.date():
+            validate_not_before_today(self.date.date())  
         validate_occupied_seats(self.room.seats, self.occupied_seats)
     

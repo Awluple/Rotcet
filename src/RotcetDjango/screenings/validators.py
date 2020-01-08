@@ -1,6 +1,6 @@
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext as _
-from scripts.tools import string_list_to_normal
+from scripts.tools import string_list_to_python
 def validate_show(SHOWS_CHOICES, type, **fields):
     """Validates if correct show was selected and if multiple values are not selected"""
     fields = list(fields.items())
@@ -8,7 +8,7 @@ def validate_show(SHOWS_CHOICES, type, **fields):
     # check if multiple values are not selected
     for field in fields:
         if field[1] and relation:
-            raise ValidationError(_("You mustn't select more them one show"), code='invalid') 
+            raise ValidationError(_("You cannot select more them one show"), code='invalid') 
         if field[1]:
             relation = field
     
@@ -23,8 +23,9 @@ def validate_show(SHOWS_CHOICES, type, **fields):
 
 
 def validate_positive_integers_list(string_list):
+    """Validates if occupied_seats field has correct form"""
     try:
-        string_list_to_normal(string_list)
+        string_list_to_python(string_list)
     except:
         raise ValidationError(_("An error accured while trying to convert seat to integer"),
             code='invalid')
@@ -33,7 +34,7 @@ def validate_occupied_seats(room_seats, occupied_seats, raise_list_error=False):
     """Validates if occupied_seats field has correct form, occupied_seats lenght is smaller then room seats,
     seat is in room seats range, no dubles"""
     try:
-        occupied_seats = string_list_to_normal(occupied_seats)
+        occupied_seats = string_list_to_python(occupied_seats)
     except:
         if raise_list_error:
             raise ValidationError(_("An error accured while trying to convert seat to integer"),

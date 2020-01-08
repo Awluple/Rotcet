@@ -1,4 +1,4 @@
-def string_list_to_normal(string_list):
+def string_list_to_python(string_list):
     if string_list:
         as_list = string_list.split(',')
     else:
