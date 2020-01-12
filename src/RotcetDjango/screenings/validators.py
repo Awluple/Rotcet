@@ -1,6 +1,7 @@
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext as _
 from scripts.tools import string_list_to_python
+
 def validate_show(SHOWS_CHOICES, type, **fields):
     """Validates if correct show was selected and if multiple values are not selected"""
     fields = list(fields.items())
@@ -18,7 +19,7 @@ def validate_show(SHOWS_CHOICES, type, **fields):
 
     # check if correct show was selected
     if expected_relation[1].capitalize() != relation[0].capitalize():
-        raise ValidationError(_("You must chose a %(expected)s not a given"),
+        raise ValidationError(_("You must chose a %(expected)s not a %(given)s"),
             params={'expected': expected_relation[1], 'given': relation[0]}, code='invalid')
 
 
@@ -56,3 +57,9 @@ def validate_occupied_seats(room_seats, occupied_seats, raise_list_error=False):
 
 if __name__ == '__main__':
     pass
+
+def validate_available_in_3D(show, in_3D):
+
+    if show.type == 'MV':
+        if not show.movie.has_3D:
+            raise ValidationError(_("Movie %(movie_name)s is not 3D"), params={'movie_name': show.movie.name}, code='invalid')

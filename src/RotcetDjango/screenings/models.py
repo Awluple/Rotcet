@@ -1,14 +1,19 @@
 from django.db import models
 from django.core.exceptions import ValidationError
 from django.core.validators import FileExtensionValidator
-from .validators import validate_show, validate_occupied_seats, validate_positive_integers_list
+from .validators import validate_show, validate_occupied_seats, validate_positive_integers_list, validate_available_in_3D
 from scripts.validators import validate_not_before_today
 from shows.models import Movie, Marathon
+from scripts.decorators import handle_test_file
+
+@handle_test_file
+def room_scheme_path(instance, filename):
+    return f'/rooms/{filename}'
 
 class Room(models.Model):
     number = models.PositiveSmallIntegerField(unique=True)
     seats = models.PositiveSmallIntegerField()
-    room_scheme = models.FileField(upload_to='rooms/', validators=[FileExtensionValidator(['html'])])
+    room_scheme = models.FileField(upload_to=room_scheme_path, validators=[FileExtensionValidator(['html'])])
 
     def __str__(self):
         return str(self.number)
@@ -44,10 +49,7 @@ class Screening(models.Model):
         return f'{self.date} {self.room}'
     def clean(self, *args, **kwargs):
         old_instance = Screening.objects.filter(pk=self.pk).first()
-        if not old_instance:
-            validate_not_before_today(self.date.date())
-        # prevent an error rise on edit wihout date change
-        elif old_instance.date.date() != self.date.date():
-            validate_not_before_today(self.date.date())  
+        validate_not_before_today(old_instance, 'date', self.date)
         validate_occupied_seats(self.room.seats, self.occupied_seats)
+        validate_available_in_3D(self.show, self.in_3D)
     

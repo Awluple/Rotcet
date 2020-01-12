@@ -1,6 +1,8 @@
 from django.db import models
 from django.core.validators import FileExtensionValidator
+from scripts.decorators import handle_test_file
 
+@handle_test_file
 def news_directory_path(instance, filename):
     return f'news/{instance.pk}/{filename}'
 

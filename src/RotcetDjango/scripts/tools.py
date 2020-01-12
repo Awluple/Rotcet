@@ -1,3 +1,6 @@
+import shutil
+from pathlib import Path
+
 def string_list_to_python(string_list):
     if string_list:
         as_list = string_list.split(',')
@@ -10,3 +13,8 @@ def string_list_to_python(string_list):
             raise TypeError(f"An error accured while trying to convert '{value}' to integer'")
         as_list[index] = value # exchange string values to integer
     return as_list
+
+def cleanup_tests_media():
+    path = Path(__file__).parents[1].joinpath('media').joinpath('tests')
+    shutil.rmtree(path)
+    path.mkdir()
