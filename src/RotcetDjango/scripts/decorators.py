@@ -6,6 +6,5 @@ def handle_test_file(func):
             return f'tests/{filename}'
         else:
             returned = func(instance, filename)
-            print(returned)
             return returned
     return wrapper_function

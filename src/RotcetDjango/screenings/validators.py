@@ -59,7 +59,6 @@ if __name__ == '__main__':
     pass
 
 def validate_available_in_3D(show, in_3D):
-
     if show.type == 'MV':
-        if not show.movie.has_3D:
+        if not show.movie.has_3D == in_3D:
             raise ValidationError(_("Movie %(movie_name)s is not 3D"), params={'movie_name': show.movie.name}, code='invalid')

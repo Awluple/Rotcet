@@ -15,6 +15,7 @@ def string_list_to_python(string_list):
     return as_list
 
 def cleanup_tests_media():
-    path = Path(__file__).parents[1].joinpath('media').joinpath('tests')
+    """ Cleanes up the folder with media from tests """
+    path = Path(__file__).parents[1].joinpath('media', 'tests')
     shutil.rmtree(path)
     path.mkdir()

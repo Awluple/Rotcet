@@ -10,7 +10,7 @@ from .models_values import screening_values, room_values
 from shows.models_values import movie_values, marathon_values
 from shows.models import Movie, Marathon
 
-from .validators import validate_occupied_seats, validate_positive_integers_list, validate_show
+from .validators import validate_occupied_seats, validate_positive_integers_list, validate_show, validate_available_in_3D
 
 class ShowValidatorTestCase(TestCase):
 
@@ -27,6 +27,12 @@ class ShowValidatorTestCase(TestCase):
             ('MV', 'Movie'),
             ('MR', 'Marathon')
         ]
+    
+    def test_ok(self):
+        movie = Marathon.objects.get(pk=1)
+        show = Show.objects.get(pk=1)
+        validate_show(self.SHOWS_CHOICES, show.type, movie=movie)
+
     def test_no_multiple_relations(self):
         movie = Marathon.objects.get(pk=1)
         marathon = Movie.objects.get(pk=1)
@@ -63,3 +69,31 @@ class OccupiedSeatsValidatorTestCase(TestCase):
         with self.assertRaisesRegex(ValidationError, 'Seat already occupied'):
             validate_occupied_seats(30, '1,1')
     
+    def test_raise_list_error(self):
+        with self.assertRaisesRegex(ValidationError, 'An error accured while trying to convert seat to integer'):
+            validate_occupied_seats(30, '1,1f', raise_list_error=True)
+
+class AvailableIn3DTestCase(TestCase):
+
+    @classmethod
+    def tearDownClass(cls):
+        cleanup_tests_media()
+
+    def setUp(self):
+        Movie.objects.create(**movie_values)
+        movie = Movie.objects.get(pk=1)
+        Show.objects.create(type='MV', movie=movie)
+    
+    def test_not_available(self):
+        show = Show.objects.get(pk=1)
+        validate_available_in_3D(show, False)
+    
+    def test_available(self):
+        Movie.objects.all().update(has_3D=True)
+        show = Show.objects.get(pk=1)
+        validate_available_in_3D(show, True)
+    
+    def test_colision(self):
+        show = Show.objects.get(pk=1)
+        with self.assertRaises(ValidationError):
+            validate_available_in_3D(show, True)
