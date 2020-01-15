@@ -19,6 +19,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
+    path('api/', include('screenings.api_urls', namespace='api_screenings')),
     path('admin/', admin.site.urls),
     re_path('', include('react.urls', namespace = 'react')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
