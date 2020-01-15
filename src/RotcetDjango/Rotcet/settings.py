@@ -38,7 +38,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'react'
+    'django_cleanup',
+    'scripts',
+    'react',
+    'shows',
+    'screenings',
+    'user_components',
+    'informations'
 ]
 
 MIDDLEWARE = [
@@ -125,3 +131,6 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
     'Rotcet/static/',
 ]
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
