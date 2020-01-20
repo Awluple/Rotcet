@@ -17,7 +17,8 @@ class News(models.Model):
     def __str__(self):
         return self.title
 
-class FAQ(models.Model):
+class FAQs(models.Model):
+    number = models.PositiveSmallIntegerField(unique=True)
     question = models.CharField(max_length=200)
     anwser = models.CharField(max_length=500)
 

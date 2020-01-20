@@ -1,7 +1,7 @@
 from django.urls import reverse
 from rest_framework import serializers
 
-from .models import Screening, Room
+from .models import Movie, Marathon
 
 class DynamicFieldsModelSerializer(serializers.ModelSerializer):
     def __init__(self, *args, **kwargs):
@@ -18,32 +18,27 @@ class DynamicFieldsModelSerializer(serializers.ModelSerializer):
                 for field_name in existing - allowed:
                     self.fields.pop(field_name)
 
-class ScreeningSerializer(DynamicFieldsModelSerializer):
-    name = serializers.SerializerMethodField()
-    type = serializers.SerializerMethodField()
-    room = serializers.SerializerMethodField()
+
+class MovieSerializer(DynamicFieldsModelSerializer):
     url = serializers.SerializerMethodField()
 
     class Meta:
-        model = Screening
+        model = Movie
         fields = '__all__'
-
+    
     def get_url(self,obj):
         request = self.context['request']
-        path = reverse('screening-detail',kwargs={'pk':obj.pk})
+        path = reverse('movie-detail',kwargs={'pk':obj.pk})
         return request.build_absolute_uri(path)
 
-    def get_name(self, obj):
-        return obj.show.get_show_name()
-
-    def get_type(self, obj):
-        return obj.show.type
-
-    def get_room(self, obj):
-        return obj.room.number
-
-class RoomSerializer(serializers.ModelSerializer):
+class MarathonSerializer(DynamicFieldsModelSerializer):
+    url = serializers.SerializerMethodField()
 
     class Meta:
-        model = Room
-        fields = ['pk', 'number', 'seats', 'room_scheme']
+        model = Marathon
+        fields = '__all__'
+    
+    def get_url(self,obj):
+        request = self.context['request']
+        path = reverse('marathon-detail',kwargs={'pk':obj.pk})
+        return request.build_absolute_uri(path)

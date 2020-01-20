@@ -1,24 +1,30 @@
 from rest_framework import viewsets
+from rest_framework.response import Response
+from django_filters import rest_framework as django_filters
 
-from .serializers import ScreeningListSerializer, ScreeningDetailSerializer, RoomViewSet
+from .serializers import ScreeningSerializer, RoomSerializer
 from .models import Screening, Room
 
-class ScreeningViewSet(viewsets.ModelViewSet):
+from .filters import ScreeningFilter
+from .paginators import ScreeningPagination
+
+class ScreeningViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Screening.objects.all()
+    serializer_class = ScreeningSerializer
+    pagination_class = ScreeningPagination
+    filterset_class = ScreeningFilter
 
+    def list(self, request):
+        if request.query_params.get('fields') is None:
+            fields = ['id', 'name', 'url', 'date']
+        else:
+            fields = request.query_params.get('fields').split(',')
+        
+        queryset = self.filter_queryset(self.get_queryset())
+        page = self.paginate_queryset(queryset)
+        serializer = self.get_serializer(page, many=True, fields=fields, context={'request': request}) 
+        return Response(serializer.data)
 
-    def get_serializer_class(self):
-        return ScreeningListSerializer
-    def get_serializer_class(self):
-        if self.action == 'list':
-            return ScreeningListSerializer
-        if self.action == 'retrieve':
-            return ScreeningDetailSerializer
-        return ScreeningListSerializer
-    
-    def get_serializer_context(self):
-        return {'request': self.request}
-
-class RoomViewSet(viewsets.ModelViewSet):
+class RoomViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Room.objects.all()
-    serializer_class = RoomViewSet
+    serializer_class = RoomSerializer
