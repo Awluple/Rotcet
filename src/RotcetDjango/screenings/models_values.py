@@ -4,7 +4,7 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 room_values = {
     'number': 1,
     'seats': 30,
-    'room_scheme': SimpleUploadedFile(name='test_html.jpg', content="", content_type='text/html'),
+    'room_scheme': SimpleUploadedFile(name='test_html.html', content="", content_type='text/html'),
 
 }
 screening_values = {

@@ -30,7 +30,7 @@ class ScreeningSerializer(DynamicFieldsModelSerializer):
 
     def get_url(self,obj):
         request = self.context['request']
-        path = reverse('screening-detail',kwargs={'pk':obj.pk})
+        path = reverse('api:screening-detail',kwargs={'pk':obj.pk})
         return request.build_absolute_uri(path)
 
     def get_name(self, obj):

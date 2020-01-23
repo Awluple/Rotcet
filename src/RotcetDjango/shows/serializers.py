@@ -28,7 +28,7 @@ class MovieSerializer(DynamicFieldsModelSerializer):
     
     def get_url(self,obj):
         request = self.context['request']
-        path = reverse('movie-detail',kwargs={'pk':obj.pk})
+        path = reverse('api:movie-detail',kwargs={'pk':obj.pk})
         return request.build_absolute_uri(path)
 
 class MarathonSerializer(DynamicFieldsModelSerializer):
@@ -40,5 +40,5 @@ class MarathonSerializer(DynamicFieldsModelSerializer):
     
     def get_url(self,obj):
         request = self.context['request']
-        path = reverse('marathon-detail',kwargs={'pk':obj.pk})
+        path = reverse('api:marathon-detail',kwargs={'pk':obj.pk})
         return request.build_absolute_uri(path)

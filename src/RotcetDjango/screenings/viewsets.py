@@ -1,5 +1,6 @@
 from rest_framework import viewsets
 from rest_framework.response import Response
+from rest_framework.filters import OrderingFilter
 from django_filters import rest_framework as django_filters
 
 from .serializers import ScreeningSerializer, RoomSerializer
@@ -13,6 +14,9 @@ class ScreeningViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = ScreeningSerializer
     pagination_class = ScreeningPagination
     filterset_class = ScreeningFilter
+    filter_backends = (django_filters.DjangoFilterBackend, OrderingFilter)
+    ordering_fields = ['pk', 'date']
+    ordering = ['date']
 
     def list(self, request):
         if request.query_params.get('fields') is None:
@@ -22,7 +26,11 @@ class ScreeningViewSet(viewsets.ReadOnlyModelViewSet):
         
         queryset = self.filter_queryset(self.get_queryset())
         page = self.paginate_queryset(queryset)
-        serializer = self.get_serializer(page, many=True, fields=fields, context={'request': request}) 
+        if page is not None:
+            serializer = self.get_serializer(page, many=True, fields=fields, context={'request': request}) 
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True, fields=fields, context={'request': request}) 
         return Response(serializer.data)
 
 class RoomViewSet(viewsets.ReadOnlyModelViewSet):

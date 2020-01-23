@@ -1,6 +1,11 @@
+import datetime
+
 from django.test import TestCase
+from django.urls import reverse
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.core.exceptions import ValidationError
+from rest_framework import status
+from rest_framework.test import APITestCase
 
 from scripts.tools import cleanup_tests_media
 
@@ -97,3 +102,38 @@ class AvailableIn3DTestCase(TestCase):
         show = Show.objects.get(pk=1)
         with self.assertRaises(ValidationError):
             validate_available_in_3D(show, True)
+
+class ScreeningApiViewCase(APITestCase):
+
+    @classmethod
+    def tearDownClass(cls):
+        cleanup_tests_media()
+
+    def setUp(self):
+        Movie.objects.create(**movie_values)
+        Room.objects.create(**room_values)
+        movie = Movie.objects.get(pk=1)
+        Show.objects.create(type='MV', movie=movie)
+
+        show = Show.objects.get(pk=1)
+        room = Room.objects.get(pk=1)
+        values = screening_values.copy()
+        values['show'] = show
+        values['room'] = room
+
+        Screening.objects.create(**values)
+        values['in_3D'] = True
+        values['date'] = datetime.datetime.now() + datetime.timedelta(1.5)
+        Screening.objects.create(**values)
+
+        values['date'] = datetime.datetime.now() - datetime.timedelta(1.5)
+        Screening.objects.create(**values)
+
+        self.url = reverse('api:screening-list')
+    
+    def test_defalut_ordering(self):
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        data = response.data['results']
+        self.assertLess(data[0]['date'], data[1]['date'])
+        self.assertGreater(data[2]['date'], data[0]['date'])

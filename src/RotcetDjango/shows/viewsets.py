@@ -20,8 +20,12 @@ class MovieViewSet(viewsets.ReadOnlyModelViewSet):
             fields = request.query_params.get('fields').split(',')
 
         queryset = self.filter_queryset(self.get_queryset())
-        page = self.paginate_queryset(queryset)
-        serializer = self.get_serializer(page, many=True, fields=fields, context={'request': request}) 
+        page = self.paginate_queryset(queryset.order_by('-tickets_sale_date'))
+        if page is not None:
+            serializer = self.get_serializer(page, many=True, fields=fields, context={'request': request}) 
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True, fields=fields, context={'request': request}) 
         return Response(serializer.data)
 
 class MarathonViewSet(viewsets.ReadOnlyModelViewSet):
@@ -37,6 +41,10 @@ class MarathonViewSet(viewsets.ReadOnlyModelViewSet):
             fields = request.query_params.get('fields').split(',')
         
         queryset = self.filter_queryset(self.get_queryset())
-        page = self.paginate_queryset(queryset)
-        serializer = self.get_serializer(page, many=True, fields=fields, context={'request': request}) 
+        page = self.paginate_queryset(queryset.order_by('-tickets_sale_date'))
+        if page is not None:
+            serializer = self.get_serializer(page, many=True, fields=fields, context={'request': request}) 
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True, fields=fields, context={'request': request}) 
         return Response(serializer.data)

@@ -15,6 +15,6 @@ router.register('news', NewsViewSet)
 router.register('faqs', FAQsViewSet)
 
 urlpatterns = [
-    path('api/', include(router.urls)),
-    path('api/time', get_server_time)
+    path('', include(router.urls)),
+    path('time/', get_server_time)
 ]
