@@ -1,5 +1,6 @@
 import datetime
 
+from django.utils import timezone
 from django.test import TestCase
 from django.urls import reverse
 from django.core.files.uploadedfile import SimpleUploadedFile
@@ -123,17 +124,56 @@ class ScreeningApiViewCase(APITestCase):
 
         Screening.objects.create(**values)
         values['in_3D'] = True
-        values['date'] = datetime.datetime.now() + datetime.timedelta(1.5)
+        values['date'] = timezone.now() + datetime.timedelta(1.5)
         Screening.objects.create(**values)
 
-        values['date'] = datetime.datetime.now() - datetime.timedelta(1.5)
+        values['date'] = timezone.now() - datetime.timedelta(1.5)
         Screening.objects.create(**values)
 
-        self.url = reverse('api:screening-list')
     
     def test_defalut_ordering(self):
-        response = self.client.get(self.url)
+        url = reverse('api:screening-list')
+        response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+
         data = response.data['results']
         self.assertLess(data[0]['date'], data[1]['date'])
         self.assertGreater(data[2]['date'], data[0]['date'])
+    
+    def test_ordering(self):
+        url = reverse('api:screening-list')
+        response = self.client.get(url, {'ordering':'-date'})
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+        data = response.data['results']
+        self.assertGreater(data[0]['date'], data[1]['date'])
+        self.assertLess(data[2]['date'], data[0]['date'])
+    
+    def test_has_default_fields(self):
+        url = reverse('api:screening-list')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+        data = response.data['results']
+        keys = data[0].keys()
+        self.assertEqual(4, len(keys))
+        self.assertListEqual(['id', 'name', 'url', 'date'], list(keys))
+
+    def test_dynamic_fields(self):
+        url = reverse('api:screening-list')
+        response = self.client.get(url, {'fields': 'id,date'})
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+        data = response.data['results']
+        keys = data[0].keys()
+        self.assertEqual(2, len(keys))
+        self.assertListEqual(['id', 'date'], list(keys))
+    
+    def test_url(self):
+        url = reverse('api:screening-list')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+        data = response.data['results'][0]
+        url_response = self.client.get(data['url'])
+        self.assertEqual(url_response.status_code, status.HTTP_200_OK)
