@@ -16,7 +16,7 @@ class ScreeningViewSet(viewsets.ReadOnlyModelViewSet):
     filterset_class = ScreeningFilter
     filter_backends = (django_filters.DjangoFilterBackend, OrderingFilter)
     ordering_fields = ['pk', 'date']
-    ordering = ['date']
+    ordering = ['-date']
 
     def list(self, request):
         if request.query_params.get('fields') is None:

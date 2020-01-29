@@ -1,8 +1,8 @@
 import datetime
 
 from django.utils import timezone
-from django.test import TestCase
 from django.urls import reverse
+from django.test import TestCase
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.core.exceptions import ValidationError
 from rest_framework import status
@@ -111,12 +111,19 @@ class ScreeningApiViewCase(APITestCase):
         cleanup_tests_media()
 
     def setUp(self):
-        Movie.objects.create(**movie_values)
+        values = movie_values.copy()
+        Movie.objects.create(**values)
+        values['name'] = 'Test_2'
+        Movie.objects.create(**values)
+        
         Room.objects.create(**room_values)
         movie = Movie.objects.get(pk=1)
+        movie2 = Movie.objects.get(pk=2)
         Show.objects.create(type='MV', movie=movie)
+        Show.objects.create(type='MV', movie=movie2)
 
         show = Show.objects.get(pk=1)
+        show2 = Show.objects.get(pk=2)
         room = Room.objects.get(pk=1)
         values = screening_values.copy()
         values['show'] = show
@@ -127,6 +134,7 @@ class ScreeningApiViewCase(APITestCase):
         values['date'] = timezone.now() + datetime.timedelta(1.5)
         Screening.objects.create(**values)
 
+        values['show'] = show2
         values['date'] = timezone.now() - datetime.timedelta(1.5)
         Screening.objects.create(**values)
 
@@ -137,8 +145,8 @@ class ScreeningApiViewCase(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
         data = response.data['results']
-        self.assertLess(data[0]['date'], data[1]['date'])
-        self.assertGreater(data[2]['date'], data[0]['date'])
+        self.assertLess(data[1]['date'], data[0]['date'])
+        self.assertGreater(data[0]['date'], data[2]['date'])
     
     def test_ordering(self):
         url = reverse('api:screening-list')
@@ -177,3 +185,50 @@ class ScreeningApiViewCase(APITestCase):
         data = response.data['results'][0]
         url_response = self.client.get(data['url'])
         self.assertEqual(url_response.status_code, status.HTTP_200_OK)
+    
+    def test_paginaton(self):
+        url = reverse('api:screening-list')
+        response = self.client.get(url, {'page_size': '2'})
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+        data = response.data['results']
+        self.assertEqual(2, len(data))
+
+        response = self.client.get(url, {'page_size': '1', 'page': '2'})
+        
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        data = response.data['results']
+        self.assertEqual(1, len(data))
+    
+    def test_paginaton_links(self):
+        url = reverse('api:screening-list')
+        response = self.client.get(url, {'page_size': '1', 'page': '1'})
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+        url = response.data['next']
+        response = self.client.get(url)
+        data = response.data['results']
+        self.assertEqual(1, len(data))
+    
+    def test_filtering(self):
+        url = reverse('api:screening-list')
+        response = self.client.get(url, {'show__movie__name':'Test_2'})
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+        data = response.data['results']
+        self.assertEqual(1, len(data))
+        self.assertEqual(data[0]['name'], 'Test_2')
+    
+class RoomApiViewCase(APITestCase):
+
+    @classmethod
+    def tearDownClass(cls):
+        cleanup_tests_media()
+    
+    def setUp(self):
+        Room.objects.create(**room_values)
+    
+    def test_get(self):
+        url = reverse('api:room-list')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
