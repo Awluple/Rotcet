@@ -37,6 +37,13 @@ class Show(models.Model):
     
     def clean(self, *args, **kwargs):
         validate_show(self.SHOWS_CHOICES, self.type, movie=self.movie, marathon=self.marathon)
+    
+    def get_show_name(self):
+        if self.movie:
+            return self.movie.name
+        elif self.marathon:
+            return self.marathon.title
+        return self.type
 
 class Screening(models.Model):
     show = models.ForeignKey(Show, related_name='screenings', on_delete=models.CASCADE)
