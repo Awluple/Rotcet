@@ -1,0 +1,14 @@
+@mixin flex-center($direction, $inline: false){
+    @if $inline {
+        display: inline-flex;
+    } @else {
+        display: flex;
+    }    
+    justify-content: center;
+    align-items: center;
+    flex-direction: $direction;
+}
+@mixin delete-border {
+    outline: none;
+    border: none;
+}

@@ -1,4 +1,8 @@
 @import 'variables';
+@import 'mixins';
+@import '../components/top/top.scss';
+@import '../components/main/main.scss';
+@import '../components/footer/footer.scss';
 
 body{
     background: #151d23;

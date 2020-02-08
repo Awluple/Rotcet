@@ -1,0 +1,47 @@
+.top {
+    @include flex-center(row);
+    justify-content: space-between;
+    align-items: unset;
+}
+.nav {
+    @include flex-center(row);
+    height: 100%;
+    background: $main-red;
+    border-bottom-left-radius: 2em;
+    ul {
+        @include flex-center(row);
+        justify-content: space-around;
+        list-style: none;
+        padding: 0.8em;
+    }
+    a {
+        color: $silver;
+        text-decoration: none;
+        font-size: 1.5em;
+        padding: 0.8em;
+        display: block;
+        font-family: $content-font;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
+.user-menu {
+    @include flex-center(row);
+    margin-left: 40px;
+    font-size: 1em;
+
+    ul {
+        @include flex-center(column);
+        padding-left: 10px;
+    }
+    a {
+        color: black;
+        font-size: 1.3em;
+        padding: 0;
+    }
+    svg {
+        width: 40px;
+    }
+}
