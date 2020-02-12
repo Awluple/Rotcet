@@ -7,7 +7,7 @@ const Main = () => {
     return (
         <Router>
         <div>
-            <Route exact path="/">
+            <Route exact path="/aj">
                 <Home />
             </Route>          
         </div>
