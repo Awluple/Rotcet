@@ -6,8 +6,8 @@ import Home from './home/home.jsx'
 const Main = () => {
     return (
         <Router>
-        <div>
-            <Route exact path="/aj">
+        <div className='main'>
+            <Route exact path="/">
                 <Home />
             </Route>          
         </div>

@@ -1,10 +1,12 @@
 import React from 'react'
 
+import Schedule from './shedule/shedule.jsx'
+
 const Home = () => {
     return (
-        <div>
-            <h1>Elo</h1>
-        </div>
+        <React.Fragment>
+            <Schedule />
+        </React.Fragment>
     )
 }
 
