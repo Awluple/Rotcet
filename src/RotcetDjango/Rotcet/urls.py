@@ -22,5 +22,5 @@ from .api_urls import urlpatterns as api_urls
 urlpatterns = [
     path('api/', include((api_urls, 'api'), namespace='api')),
     path('admin/', admin.site.urls),
-    re_path('.*', include('react.urls', namespace = 'react'))
+    re_path('.*?', include('react.urls', namespace = 'react'))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) 
