@@ -13,10 +13,7 @@ from scripts.tools import create_thumbnail
 def main_image_directory_path(instance, filename):
     return f'movies/{instance.name}/main_image/{filename}'
 
-
 def thumbnail_image_directory_path(instance, filename):
-    if re.search('test_*', filename):
-            return f'tests/{filename}'
     return f'movies/{instance.name}/main_image/thumbnail_{filename}'
 
 class Movie(models.Model):
@@ -35,8 +32,10 @@ class Movie(models.Model):
 
     def save(self, *args, **kwargs):
         old_instance = Movie.objects.filter(pk=self.pk).first()
-        if self.thumbnail is not None or old_instance.main_image != self.main_image:
-            self.thumbnail = create_thumbnail(self.main_image, 450, 80)
+
+        if not re.search('test_*', self.main_image.name):
+            if self.thumbnail is not None or old_instance.main_image != self.main_image:
+                self.thumbnail = create_thumbnail(self.main_image, 450, 80)
 
         super().save(*args, **kwargs)
         
@@ -45,7 +44,7 @@ class Movie(models.Model):
         validate_not_before_today(old_instance, 'tickets_sale_date', self.tickets_sale_date)
 
         highlights = Movie.objects.filter(highlight=True)
-        if highlights.count() >= 3 and not highlights.filter(pk=self.pk).exists():
+        if self.highlight == True and highlights.count() >= 3 and not highlights.filter(pk=self.pk).exists():
             raise ValidationError(_("There are 3 highlights already, delete one to add"), code='full')
     
 @handle_test_file

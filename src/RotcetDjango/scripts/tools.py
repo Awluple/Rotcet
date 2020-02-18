@@ -8,6 +8,9 @@ from PIL import Image as PILImage
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.core.files.images import get_image_dimensions
 
+from django.core.exceptions import ValidationError
+from django.utils.translation import gettext as _
+
 def string_list_to_python(string_list):
     if string_list:
         as_list = string_list.split(',')
@@ -27,7 +30,9 @@ def cleanup_tests_media():
     shutil.rmtree(path)
     path.mkdir()
 
-def create_thumbnail(image, max_size, quality):
+def create_thumbnail(image, max_size=450, quality=80):
+    if image is None:
+        raise ValidationError(_("No image", code='empty'))
 
     # scale image
     width, height = get_image_dimensions(image)
