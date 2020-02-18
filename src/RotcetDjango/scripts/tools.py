@@ -6,7 +6,6 @@ from pathlib import Path
 
 from PIL import Image as PILImage
 from django.core.files.uploadedfile import InMemoryUploadedFile
-from django.core.files.images import get_image_dimensions
 
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext as _
@@ -31,11 +30,10 @@ def cleanup_tests_media():
     path.mkdir()
 
 def create_thumbnail(image, max_size=450, quality=80):
-    if image is None:
-        raise ValidationError(_("No image", code='empty'))
 
+    original_image = PILImage.open(image)
     # scale image
-    width, height = get_image_dimensions(image)
+    width, height = original_image.size
     if width > max_size:
         reduce = max_size / width
         width = width * reduce
