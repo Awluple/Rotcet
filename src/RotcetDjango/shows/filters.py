@@ -9,7 +9,7 @@ class MovieFilter(filters.FilterSet):
 
     class Meta:
         model = Movie
-        exclude = ['main_image']
+        exclude = ['main_image', 'thumbnail']
         fields = '__all__'
 
 class MarathonFilter(filters.FilterSet):

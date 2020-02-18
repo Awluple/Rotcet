@@ -1,5 +1,12 @@
+import os
+import sys
 import shutil
+from io import BytesIO
 from pathlib import Path
+
+from PIL import Image as PILImage
+from django.core.files.uploadedfile import InMemoryUploadedFile
+from django.core.files.images import get_image_dimensions
 
 def string_list_to_python(string_list):
     if string_list:
@@ -19,3 +26,28 @@ def cleanup_tests_media():
     path = Path(__file__).parents[1].joinpath('media', 'tests')
     shutil.rmtree(path)
     path.mkdir()
+
+def create_thumbnail(image, max_size, quality):
+
+    # scale image
+    width, height = get_image_dimensions(image)
+    if width > max_size:
+        reduce = max_size / width
+        width = width * reduce
+        height = height * reduce
+    elif height > max_size:
+        reduce = max_size / height
+        width = width * reduce
+        height = height * reduce
+    
+    basename = os.path.basename(image.name)
+    name, extension = os.path.splitext(basename)
+    extension = extension.replace(".","")
+    extension = extension if extension != 'jpg' else 'JPEG'
+
+    thumb = PILImage.open(image)
+    thumb_io = BytesIO()
+    thumb = thumb.resize((round(width), round(height)))
+    thumb.save(thumb_io, format=extension, quality=quality)
+
+    return InMemoryUploadedFile(thumb_io,'ImageField', basename, f'image/{extension}', sys.getsizeof(thumb_io), None)

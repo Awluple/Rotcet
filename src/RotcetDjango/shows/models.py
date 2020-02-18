@@ -1,19 +1,30 @@
+import re
+
 from django.db import models
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext as _
 from django.core.validators import FileExtensionValidator
+
 from scripts.validators import validate_not_before_today
 from scripts.decorators import handle_test_file
+from scripts.tools import create_thumbnail
 
 @handle_test_file
 def main_image_directory_path(instance, filename):
     return f'movies/{instance.name}/main_image/{filename}'
+
+
+def thumbnail_image_directory_path(instance, filename):
+    if re.search('test_*', filename):
+            return f'tests/{filename}'
+    return f'movies/{instance.name}/main_image/thumbnail_{filename}'
 
 class Movie(models.Model):
     name = models.CharField(max_length=400)
     short_description = models.CharField(max_length=200)
     description = models.CharField(max_length=1000, blank=True, null=True)
     main_image = models.FileField(upload_to=main_image_directory_path, validators=[FileExtensionValidator(['jpg', 'png', 'jpeg'])])
+    thumbnail = models.FileField(upload_to=thumbnail_image_directory_path, blank=True, null=True)
     relese_date = models.DateField()
     tickets_sale_date = models.DateField()
     highlight = models.BooleanField(default=False)
@@ -21,6 +32,13 @@ class Movie(models.Model):
 
     def __str__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        old_instance = Movie.objects.filter(pk=self.pk).first()
+        if self.thumbnail is not None or old_instance.main_image != self.main_image:
+            self.thumbnail = create_thumbnail(self.main_image, 450, 80)
+
+        super().save(*args, **kwargs)
         
     def clean(self, *args, **kwargs):
         old_instance = Movie.objects.filter(pk=self.pk).first()
