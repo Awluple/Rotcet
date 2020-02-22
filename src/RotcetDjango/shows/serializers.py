@@ -21,15 +21,24 @@ class DynamicFieldsModelSerializer(serializers.ModelSerializer):
 
 class MovieSerializer(DynamicFieldsModelSerializer):
     url = serializers.SerializerMethodField()
+    screenings = serializers.SerializerMethodField()
 
     class Meta:
         model = Movie
         fields = '__all__'
     
-    def get_url(self,obj):
+    def get_url(self, obj):
         request = self.context['request']
         path = reverse('api:movie-detail',kwargs={'pk':obj.pk})
         return request.build_absolute_uri(path)
+    
+    def get_screenings(self, obj):
+        if not hasattr(obj, 'show'):
+            return []
+            
+        shows = obj.show.screenings.all()
+        screenings = [screening.date for screening in shows]
+        return screenings
 
 class MarathonSerializer(DynamicFieldsModelSerializer):
     url = serializers.SerializerMethodField()

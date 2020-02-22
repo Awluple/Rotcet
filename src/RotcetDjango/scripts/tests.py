@@ -1,12 +1,14 @@
 import os
 from pathlib import Path
 import datetime
+from io import BytesIO
 
 from django.test import TestCase
 from django.core.exceptions import ValidationError
+from PIL import Image
 
 from .decorators import handle_test_file 
-from .tools import string_list_to_python, cleanup_tests_media
+from .tools import string_list_to_python, cleanup_tests_media, create_thumbnail
 from .validators import validate_not_before_today
 
 class HandleTestFileTestCase(TestCase):
@@ -53,7 +55,6 @@ class CleanupTestsMediaTestCase(TestCase):
         self.assertEqual(len(files), 0)
 
 
-
 class OldInstance:
         def __init__(self, date):
             self.date = date
@@ -87,3 +88,29 @@ class NotBeforeTodayValidatorTestCase(TestCase):
         new_date = datetime.date.today() - datetime.timedelta(1)
         with self.assertRaises(ValidationError):
             validate_not_before_today(self.old_instance, 'date', new_date)
+
+class ThumbnailsTestCase(TestCase):
+
+    def setUp(self):
+        self.image = Path(__file__).parent.joinpath('tests_materials/test_img.jpg')
+    
+    def test_thumbnail_create(self):
+        tumb = Image.open(create_thumbnail(self.image))
+        
+        tumb_io = BytesIO()
+        tumb.save(tumb_io, 'png')
+
+        original_image = os.path.getsize(self.image)
+
+        self.assertLess(tumb_io.tell(), original_image)
+    
+    def test_resize(self):
+        tumb = Image.open(create_thumbnail(self.image, 500))
+        tumb_width, tumb_height = tumb.size
+
+        original_image = Image.open(self.image)
+        original_width, original_height = original_image.size
+
+        self.assertLess(tumb_width, original_width)
+        self.assertLess(tumb_height, original_height)
+    

@@ -219,6 +219,52 @@ class ScreeningApiViewCase(APITestCase):
         self.assertEqual(1, len(data))
         self.assertEqual(data[0]['name'], 'Test_2')
     
+    def test_movie_screening_filter_min(self):
+        url = reverse('api:movie-list')
+        
+        date = timezone.now() - datetime.timedelta(hours=1)
+        time = date.time()
+        date = date.date()
+
+        response = self.client.get(url, {'screenings_min': f'{date} {time}'})
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+        data = response.data['results']
+        self.assertEqual(2, len(data))
+    
+    def test_movie_screening_filter_max(self):
+        url = reverse('api:movie-list')
+
+        date = timezone.now() + datetime.timedelta(hours=1)
+        time = date.time()
+        date = date.date()
+
+        response = self.client.get(url, {'screenings_max': f'{date} {time}'})
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+        data = response.data['results']
+        self.assertEqual(2, len(data))
+
+
+    def test_movie_screening_filter_min_max(self):
+        url = reverse('api:movie-list')
+
+        date = timezone.now() - datetime.timedelta(hours=1)
+        time = date.time()
+        date = date.date()
+        min = f'{date} {time}'
+
+        date = timezone.now() + datetime.timedelta(hours=1)
+        time = date.time()
+        date = date.date()
+        max = f'{date} {time}'
+
+        response = self.client.get(url, {'screenings_min': min, 'screenings_max': max})
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+        data = response.data['results']
+        self.assertEqual(1, len(data))
+
 class RoomApiViewCase(APITestCase):
 
     @classmethod

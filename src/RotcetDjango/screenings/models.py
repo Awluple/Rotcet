@@ -25,8 +25,8 @@ class Show(models.Model):
         ('MR', 'Marathon')
     ]
     type = models.CharField(max_length=2, choices=SHOWS_CHOICES)
-    movie = models.OneToOneField(Movie, blank=True, null=True, on_delete=models.CASCADE)
-    marathon = models.OneToOneField(Marathon, blank=True, null=True, on_delete=models.CASCADE)
+    movie = models.OneToOneField(Movie, related_name='show', blank=True, null=True, on_delete=models.CASCADE)
+    marathon = models.OneToOneField(Marathon, related_name='show', blank=True, null=True, on_delete=models.CASCADE)
 
     def __str__(self):
         if self.movie:

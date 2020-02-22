@@ -32,6 +32,12 @@ class MovieTestCase(TestCase):
             movie = Movie(**values)
             movie.full_clean()
     
+    def test_add_not_highlight(self):
+        values = movie_values.copy()
+        values['highlight'] = False
+        movie = Movie(**values)
+        movie.full_clean()
+
     def test_can_edit_highlight_movie(self):
         """ Test if highlighted movie can be edited if there are already 3 highlights """
         movie = Movie.objects.get(pk=1)
