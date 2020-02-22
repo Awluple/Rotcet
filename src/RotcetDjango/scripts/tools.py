@@ -48,9 +48,8 @@ def create_thumbnail(image, max_size=450, quality=80):
     extension = extension.replace(".","")
     extension = extension if extension != 'jpg' else 'JPEG'
 
-    thumb = PILImage.open(image)
     thumb_io = BytesIO()
-    thumb = thumb.resize((round(width), round(height)))
+    thumb = original_image.resize((round(width), round(height)))
     thumb.save(thumb_io, format=extension, quality=quality)
 
     return InMemoryUploadedFile(thumb_io,'ImageField', basename, f'image/{extension}', sys.getsizeof(thumb_io), None)

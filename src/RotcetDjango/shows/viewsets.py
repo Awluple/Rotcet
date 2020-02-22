@@ -53,15 +53,3 @@ class MarathonViewSet(viewsets.ReadOnlyModelViewSet):
 
         serializer = self.get_serializer(queryset, many=True, fields=fields, context={'request': request}) 
         return Response(serializer.data)
-
-class SheduleViewSet(viewsets.ViewSet):
-
-    def get_queryset(self):
-        start_date = timezone.date.now()
-        
-        end_date = datetime.date(2005, 3, 31)
-        return Movie.objects.filter(Q(show.date))
-
-    def list(self, request):
-        # movies = self.get_queryset().filter
-        return Response("eki")
