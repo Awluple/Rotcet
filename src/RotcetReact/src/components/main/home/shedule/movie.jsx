@@ -13,10 +13,11 @@ const Movie = props => {
         return screenings
     }
     
-    const sortScreenings = (screenings) => {
-        let sorted = {}
-        screenings.map(screening => {
-            console.log(screening)
+    const organizeScreenings = (screeningsArray) => {
+        /* Changes array of dates to organised object */
+        screeningsArray = screeningsArray.sort((date1, date2) => {return date1.getTime() - date2.getTime()}) // set dates in ascending order
+        let organized = {}
+        screeningsArray.map(screening => {
             const dd = screening.getDate()
             const mm = screening.getMonth() + 1
             const yyyy = screening.getFullYear()
@@ -25,17 +26,21 @@ const Movie = props => {
             let minute = screening.getMinutes()
 
             minute = minute < 10 ? `0${minute}` : minute // if minute is less then 0, add 0 before (9 => 09)
-
-            if (sorted[`${dd}.${mm}.${yyyy}`] in sorted){
-                sorted[`${dd}.${mm}.${yyyy}`].push(`${hour}:${minute}`)
+            
+            if (`${dd}.${mm}.${yyyy}` in organized){
+                organized[`${dd}.${mm}.${yyyy}`].push(`${hour}:${minute}`)
             } else {
-                sorted[`${dd}.${mm}.${yyyy}`] = [`${hour}:${minute}`]
+                organized[`${dd}.${mm}.${yyyy}`] = [`${hour}:${minute}`]
             }
         })
-        return sorted
+        return organized
     }
 
-    console.log(sortScreenings(toDateObjects(props.movie.screenings)))
+    const toDisplay = (screeningsObject) => {
+        dates = Object.keys(screeningsObject)
+    }
+
+    console.log(toDisplay(organizeScreenings(toDateObjects(props.movie.screenings))))
 
     return (
         <div className='movies__movie'>
@@ -48,6 +53,7 @@ const Movie = props => {
 
                 <div className='movie__screenings'>
                     <p>{props.movie.has_3D ? '2D/3D' : '2D'}</p>
+
                 </div>
 
             </div>
