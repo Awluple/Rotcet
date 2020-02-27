@@ -18,7 +18,6 @@ const MoviesList = props => {
             
             {props.movies && props.movies.length > 0 && 
                 props.movies.map(movie => {
-                    console.log(movie)
                     return (
                         <Movie key={movie.id} movie={movie} />
                     )

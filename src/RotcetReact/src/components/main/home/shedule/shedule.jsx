@@ -20,7 +20,7 @@ const Schedule = () => {
     useEffect(() => {
         let time = new Date()
         const year = time.getUTCFullYear()
-        const month = time.getUTCMonth()
+        const month = time.getUTCMonth() + 1
         const day = time.getUTCDate()
         const query = {
             'fields': 'id,name,has_3D,screenings,thumbnail',
