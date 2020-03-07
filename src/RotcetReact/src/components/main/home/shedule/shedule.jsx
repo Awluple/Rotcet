@@ -1,23 +1,25 @@
-import React, { useState, useEffect } from 'react'
+import React, { Component } from 'react'
 import { Link } from "react-router-dom"
 import axios from 'axios'
-import queryString from 'query-string'
 
 import MovieList from './moviesList.jsx'
 
-const Schedule = () => {
-    const [movies, setMovies] = useState(null);
+class Shedule extends Component {
 
-    const getMovies = (query) => {
-        query = queryString.stringify(query)
-        axios.get(`/api/movies?${query}`).then(
-            res => {
-                setMovies(res.data.results)
-            }
+    state = {
+        movies: null
+    }
+
+    getMovies = (query) => {
+        return axios.get(`/api/movies`,
+        {params: query
+        })
+         .then(
+            res => { return res.data.results }
         )
     }
 
-    useEffect(() => {
+    componentDidMount() {
         let time = new Date()
         const year = time.getUTCFullYear()
         const month = time.getUTCMonth() + 1
@@ -27,15 +29,22 @@ const Schedule = () => {
             'screenings_min': `${year}-${month}-${day}`,
             'page_size': 100
         }
-        getMovies(query)
-    },[])
-    return (
-        <div className='shedule'>
+        this.getMovies(query).then(data => {
+            this.setState({
+                movies: data
+            })
+        })
+    }
+
+    render() {
+        return (
+            <div className='shedule'>
             <h2>SHEDULE</h2>
-            <MovieList movies={movies} />
+            <MovieList movies={this.state.movies} />
             <Link to='/calendar'>CALENDAR</Link>
         </div>
-    )
+        )
+    }
 }
 
-export default Schedule
+export default Shedule

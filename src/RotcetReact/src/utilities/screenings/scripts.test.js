@@ -25,19 +25,6 @@ describe('Utilities screenings scripts tests', () => {
             assert.isFalse(checkIfOutdated(date))
         } )
     })
-    describe('checkIfOutdated tests', () => {
-        it('passes correct dates', () => {
-            let date = new Date()
-            date.setDate(date.getDate() - 10)
-            assert.isTrue(checkIfOutdated(date))
-        })
-
-        it('handles outdates', () => {
-            let date = new Date()
-            date.setDate(date.getDate() + 10)
-            assert.isFalse(checkIfOutdated(date))
-        } )
-    })
     
     describe('organizeScreenings tests', () => {
         beforeEach(() => {
@@ -48,19 +35,19 @@ describe('Utilities screenings scripts tests', () => {
         })
 
         it('creates dates list', () => {
-            const returned = organizeScreenings([global.date1, global.date2, global.date3, global.date4])
+            const returned = organizeScreenings([date1, date2, date3, date4])
             const expectedDays = ['20.7.2200', '25.7.2200']
             assert.deepEqual(returned['days'], expectedDays)
         })
 
         it('sorts ascending', () => {
-            const returned = organizeScreenings([global.date3, global.date1])
+            const returned = organizeScreenings([date3, date1])
             const expectedDays = ['20.7.2200', '25.7.2200']
             assert.deepEqual(returned['days'], expectedDays)
         })
 
         it('organize screenings', () => {
-            const returned = organizeScreenings([global.date1, global.date2, global.date3, global.date4])
+            const returned = organizeScreenings([date1, date2, date3, date4])
             const expected = {
                 days: ['20.7.2200', '25.7.2200'],
                 '20.7.2200': ['9:09', '11:11'],
@@ -70,7 +57,7 @@ describe('Utilities screenings scripts tests', () => {
         })
 
         it('adds 0 for minutes below 10', () => {
-            const returned = organizeScreenings([global.date1])
+            const returned = organizeScreenings([date1])
             assert.equal(returned['20.7.2200'][0], '9:09')
         })
     })

@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import LoadingGif from '../../../../../media/gifs/loading.jsx'
+import LoadingGif from 'media/gifs/loading.jsx'
 
 import Movie from './movie.jsx'
 

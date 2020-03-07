@@ -18,6 +18,7 @@ module.exports = {
     resolve: {
       alias: {
         utilities: path.resolve(__dirname, './src/utilities/'),
+        media: path.resolve(__dirname, './media/'),
       },
       extensions: ['*', '.js', '.jsx']
     },
