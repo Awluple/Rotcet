@@ -41,7 +41,9 @@ class Shedule extends Component {
             <div className='shedule'>
             <h2>SHEDULE</h2>
             <MovieList movies={this.state.movies} />
-            <Link to='/calendar'>CALENDAR</Link>
+            <div className='shedule__calendar'>
+                <Link to='/calendar'>CALENDAR</Link>
+            </div>
         </div>
         )
     }

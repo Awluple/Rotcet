@@ -47,7 +47,9 @@ const Movie = props => {
                             <Screenings day={screeningsDates.day2} />
                         }
                     </div>
-
+                </div>
+                <div className='movie__all_times'>
+                    <a href="">All times</a>
                 </div>
             </div>
             )

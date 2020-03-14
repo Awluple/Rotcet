@@ -1,0 +1,110 @@
+.shedule {
+    text-align: center;
+    h2 {
+        background: $darker-red;
+        color: $silver;
+        font-family: $headers-font;
+        font-weight: 100;
+        font-size: 3em;
+        text-align: center;
+        border-top-left-radius: 2em;
+        border-top-right-radius: 2em
+    }
+}
+
+.shedule__calendar {
+    text-align: center;
+    a {
+        display: inline-block;
+        width: 25%;
+        padding: 15px 0px;;
+        border-bottom-left-radius: 1.5em;
+        border-bottom-right-radius: 1.5em;
+        background: $darker-red;
+        color: $silver;
+        font-family: $headers-font;
+        font-size: 2.4em;
+        font-weight: 100;
+        text-decoration: underline;
+    }
+}
+
+.shedule__movies {
+    @include flex-center(row);
+    align-items: stretch;
+    background: $main-red;
+}
+
+.movies__movie {
+    display: flex;
+    flex-direction: column;
+    margin: 30px 0px 30px 30px;
+    padding-right: 30px;
+    border-right: 10px solid #790303;
+    h3 {
+        font-family: $content-font;
+        font-weight: 600;
+        color: $silver;
+        font-size: 2.2em;
+        text-align: right;
+    }
+    &:last-child {
+        border-right: none;
+    }
+}
+
+.movie__all_times {
+    text-align: right;
+    margin-top: auto;
+    a {
+        padding: 0px 10px;
+        border-radius: 0.5em;
+        text-decoration: none;
+        font-weight: 100;
+        font-family: $content-font;
+        font-size: 2em;
+        color: black;
+        background: $darker-silver;
+    }
+}
+.movie__details {
+    display: flex;
+    img {
+        width: 250px;
+    }
+}
+.movie__screenings {
+    margin-left: 20px;
+    p {
+        font-family: $content-font;
+        font-weight: 400;
+        font-size: 1.3em;
+        color: $silver;
+    }
+}
+
+.screenings__day {
+    margin-bottom: 10px;
+    h4 {
+        font-family: $content-font;
+        color: $silver;
+        font-weight: 600;
+        font-size: 1.5em;
+    }
+    ul {
+        padding: 0;
+        width: 150px;
+        list-style-type: none;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+    }
+    li {
+        font-family: $content-font;
+        font-weight: 100;
+        font-size: 1.3em;
+        width: 65px;
+        background: $darker-silver;
+        border-radius: 0.5em;
+    }
+}
