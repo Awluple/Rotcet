@@ -31,7 +31,35 @@
 
 .shedule__container {
     overflow: hidden;
+    position: relative;
     background: $main-red;
+
+    svg {
+        width: 50px;
+    }
+    button {
+        @include delete-border;
+        padding: 15px;
+        border-radius: 50%;
+        position: absolute;
+        top: calc(50% - 50px);
+        background: $darker-red;
+        opacity: 0.5;
+        z-index: 1001;
+
+        &:first-child {
+            left: 20px;
+            transform: scaleX(-1);
+        }
+
+        &:last-child {
+            right: 20px;
+        }
+
+        &:hover {
+            opacity: 1;
+        }
+    }
 }
 
 .shedule__movies {
@@ -41,6 +69,7 @@
     @include flex-center(row);
     justify-content: flex-start;
     align-items: stretch;
+    transition: right 0.3s linear;
 }
 
 .movies__movie {
