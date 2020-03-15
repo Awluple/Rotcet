@@ -12,9 +12,24 @@ const MoviesList = props => {
     const [position, setPosition] = useState(0);
     const [isOverWidth, setIsOverWidth] = useState(false);
 
+    useEffect(() => {
+        let iterations = 0;
 
-    const moveMovies = (operator) => {
-        
+        const checkWidth = () => {
+            iterations++
+            if (!(moviesRef.current.scrollWidth === 50)){
+                clearInterval(waitForFlexbox)
+                setIsOverWidth(moviesRef.current.scrollWidth < window.innerWidth)
+                return
+            }
+            if (iterations === 5){
+                clearInterval(waitForFlexbox)
+            }
+        }
+        const waitForFlexbox = setInterval(checkWidth, 100);
+      },[]);
+
+    const moveMovies = (operator) => {   
         if(operator === 'add') {
             if((position + 500) < moviesRef.current.scrollWidth - window.innerWidth){
                 setPosition(position + 500)
@@ -32,12 +47,14 @@ const MoviesList = props => {
         }
     }
 
+    console.log(isOverWidth)
+
     return (
         <div className='shedule__container'>
             { position !== 0 &&
                 <button onClick={() => {moveMovies('subtract')}}><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 3l3.057-3 11.943 12-11.943 12-3.057-3 9-9z"/></svg></button>
             }
-            <ul ref={moviesRef} style={{right: position + 'px'}} className='shedule__movies'>
+            <ul ref={moviesRef} style={{right: position + 'px', display: 'inline-flex'}} className='shedule__movies'>
                 {props.movies === null && 
                     <LoadingGif />
                 }
