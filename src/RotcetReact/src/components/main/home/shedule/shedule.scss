@@ -29,10 +29,18 @@
     }
 }
 
-.shedule__movies {
-    @include flex-center(row);
-    align-items: stretch;
+.shedule__container {
+    overflow: hidden;
     background: $main-red;
+}
+
+.shedule__movies {
+    position: relative;
+    list-style: none;
+    padding: 0px;
+    @include flex-center(row);
+    justify-content: flex-start;
+    align-items: stretch;
 }
 
 .movies__movie {

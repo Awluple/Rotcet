@@ -32,7 +32,7 @@ const Movie = props => {
     
     if (screeningsDates){
         return (
-            <div className='movies__movie'>
+            <li className='movies__movie'>
                 <h3>{props.movie.name}</h3>
                 <div className='movie__details'>
 
@@ -51,7 +51,7 @@ const Movie = props => {
                 <div className='movie__all_times'>
                     <a href="">All times</a>
                 </div>
-            </div>
+            </li>
             )
         }else {
         return null
