@@ -5,7 +5,7 @@ from .models import Movie, Marathon
 
 class MovieFilter(filters.FilterSet):
     
-    screenings = filters.DateTimeFromToRangeFilter(field_name='show__screenings__date', widget=widgets.RangeWidget(attrs={'placeholder': 'yyyy-mm-dd hh:mm:ss'}))
+    screenings = filters.DateTimeFromToRangeFilter(field_name='show__screenings__date', distinct=True, widget=widgets.RangeWidget(attrs={'placeholder': 'yyyy-mm-dd hh:mm:ss'}))
 
     class Meta:
         model = Movie

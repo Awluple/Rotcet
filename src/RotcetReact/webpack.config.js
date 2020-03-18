@@ -15,6 +15,13 @@ module.exports = {
       filename: 'main.js',
       publicPath: '/static/'
     },
+    resolve: {
+      alias: {
+        utilities: path.resolve(__dirname, './src/utilities/'),
+        media: path.resolve(__dirname, './media/'),
+      },
+      extensions: ['*', '.js', '.jsx']
+    },
     module: {
       rules: [
         {
