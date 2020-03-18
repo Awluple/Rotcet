@@ -2,8 +2,8 @@ import React from 'react'
 
 const LoadingGif = () => {
     return (
-        <svg xmlns="http://www.w3.org/2000/svg" 
-        xmlnsXlink="http://www.w3.org/1999/xlink" version="1.0" width="100px" height="100px" viewBox="0 0 128 128" 
+        <svg className='loading_gif' xmlns="http://www.w3.org/2000/svg" 
+        xmlnsXlink="http://www.w3.org/1999/xlink" version="1.0" viewBox="0 0 128 128" 
         xmlSpace="preserve">
             <g transform="rotate(45 64 64)">
                 <circle cx="16" cy="64" r="16" fill="#151d23" fillOpacity="1"/>

@@ -13,11 +13,14 @@ const MoviesList = props => {
     const [isOverWidth, setIsOverWidth] = useState(false);
 
     useEffect(() => {
+        // Flexbox needs some time to set width of a element. This function waits for it and
+        // removes the slider arrow if element size is lesser than window size
         let iterations = 0;
+        let waitForFlexbox
 
         const checkWidth = () => {
             iterations++
-            if (!(moviesRef.current.scrollWidth === 50)){
+            if (!(moviesRef.current.scrollWidth === 50) && isOverWidth !== true){ // default width for flexbox is 50
                 clearInterval(waitForFlexbox)
                 setIsOverWidth(moviesRef.current.scrollWidth < window.innerWidth)
                 return
@@ -26,14 +29,20 @@ const MoviesList = props => {
                 clearInterval(waitForFlexbox)
             }
         }
-        const waitForFlexbox = setInterval(checkWidth, 100);
-      },[]);
+
+        if(props.movies && props.movies.length !== 0) {
+            waitForFlexbox = setInterval(checkWidth, 100);
+        }else if(props.movies && props.movies.length === 0){
+            setIsOverWidth(true)
+        }
+      },[props.movies]);
 
     const moveMovies = (operator) => {   
         if(operator === 'add') {
             if((position + 500) < moviesRef.current.scrollWidth - window.innerWidth){
                 setPosition(position + 500)
             }else{
+                // don't let the slider go further when no movies remain
                 setIsOverWidth(true)
                 setPosition(moviesRef.current.scrollWidth - window.innerWidth)
             }
@@ -47,20 +56,22 @@ const MoviesList = props => {
         }
     }
 
-    console.log(isOverWidth)
 
     return (
         <div className='shedule__container'>
             { position !== 0 &&
                 <button onClick={() => {moveMovies('subtract')}}><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 3l3.057-3 11.943 12-11.943 12-3.057-3 9-9z"/></svg></button>
             }
-            <ul ref={moviesRef} style={{right: position + 'px', display: 'inline-flex'}} className='shedule__movies'>
+            <ul ref={moviesRef} style={{right: position + 'px'}} 
+            className={'shedule__movies' + (props.movies === null || (props.movies && props.movies.length === 0) ? ' shedule__movies--no_movies' : '')}>
+
+                {/* Wait for server response */}
                 {props.movies === null && 
                     <LoadingGif />
                 }
 
                 {props.movies && props.movies.length === 0 && 
-                    <h2 className='shedule__no_movies'>Sorry, there are no screenings for now</h2>
+                    <h2>Sorry, there are no screenings for now</h2>
                 }
 
                 {props.movies && props.movies.length > 0 && 

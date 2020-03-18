@@ -71,6 +71,18 @@
     justify-content: flex-start;
     align-items: stretch;
     transition: right 0.3s linear;
+
+    &--no_movies {
+        height: 250px;
+        @include flex-center(row);
+        h2 {
+            background: none;
+        }
+        .loading_gif {
+            width: 150px;
+        }
+    }
+
 }
 
 .movies__movie {

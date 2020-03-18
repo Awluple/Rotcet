@@ -103,7 +103,7 @@ describe('Shedule components tests', () => {
         })
         it('renders info when no movies', () => {
             wrapper = mount(<MoviesList movies={[]} />)
-            assert.equal(wrapper.find('h2.shedule__no_movies').text(), 'Sorry, there are no screenings for now')
+            assert.equal(wrapper.find('.shedule__movies').find('h2').text(), 'Sorry, there are no screenings for now')
         })
         it('renders movies', () => {
             wrapper = mount(<MoviesList movies={[movie, movie2]} />)
