@@ -20,7 +20,7 @@ const MoviesList = props => {
 
         const checkWidth = () => {
             iterations++
-            if (!(moviesRef.current.scrollWidth === 50) && isOverWidth !== true){ // default width for flexbox is 50
+            if (!(moviesRef.current.scrollWidth === 50) && isOverWidth !== true){
                 clearInterval(waitForFlexbox)
                 setIsOverWidth(moviesRef.current.scrollWidth < window.innerWidth)
                 return
@@ -39,7 +39,7 @@ const MoviesList = props => {
 
     const moveMovies = (operator) => {   
         if(operator === 'add') {
-            if((position + 500) < moviesRef.current.scrollWidth - window.innerWidth){
+            if((position + 800) < moviesRef.current.scrollWidth - window.innerWidth){
                 setPosition(position + 500)
             }else{
                 // don't let the slider go further when no movies remain
@@ -48,7 +48,7 @@ const MoviesList = props => {
             }
         }else {
             setIsOverWidth(false)
-            if(position < 500){
+            if(position < 800){
                 setPosition(0)
             }else{
                 setPosition(position - 500)

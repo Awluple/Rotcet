@@ -33,6 +33,12 @@ const movie2 = {
     'screenings': ['2200-02-26T12:09:43Z']
 }
 
+// let movies = []
+//     for (let index = 2; index < 10; index++) {
+//         const newMovie = JSON.parse(JSON.stringify(movie));
+//         newMovie['id'] = index
+//         movies.push(newMovie)
+//     }
 describe('Shedule components tests', () => {
     
     describe('Shedule component', () => {
@@ -96,7 +102,11 @@ describe('Shedule components tests', () => {
         })
     })
 
+
     describe('MoviesList component', () => {
+        before(() => {
+            global.wrapper = mount(<MoviesList movies={[movie, movie2]} />)
+        })
         it('renders loading when no movies yet', () => {
             wrapper = shallow(<MoviesList movies={null} />)
             assert.lengthOf(wrapper.find(LoadingGif), 1)
@@ -108,6 +118,9 @@ describe('Shedule components tests', () => {
         it('renders movies', () => {
             wrapper = mount(<MoviesList movies={[movie, movie2]} />)
             assert.lengthOf(wrapper.find(Movie), 2)
+        })
+        it('has position set on list', () => {
+            assert.propertyVal(wrapper.find('ul').get(0).props.style, 'right', '0px')
         })
     })
 })
