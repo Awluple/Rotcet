@@ -1,0 +1,46 @@
+.highlight {
+    margin-top: 65px;
+}
+
+.highlight_movie {
+    display: flex;
+    margin: 50px 0px;
+
+    iframe {
+        width: 675px;
+        height: 380px;
+        border-radius: 0px 250px 250px 0px;
+    }
+    h3 {
+        font-family: $content-font;
+        font-size: 2.7em;
+        font-weight: 600;
+        color: white;
+    }
+    .movie__description {
+        margin-left: 7%;
+        @include flex-center(column);
+        justify-content: space-between;
+
+        a {
+            margin-bottom: 50px;
+            padding: 0px 50px;
+            background: $main-red;
+            font-family: $content-font;
+            font-weight: 100;
+            font-size: 2em;
+            color: white;
+            border-radius: 40px;
+        }
+    }
+    .movie__info {
+        text-align: center;
+        
+        p {
+            max-width: 500px;
+            font-family: $content-font;
+            font-size: 1.2em;
+            color: white;
+        }
+    }
+}
