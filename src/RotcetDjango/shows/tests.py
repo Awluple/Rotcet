@@ -81,6 +81,15 @@ class MovieAPITestCase(APITestCase):
         keys = data[0].keys()
         self.assertEqual(4, len(keys))
         self.assertListEqual(['id', 'main_image', 'tickets_sale_date', 'has_3D'], list(keys))
+    
+    def test_dynamic_related_fields(self):
+        response = self.client.get(self.url, {'fields':'id,images,trailers'})
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+        data = response.data['results']
+        keys = data[0].keys()
+        self.assertEqual(3, len(keys))
+        self.assertListEqual(['id', 'trailers', 'images'], list(keys))
 
     def test_ordering(self):
         response = self.client.get(self.url, {'fields':'id,tickets_sale_date'})

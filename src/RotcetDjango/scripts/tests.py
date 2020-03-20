@@ -1,6 +1,7 @@
 import os
 from pathlib import Path
 import datetime
+from django.utils import timezone
 from io import BytesIO
 
 from django.test import TestCase
@@ -62,7 +63,7 @@ class OldInstance:
 class NotBeforeTodayValidatorTestCase(TestCase):
 
     def setUp(self):
-        self.old_instance = OldInstance(datetime.date.today())
+        self.old_instance = OldInstance(timezone.now().date())
         self.new_date = self.old_instance.date + datetime.timedelta(2)
 
     def test_ok(self):
@@ -76,16 +77,16 @@ class NotBeforeTodayValidatorTestCase(TestCase):
             validate_not_before_today(self.old_instance, 'wrong_date', self.new_date)
     
     def test_date_as_datatime(self):
-        old_instance = OldInstance(datetime.datetime.now())
-        new_date = datetime.datetime.now() + datetime.timedelta(2)
+        old_instance = OldInstance(timezone.now())
+        new_date = timezone.now() + datetime.timedelta(2)
         validate_not_before_today(old_instance, 'date', new_date)
 
     def test_today(self):
-        new_date = datetime.date.today()
+        new_date = timezone.now().date()
         validate_not_before_today(self.old_instance, 'date', new_date)
     
     def test_before_today(self):
-        new_date = datetime.date.today() - datetime.timedelta(1)
+        new_date = timezone.now().date() - datetime.timedelta(1)
         with self.assertRaises(ValidationError):
             validate_not_before_today(self.old_instance, 'date', new_date)
 

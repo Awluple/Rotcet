@@ -1,7 +1,7 @@
 from django.urls import reverse
 from rest_framework import serializers
 
-from .models import Movie, Marathon
+from .models import Movie, Marathon, Image, Trailer
 
 class DynamicFieldsModelSerializer(serializers.ModelSerializer):
     def __init__(self, *args, **kwargs):
@@ -19,9 +19,23 @@ class DynamicFieldsModelSerializer(serializers.ModelSerializer):
                     self.fields.pop(field_name)
 
 
+class TrailerSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Trailer
+        fields = '__all__'
+
+class ImageSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Image
+        fields = '__all__'
+
 class MovieSerializer(DynamicFieldsModelSerializer):
     url = serializers.SerializerMethodField()
     screenings = serializers.SerializerMethodField()
+    trailers = TrailerSerializer(many=True, read_only=True)
+    images = ImageSerializer(many=True, read_only=True)
 
     class Meta:
         model = Movie

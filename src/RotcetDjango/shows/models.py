@@ -21,6 +21,7 @@ class Movie(models.Model):
     short_description = models.CharField(max_length=200)
     description = models.CharField(max_length=1000, blank=True, null=True)
     main_image = models.FileField(upload_to=main_image_directory_path, validators=[FileExtensionValidator(['jpg', 'png', 'jpeg'])])
+    main_trailer = models.URLField(null=True, blank=True)
     thumbnail = models.FileField(upload_to=thumbnail_image_directory_path, blank=True, null=True)
     relese_date = models.DateField()
     tickets_sale_date = models.DateField()

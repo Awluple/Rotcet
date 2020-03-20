@@ -230,7 +230,8 @@ class ScreeningApiViewCase(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
         data = response.data['results']
-        self.assertEqual(2, len(data))
+        self.assertEqual(1, len(data))
+        self.assertEqual('Test', data[0]['name'])
     
     def test_movie_screening_filter_max(self):
         url = reverse('api:movie-list')
