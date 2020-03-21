@@ -62,7 +62,11 @@
         }
     }
 }
-
+.movie__graphic--remove-border-radius {
+    iframe {
+        border-radius: 0px !important; 
+    }
+}
 .highlight_movie--left {
     flex-direction: row-reverse;
 
