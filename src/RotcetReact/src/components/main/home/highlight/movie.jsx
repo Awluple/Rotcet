@@ -5,7 +5,7 @@ import {Link} from 'react-router-dom'
 const Movie = props => {
     console.log(props.index)
     return (
-        <div className={'highlight_movie' + ((props.index === 1) ? ' highlight_movie--left' : '')}>
+        <div className={'highlight_movie' + ((props.movie.main_trailer === null) ? ' highlight_movie--no_trailer' : '') + ((props.index === 1) ? ' highlight_movie--left' : '') }>
             <div className='movie__graphic'>
                 {props.movie.main_trailer ? 
                     <iframe src={props.movie.main_trailer} frameBorder="0"></iframe>
