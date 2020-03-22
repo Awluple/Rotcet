@@ -49,7 +49,7 @@ const Movie = props => {
                     </div>
                 </div>
                 <div className='movie__all_times'>
-                    <a href="">All times</a>
+                    <a className='shadow-small' href="">All times</a>
                 </div>
             </li>
             )

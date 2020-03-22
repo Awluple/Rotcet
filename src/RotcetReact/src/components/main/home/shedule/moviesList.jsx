@@ -58,7 +58,7 @@ const MoviesList = props => {
 
 
     return (
-        <div className='shedule__container'>
+        <div className='shedule__container shadow-big'>
             { position !== 0 &&
                 <button onClick={() => {moveMovies('subtract')}}><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 3l3.057-3 11.943 12-11.943 12-3.057-3 9-9z"/></svg></button>
             }

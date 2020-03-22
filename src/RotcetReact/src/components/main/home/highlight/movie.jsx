@@ -43,7 +43,7 @@ const Movie = props => {
                     <h3>{props.movie.name}</h3>
                     <p>{props.movie.short_description}</p>
                 </div>
-                <Link to='' >Tickets</Link>
+                <Link className='shadow-small' to='' >Tickets</Link>
             </div>
         </div>
     )
