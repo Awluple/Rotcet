@@ -17,8 +17,8 @@ const Movie = props => {
     }
 
     const opts = {
-        width: '675px',
-        height: '380px'
+        width: '750px',
+        height: '422px'
     }
 
     const setBorder = () => {
