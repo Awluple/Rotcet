@@ -7,6 +7,7 @@ import { MemoryRouter } from 'react-router-dom'
 import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
 
+import YouTube from 'react-youtube';
 import LoadingGif from 'media/gifs/loading.jsx'
 
 import Highlight from './highlight.jsx'
@@ -69,4 +70,26 @@ describe('Highlight components tests', () => {
             assert.equal(wrapper.find(Movie).first().find('h3').text(), 'Test 1')
         });
     });
+
+    describe('Movie component', () => {
+        before(() => {
+            global.wrapper = shallow(<Movie index={0} movie={movie1} />)
+            global.wrapper2 = shallow(<Movie index={1} movie={movie2} />)
+        })
+        it('displays all data', () => {
+            assert.lengthOf(wrapper.find(YouTube), 1)
+            assert.equal(wrapper.find('h3').text(), 'Test 1')
+            assert.equal(wrapper.find('p').text(), 'Test desc 1')
+        })
+        it('gives --left className for second element', () => {
+            assert.isTrue(wrapper2.find('.highlight_movie--left').exists())
+        })
+        it('displays main image if no trailer', () => {
+            assert.isTrue(wrapper2.find('img').exists())
+        })
+        it('does not display both main image and trailer', () => {
+            assert.isTrue(wrapper.find(YouTube).exists())
+            assert.isFalse(wrapper.find('img').exists())
+        })
+    })
 });
