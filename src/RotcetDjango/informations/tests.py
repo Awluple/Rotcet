@@ -34,6 +34,25 @@ class NewsTests(APITestCase):
         self.assertGreater(data[0]['day_posted'], data[1]['day_posted'])
         self.assertGreater(data[0]['day_posted'], data[2]['day_posted'])
 
+    def test_default_fields(self):
+        url = reverse('api:news-list')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+        data = response.data['results']
+        keys = data[0].keys()
+        self.assertEqual(len(keys), 3)
+    
+    def test_dynamic_fields(self):
+        url = reverse('api:news-list')
+        response = self.client.get(url, {'fields': 'id,description_html,title,image'})
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+        data = response.data['results']
+        keys = data[0].keys()
+        self.assertEqual(len(keys), 4)
+        self.assertListEqual(['id', 'image', 'title', 'description_html'], list(keys))
+
 class FAQsTests(APITestCase):
 
     def setUp(self):
