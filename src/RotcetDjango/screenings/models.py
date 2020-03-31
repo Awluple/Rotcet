@@ -4,11 +4,11 @@ from django.core.validators import FileExtensionValidator
 from .validators import validate_show, validate_occupied_seats, validate_positive_integers_list, validate_available_in_3D
 from scripts.validators import validate_not_before_today
 from shows.models import Movie, Marathon
-from scripts.decorators import handle_test_file
+from scripts.tools import handle_test_file
 
-@handle_test_file
 def room_scheme_path(instance, filename):
-    return f'/rooms/{filename}'
+    path = f'/rooms/{filename}'
+    return handle_test_file(path, filename)
 
 class Room(models.Model):
     number = models.PositiveSmallIntegerField(unique=True)

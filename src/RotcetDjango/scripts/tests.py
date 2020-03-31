@@ -8,25 +8,36 @@ from django.test import TestCase
 from django.core.exceptions import ValidationError
 from PIL import Image
 
-from .decorators import handle_test_file 
-from .tools import string_list_to_python, cleanup_tests_media, create_thumbnail
+from .decorators import handle_test_file as handle_test_file_decorator
+from .tools import string_list_to_python, cleanup_tests_media, create_thumbnail, handle_test_file
 from .validators import validate_not_before_today
 
-class HandleTestFileTestCase(TestCase):
+class HandleTestFileDecoratorTestCase(TestCase):
 
     def path_to_create(self, instance, filename):
         return f'path/{instance}/{filename}'
 
     def test_path_redirection(self):
-        path = handle_test_file(self.path_to_create)
+        path = handle_test_file_decorator(self.path_to_create)
         path = path('instance', 'test_image.jpg')
         self.assertEqual(path, 'tests/test_image.jpg')
     
     def test_no_redirection(self):
-        path = handle_test_file(self.path_to_create)
+        path = handle_test_file_decorator(self.path_to_create)
         path = path('instance', 'image.jpg')
         self.assertEqual(path, 'path/instance/image.jpg')
 
+class HandleTestFileTestCase(TestCase):
+
+    def test_path_redirection(self):
+        path = '/test/path/image.jpg'
+        new_path = handle_test_file(path, 'image.jpg')
+        self.assertEqual(new_path, path)
+    
+    def test_no_redirection(self):
+        path = '/test/path/test_image.jpg'
+        new_path = handle_test_file(path, 'test_image.jpg')
+        self.assertEqual(new_path, 'tests/test_image.jpg')
 
 class TringListToPythonTestCase(TestCase):
     
@@ -115,3 +126,4 @@ class ThumbnailsTestCase(TestCase):
         self.assertLess(tumb_width, original_width)
         self.assertLess(tumb_height, original_height)
     
+
