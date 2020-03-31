@@ -9,7 +9,7 @@ from scripts.tools import cleanup_tests_media
 from .models import News, FAQs
 from .models_values import news_values, faqs_values
 
-class NewsTests(APITestCase):
+class NewsApiTests(APITestCase):
 
     @classmethod
     def tearDownClass(cls):
@@ -52,6 +52,18 @@ class NewsTests(APITestCase):
         keys = data[0].keys()
         self.assertEqual(len(keys), 4)
         self.assertListEqual(['id', 'image', 'title', 'description_html'], list(keys))
+
+class NewsTests(TestCase):
+    @classmethod
+    def tearDownClass(cls):
+        cleanup_tests_media()
+
+    def setUp(self):
+        news1 = News.objects.create(**news_values)
+    
+    def test_has_corrent_default_image(self):
+        article = News.objects.get(pk=1)
+        self.assertEqual(article.image.url, '/media/assets/placeholders/logo.png')
 
 class FAQsTests(APITestCase):
 
