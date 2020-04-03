@@ -9,7 +9,9 @@ const Home = () => {
         <React.Fragment>
             <Schedule />
             <Highlight />
-            <News />
+            <div className='news_and_info'>
+                <News />
+            </div>
         </React.Fragment>
     )
 }

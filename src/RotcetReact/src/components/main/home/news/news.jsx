@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react'
+import {Link} from 'react-router-dom'
 import axios from 'axios'
 
 import LoadingGif from 'media/gifs/loading.jsx'
@@ -38,7 +39,7 @@ const News = () => {
                 :
                 <LoadingGif />
             }
-            
+            <Link className='button shadow-small' to='/'>Archive</Link>
         </div>
     )
 }

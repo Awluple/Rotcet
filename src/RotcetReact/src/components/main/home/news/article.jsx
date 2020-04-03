@@ -1,14 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import {Link} from 'react-router-dom'
 
 const Article = props => {
     return (
         <div className='news__article'>
             <div className='article--image'>
-                <img src={props.article.image} alt='Article image' />
+                <Link to='/'><img src={props.article.image} alt='Article image' /></Link>
             </div>
             <div className='article--content'>
-                <h4>{props.article.title}</h4>
+                <Link to='/'><h4>{props.article.title}</h4></Link>
                 <h6>{props.article.day_posted}</h6>
                 <p>{props.article.short_description}</p>
             </div>
