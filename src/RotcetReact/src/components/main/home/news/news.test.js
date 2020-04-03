@@ -24,7 +24,8 @@ const article1 = {
 const article2 = {
     id: 2,
     title: 'Test 2',
-    image: '/test/test.jpg',
+    image: null,
+    thumbnail: '/test/thumbnail_test.jpg',
     day_posted: '2200-04-03',
     short_description: 'Test desc 2'
 }
@@ -62,12 +63,17 @@ describe('News components tests', () => {
     describe('Article component', () => {
         before(() => {
             global.wrapper = shallow(<Article article={article1} />)
+            global.wrapper2 = shallow(<Article article={article2} />)
         })
         it('displays all data', () => {
-            assert.lengthOf(wrapper.find('img'), 1)
-            assert.lengthOf(wrapper.find('h4'), 1)
-            assert.lengthOf(wrapper.find('h6'), 1)
-            assert.lengthOf(wrapper.find('p'), 1)
+            assert.equal(wrapper.find('img').prop('src'), '/test/test.jpg')
+            assert.equal(wrapper.find('h4').text(), 'Test 1')
+            assert.equal(wrapper.find('h6').text(), '2200-01-02')
+            assert.equal(wrapper.find('p').text(), 'Test desc 1')
+        })
+        it('displays appropriate image', () => {
+            assert.equal(wrapper.find('img').prop('src'), '/test/test.jpg')
+            assert.equal(wrapper2.find('img').prop('src'), '/test/thumbnail_test.jpg')
         })
     })
 });

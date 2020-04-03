@@ -15,7 +15,7 @@ const News = () => {
         return axios.get('/api/news', {
             params: {
                 'page_size': 3,
-                'fields': 'id,title,image,day_posted,short_description'
+                'fields': 'id,title,image,thumbnail,day_posted,short_description'
             }
         }).then(
             res => { return res.data.results }
