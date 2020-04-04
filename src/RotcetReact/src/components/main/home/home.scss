@@ -1,2 +1,7 @@
 @import './shedule/shedule.scss';
-@import './highlight/highlight.scss'
+@import './highlight/highlight.scss';
+@import './news/news.scss';
+
+.news_and_info {
+    display: flex;
+}

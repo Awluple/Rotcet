@@ -9,6 +9,13 @@ from django.core.files.uploadedfile import InMemoryUploadedFile
 
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext as _
+import re
+
+def handle_test_file(path, filename):
+    if re.search('test_*', filename):
+            return f'tests/{filename}'
+    else:
+        return path
 
 def string_list_to_python(string_list):
     if string_list:

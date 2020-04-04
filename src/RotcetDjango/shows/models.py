@@ -6,15 +6,15 @@ from django.utils.translation import gettext as _
 from django.core.validators import FileExtensionValidator
 
 from scripts.validators import validate_not_before_today
-from scripts.decorators import handle_test_file
-from scripts.tools import create_thumbnail
+from scripts.tools import create_thumbnail, handle_test_file
 
-@handle_test_file
 def main_image_directory_path(instance, filename):
-    return f'movies/{instance.name}/main_image/{filename}'
+    path = f'movies/{instance.name}/{instance.relese_date}/main_image/{filename}'
+    return handle_test_file(path, filename)
 
 def thumbnail_image_directory_path(instance, filename):
-    return f'movies/{instance.name}/main_image/thumbnail_{filename}'
+    path = f'movies/{instance.name}/{instance.relese_date}/main_image/thumbnail_{filename}'
+    return handle_test_file(path, filename)
 
 class Movie(models.Model):
     name = models.CharField(max_length=400)
@@ -48,9 +48,10 @@ class Movie(models.Model):
         if self.highlight == True and highlights.count() >= 3 and not highlights.filter(pk=self.pk).exists():
             raise ValidationError(_("There are 3 highlights already, delete one to add"), code='full')
     
-@handle_test_file
+
 def image_directory_path(instance, filename):
-    return f'movies/{instance.movie.name}/images/{filename}'
+    path = f'movies/{instance.movie.name}/images/{filename}'
+    return handle_test_file(path, filename)
 
 class Image(models.Model):
     movie = models.ForeignKey(Movie, related_name='images', on_delete=models.CASCADE)
@@ -66,13 +67,15 @@ class Trailer(models.Model):
     def __str__(self):
         return self.movie.name
 
-@handle_test_file
-def marathon_image_directory_path(instance, filename):
-    return f'marathons/{instance.id}/main_image/{filename}'
 
-@handle_test_file
+def marathon_image_directory_path(instance, filename):
+    path = f'marathon/{instance.tickets_sale_date}_{instance.title}/main_image/{filename}'
+    return handle_test_file(path, filename)
+
+
 def marathon_description_directory_path(instance, filename):
-    return f'marathons/{instance.id}/description/{filename}'
+    path = f'marathons/{instance.tickets_sale_date}_{instance.title}/description/{filename}'
+    return handle_test_file(path, filename)
 
 class Marathon(models.Model):
     title = models.CharField(max_length=200)

@@ -1,0 +1,49 @@
+.home__news {
+    display: inline-flex;
+    flex-direction: column;
+    width: 65%;
+
+    a {
+        align-self: center;
+        margin-top: 50px;
+        padding: 0px 100px;
+    }
+    .news__article {
+        margin-left: 40px;
+        margin-top: 40px;
+        display: flex;
+
+        a {
+            text-decoration: none;
+        }
+        p, h4, h6 {
+            font-family: $content-font;
+            font-weight: 100;
+            color: white;
+        }
+        h4 {
+            font-weight: 400;
+            font-size: 1.8em;
+        }
+        h6 {
+            font-size: 1em;
+        }
+        p {
+            font-size: 1.3em;
+        }
+
+        .article--image {
+            width: 325px;
+            text-align: center;
+            img {
+                max-width: 325px;
+                max-height: 225px;
+                object-fit: contain;
+            }
+        }
+
+        .article--content {
+            margin-left: 50px;
+        }
+    }
+}
