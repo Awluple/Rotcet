@@ -1,0 +1,43 @@
+.informations {
+    display: flex;
+    flex-direction: column;
+    width: 25%;
+    align-items: flex-end;
+    margin-top: 10%;
+    svg {
+        width: 65px;
+        margin: 5px;
+    }
+
+}
+.informations__social_media {
+    display: flex;
+}
+
+.informations__link {
+    background: $darker-silver;
+    font-family: $content-font;
+    font-weight: 400;
+    font-size: 1.9em;
+    width: 75%;
+    border-radius: 10px;
+    border-radius: 70px 0px 0px 70px;
+    text-align: center;
+    color: black;
+    margin: 15px 0px;
+
+    &--big {
+        @include flex-center(row);
+        font-weight: 600;
+        font-size: 2.7em;
+        width: 100%;
+    }
+    &:hover{
+        background: #969696;
+    }
+    &:first-child{
+        &:hover{
+            background: $darker-silver;
+        }
+    }
+}

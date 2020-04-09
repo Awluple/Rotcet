@@ -13,7 +13,7 @@ const Informations = () => {
 
     return (
         <div className='informations'>
-            <div className='informations__social_media'>
+            <div className='informations__social_media informations__link informations__link--big'>
                 <a rel="noopener" target='blank' href="https://www.facebook.com"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                     <path d={svgs.facebook} /></svg></a>
                 <a rel="noopener" target='blank' href="https://www.twitter.com"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -23,10 +23,10 @@ const Informations = () => {
                 <a rel="noopener" target='blank' href="https://www.instagram.com"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                     <path d={svgs.instagram} /></svg></a>
             </div>
-            <Link to=''><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d={svgs.map} /></svg>Location</Link>
-            <Link to=''>About us</Link>
-            <Link to=''>FAQs</Link>
-            <Link to=''>Contact</Link>
+            <Link className='informations__link informations__link--big' to=''><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d={svgs.map} /></svg>Location</Link>
+            <Link className='informations__link' to=''>About us</Link>
+            <Link className='informations__link' to=''>FAQs</Link>
+            <Link className='informations__link' to=''>Contact</Link>
         </div>
     )
 }
