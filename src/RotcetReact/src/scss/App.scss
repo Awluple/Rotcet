@@ -43,6 +43,10 @@ a {
     font-size: 2em;
     color: white;
     border-radius: 40px;
+
+    &:hover {
+        background: $darker-red;
+    }
 }
 .shadow {
     &-big {

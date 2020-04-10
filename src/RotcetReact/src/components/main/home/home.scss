@@ -1,7 +1,9 @@
 @import './shedule/shedule.scss';
 @import './highlight/highlight.scss';
 @import './news/news.scss';
+@import './info/informations.scss';
 
 .news_and_info {
     display: flex;
+    justify-content: space-between;
 }
