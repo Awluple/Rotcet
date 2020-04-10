@@ -63,7 +63,18 @@ class MovieAPITestCase(APITestCase):
         values['name'] = 'Test_2'
         Movie.objects.create(**values)
 
+        values['name'] = 'Test_3'
+        values['tickets_sale_date'] = None
+        Movie.objects.create(**values)
     
+    def test_has_tickets_sale_date(self):
+        response = self.client.get(self.url, {'has_tickets_sale_date': False})
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+        data = response.data['results']
+        self.assertEqual(1, len(data))
+        self.assertEqual(data[0]['name'], 'Test_3')
+
     def test_default_fields(self):
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
