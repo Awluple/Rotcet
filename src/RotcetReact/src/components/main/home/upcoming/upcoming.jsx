@@ -42,9 +42,11 @@ const Upcoming = () => {
         return (
             <div ref={upcomingRef} className='upcoming'>
                 <h2 className='header header--medium'>COMING SOON</h2>
-                    {upcoming.map(movie => {
-                        return <Movie key={movie.id} movie={movie} />
-                    })}
+                    <div className='upcoming__movies'>
+                        {upcoming.map(movie => {
+                            return <Movie key={movie.id} movie={movie} />
+                        })}
+                    </div>
                 }
             </div>
         )
