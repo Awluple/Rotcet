@@ -24,7 +24,7 @@ class Movie(models.Model):
     main_trailer = models.CharField(max_length=1000, null=True, blank=True)
     thumbnail = models.FileField(upload_to=thumbnail_image_directory_path, blank=True, null=True)
     relese_date = models.DateField()
-    tickets_sale_date = models.DateField()
+    tickets_sale_date = models.DateField(null=True, blank=True)
     highlight = models.BooleanField(default=False)
     has_3D = models.BooleanField()
 
@@ -42,7 +42,8 @@ class Movie(models.Model):
         
     def clean(self, *args, **kwargs):
         old_instance = Movie.objects.filter(pk=self.pk).first()
-        validate_not_before_today(old_instance, 'tickets_sale_date', self.tickets_sale_date)
+        if self.tickets_sale_date:
+            validate_not_before_today(old_instance, 'tickets_sale_date', self.tickets_sale_date)
 
         highlights = Movie.objects.filter(highlight=True)
         if self.highlight == True and highlights.count() >= 3 and not highlights.filter(pk=self.pk).exists():

@@ -4,6 +4,7 @@ import Schedule from './shedule/shedule.jsx'
 import Highlight from './highlight/highlight.jsx'
 import News from './news/news.jsx';
 import Informations from './info/informations.jsx'
+import Upcoming from './upcoming/upcoming.jsx'
 
 const Home = () => {
     return (
@@ -14,6 +15,7 @@ const Home = () => {
                 <News />
                 <Informations />
             </div>
+            <Upcoming />
         </React.Fragment>
     )
 }

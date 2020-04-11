@@ -1,0 +1,23 @@
+.upcoming__movies {
+    @include flex-center(row);
+    align-items: stretch;
+    flex-wrap: wrap;
+}
+.upcoming__movie {
+    margin: 60px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    img {
+        width: 250px;
+        margin-bottom: 25px;
+    }
+    p {
+        max-width: 250px;
+        font-family: $content-font;
+        font-size: 1.6em;
+        font-weight: 100;
+        color: white;
+    }
+}
