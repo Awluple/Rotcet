@@ -8,10 +8,12 @@ const Upcoming = () => {
     const upcomingRef = useRef(null)
 
     const getMovies = () => {
+        const date = new Date()
         return axios.get('/api/movies', {
             params: {
-                'has_tickets_sale_date': false,
-                'fields': 'id,name,thumbnail'
+                has_tickets_sale_date: false,
+                relese_date__gt: `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`,
+                fields: 'id,name,thumbnail'
             }
         }).then(
             res => { return res.data.results }
