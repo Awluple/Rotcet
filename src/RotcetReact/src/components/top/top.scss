@@ -45,3 +45,18 @@
         width: 40px;
     }
 }
+
+.top__button {
+    background: $darker-red;
+    svg {
+        width: 50px;
+    }
+}
+
+
+
+@media only screen and (max-width: 1024px) {
+    body {
+      background-color: lightblue;
+    }
+  }
