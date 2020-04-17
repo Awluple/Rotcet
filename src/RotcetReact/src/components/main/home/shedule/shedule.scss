@@ -167,6 +167,18 @@
 }
 }
 
+.shedule_slider_info {
+    text-align: center;
+    background: $darker-red;
+    border-radius: 50px;
+    margin: 5px 0px;
+    svg {
+        fill: $darker-silver;
+        transform: rotate(90deg);
+        width: 50px;
+    }
+}
+
 @media only screen and (max-width: 1024px) {
     .shedule {
         .movie__image img {

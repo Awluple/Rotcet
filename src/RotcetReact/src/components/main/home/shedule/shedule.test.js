@@ -3,6 +3,8 @@ import { configure, mount, shallow } from 'enzyme';
 import { assert } from 'chai';
 import Adapter from 'enzyme-adapter-react-16'
 
+import 'utilities/mocks/matchMedia.mock';
+
 import { MemoryRouter } from 'react-router-dom'
 import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'

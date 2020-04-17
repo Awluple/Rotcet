@@ -14,20 +14,14 @@ const MoviesList = props => {
 
     const [smallDevice, setSmallDevice] = useState(false)
 
+    const [touchStartPosition, setTouchStartPosition] = useState(0)
+    const [touchPosition, setTouchPosition] = useState(0)
+
     const resetPosition = () => {
         setPosition(0)
     }
 
-    const changeSize = (size) => {
-        resetPosition()
-        if(size.matches) {
-            setSmallDevice(true)
-        }else {
-            setSmallDevice(false)
-        }
-    }
-
-    const over = () => {
+    const overWidth = () => {
         resetPosition()
         if (moviesRef.current.scrollWidth < window.innerWidth){
             setIsOverWidth(true)
@@ -36,29 +30,7 @@ const MoviesList = props => {
         }
     }
     
-    useEffect(() => {
-        window.addEventListener('resize', over);
-        return () => {
-            window.removeEventListener('resize', over);
-         }
-     }, [])
-
-    useEffect(() => {
-        const small = window.matchMedia("(max-width: 600px)")
-        changeSize(small)
-        small.addListener(changeSize)
-        return () => {
-            small.removeListener(changeSize)
-        }
-    }, [])
-
-    useEffect(() => {
-        const medium = window.matchMedia("(max-width: 1024px)")
-        medium.addListener(resetPosition)
-        return () => {
-            medium.removeListener(changeSize)
-        }
-    }, [])
+    // =========== FOR DESKTOP ===========
 
     useEffect(() => {
         // Flexbox needs some time to set width of a element. This function waits for it and
@@ -104,9 +76,64 @@ const MoviesList = props => {
         }
     }
 
+    // =========== FOR MOBILE ===========
+
+    const changeSize = (size) => {
+        resetPosition()
+        if(size.matches) {
+            setSmallDevice(true)
+        }else {
+            setSmallDevice(false)
+        }
+    }
+
+    useEffect(() => {
+        // resets list position and hides arrow if needed
+        window.addEventListener('resize', overWidth);
+        return () => {
+            window.removeEventListener('resize', overWidth);
+         }
+     }, [])
+
+    useEffect(() => {
+        // activates list move by touch
+        const small = window.matchMedia("(max-width: 600px)")
+        changeSize(small)
+        small.addListener(changeSize)
+        return () => {
+            small.removeListener(changeSize)
+        }
+    }, [])
+
+    useEffect(() => {
+        const medium = window.matchMedia("(max-width: 1024px)")
+        medium.addListener(resetPosition)
+        return () => {
+            medium.removeListener(changeSize)
+        }
+    }, [])
+
+    const touchStart = event => {
+        setTouchStartPosition(event.touches[0].clientX)
+    }
+
+    const touchMove = event => {
+        setTouchPosition(event.touches[0].clientX)
+    }
+
+    const touchEnd = () => {
+        if (smallDevice && props.movies.length > 1){
+            if (touchStartPosition - touchPosition >= 50 && position / 100 < props.movies.length - 1) { // next
+                setPosition(position + 100)
+            }else if (touchStartPosition - touchPosition <= -50 && position > 0){ // back
+                setPosition(position - 100)
+            }
+        }
+    }
+    
 
     return (
-        <div className='shedule__container shadow-big'>
+        <div onTouchMove={touchMove} onTouchStart={touchStart} onTouchEnd={touchEnd} className='shedule__container shadow-big'>
             { position !== 0 &&
                 <button onClick={() => {moveMovies('subtract')}}><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 3l3.057-3 11.943 12-11.943 12-3.057-3 9-9z"/></svg></button>
             }
@@ -133,11 +160,13 @@ const MoviesList = props => {
             { !isOverWidth &&
                 <button onClick={() => {moveMovies('add')}}><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 3l3.057-3 11.943 12-11.943 12-3.057-3 9-9z"/></svg></button>
             }
-            {/* { !isOverWidth && smallDevice &&
-                <svg xmlns="http://www.w3.org/2000/svg" width="50" viewBox="0 0 24 24">
-                    <path d="M11 6h-4l5-6 5 6h-4v3h-2v-3zm2 9h-2v3h-4l5 6 5-6h-4v-3zm6-4h-14v2h14v-2z"/>
-                </svg>
-            } */}
+            { props.movies !== null && smallDevice && props.movies.length > 1 &&
+                <div className='shedule_slider_info'>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M11 6h-4l5-6 5 6h-4v3h-2v-3zm2 9h-2v3h-4l5 6 5-6h-4v-3zm6-4h-14v2h14v-2z"/>
+                    </svg>
+                </div> 
+            }
         </div>
         
     )
