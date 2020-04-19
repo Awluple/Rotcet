@@ -109,6 +109,7 @@
 }
 
 .movie__all_times {
+    padding-top: 10px;
     text-align: right;
     margin-top: auto;
     a {
@@ -177,6 +178,11 @@
         transform: rotate(90deg);
         width: 50px;
     }
+    &--last {
+        svg {
+            transform: rotate(-90deg);
+        }
+    }
 }
 
 @media only screen and (max-width: 1024px) {
@@ -235,7 +241,9 @@
         }
         .movie__all_times {
             text-align: center;
-            margin-top: 10px;
+            a {
+                font-size: 1.4em;
+            }
         }
         
     }

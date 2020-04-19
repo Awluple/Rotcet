@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import LoadingGif from 'media/gifs/loading.jsx'
 
 import Movie from './movie.jsx'
+import SliderInfo from './sliderInfo.jsx'
 
 const MoviesList = props => {
 
@@ -113,8 +114,10 @@ const MoviesList = props => {
         }
     }, [])
 
+
     const touchStart = event => {
         setTouchStartPosition(event.touches[0].clientX)
+        setTouchPosition(0)
     }
 
     const touchMove = event => {
@@ -122,7 +125,7 @@ const MoviesList = props => {
     }
 
     const touchEnd = () => {
-        if (smallDevice && props.movies.length > 1){
+        if (smallDevice && props.movies.length > 1 && touchPosition !== 0){
             if (touchStartPosition - touchPosition >= 50 && position / 100 < props.movies.length - 1) { // next
                 setPosition(position + 100)
             }else if (touchStartPosition - touchPosition <= -50 && position > 0){ // back
@@ -161,11 +164,7 @@ const MoviesList = props => {
                 <button onClick={() => {moveMovies('add')}}><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 3l3.057-3 11.943 12-11.943 12-3.057-3 9-9z"/></svg></button>
             }
             { props.movies !== null && smallDevice && props.movies.length > 1 &&
-                <div className='shedule_slider_info'>
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                        <path d="M11 6h-4l5-6 5 6h-4v3h-2v-3zm2 9h-2v3h-4l5 6 5-6h-4v-3zm6-4h-14v2h14v-2z"/>
-                    </svg>
-                </div> 
+                <SliderInfo position={position} movies={props.movies.length} />
             }
         </div>
         
