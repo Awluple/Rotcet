@@ -136,12 +136,12 @@ const MoviesList = props => {
     
 
     return (
-        <div onTouchMove={touchMove} onTouchStart={touchStart} onTouchEnd={touchEnd} className='shedule__container shadow-big'>
+        <div onTouchMove={touchMove} onTouchStart={touchStart} onTouchEnd={touchEnd} className='schedule__container shadow-big'>
             { position !== 0 &&
                 <button onClick={() => {moveMovies('subtract')}}><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 3l3.057-3 11.943 12-11.943 12-3.057-3 9-9z"/></svg></button>
             }
             <ul ref={moviesRef} style={{right: position + (smallDevice ? 'vw' : 'px')}} 
-            className={'shedule__movies' + (props.movies === null || (props.movies && props.movies.length === 0) ? ' shedule__movies--no_movies' : '')}>
+            className={'schedule__movies' + (props.movies === null || (props.movies && props.movies.length === 0) ? ' schedule__movies--no_movies' : '')}>
 
                 {/* Wait for server response */}
                 {props.movies === null && 

@@ -9,7 +9,7 @@ import { MemoryRouter } from 'react-router-dom'
 import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
 
-import Shedule from './shedule.jsx'
+import Schedule from './schedule.jsx'
 import Movie from './movie.jsx'
 import MoviesList from './moviesList.jsx'
 import Screening from './screenings.jsx'
@@ -41,9 +41,9 @@ const movie2 = {
 //         newMovie['id'] = index
 //         movies.push(newMovie)
 //     }
-describe('Shedule components tests', () => {
+describe('Schedule components tests', () => {
     
-    describe('Shedule component', () => {
+    describe('Schedule component', () => {
         before(() => {
            const mock = new MockAdapter(axios)
            mock.onGet('/api/movies').reply(200, {
@@ -51,7 +51,7 @@ describe('Shedule components tests', () => {
                 movie, movie2
             ]
            })
-           global.wrapper = mount(<MemoryRouter><Shedule /></MemoryRouter>).find(Shedule)
+           global.wrapper = mount(<MemoryRouter><Schedule /></MemoryRouter>).find(Schedule)
         })
         it('gets movies', () => {
             assert.isNotNull(wrapper.state('movies'))
@@ -115,7 +115,7 @@ describe('Shedule components tests', () => {
         })
         it('renders info when no movies', () => {
             wrapper = mount(<MoviesList movies={[]} />)
-            assert.equal(wrapper.find('.shedule__movies').find('h2').text(), 'Sorry, there are no screenings for now')
+            assert.equal(wrapper.find('.schedule__movies').find('h2').text(), 'Sorry, there are no screenings for now')
         })
         it('renders movies', () => {
             wrapper = mount(<MoviesList movies={[movie, movie2]} />)

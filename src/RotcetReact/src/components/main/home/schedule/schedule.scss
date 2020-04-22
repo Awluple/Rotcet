@@ -1,4 +1,4 @@
-.shedule {
+.schedule {
     text-align: center;
     h2 {
         background: $darker-red;
@@ -12,7 +12,7 @@
     }
 }
 
-.shedule__calendar {
+.schedule__calendar {
     text-align: center;
     a {
         display: inline-block;
@@ -33,7 +33,7 @@
     }
 }
 
-.shedule__container {
+.schedule__container {
     text-align: left;
     overflow: hidden;
     position: relative;
@@ -67,7 +67,7 @@
     }
 }
 
-.shedule__movies {
+.schedule__movies {
     position: relative;
     list-style: none;
     padding: 0px;
@@ -88,7 +88,7 @@
     }
 
 }
-.shedule {
+.schedule {
     
 .movies__movie {
     display: flex;
@@ -168,7 +168,7 @@
 }
 }
 
-.shedule_slider_info {
+.schedule_slider_info {
     text-align: center;
     background: $darker-red;
     border-radius: 50px;
@@ -186,7 +186,7 @@
 }
 
 @media only screen and (max-width: 1024px) {
-    .shedule {
+    .schedule {
         .movie__image img {
             width: 200px;
         }
@@ -209,12 +209,12 @@
     }  
 }
 @media only screen and (max-width: 600px) {
-    .shedule {
+    .schedule {
         h2 {
             font-size: 2.5em;
         }
     } 
-    .shedule__container {
+    .schedule__container {
         button {
             display: none;
         }
@@ -247,7 +247,7 @@
         }
         
     }
-    .shedule__calendar {
+    .schedule__calendar {
         a {
             font-size: 1.4em;
             width: 60%;
@@ -256,7 +256,7 @@
     }
 }
 @media only screen and (max-width: 400px) {
-    .shedule {
+    .schedule {
         .movies__movie {
             h3 {
                 font-size: 1.5em;

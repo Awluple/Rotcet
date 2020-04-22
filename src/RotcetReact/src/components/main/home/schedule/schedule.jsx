@@ -4,7 +4,7 @@ import axios from 'axios'
 
 import MovieList from './moviesList.jsx'
 
-class Shedule extends Component {
+class Schedule extends Component {
 
     state = {
         movies: null
@@ -38,10 +38,10 @@ class Shedule extends Component {
 
     render() {
         return (
-            <div className='shedule'>
-            <h2>SHEDULE</h2>
+            <div className='schedule'>
+            <h2>SCHEDULE</h2>
             <MovieList movies={this.state.movies} />
-            <div className='shedule__calendar'>
+            <div className='schedule__calendar'>
                 <Link to='/calendar'>CALENDAR</Link>
             </div>
         </div>
@@ -49,4 +49,4 @@ class Shedule extends Component {
     }
 }
 
-export default Shedule
+export default Schedule

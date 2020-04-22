@@ -1,6 +1,6 @@
 import React from 'react'
 
-import Schedule from './shedule/shedule.jsx'
+import Schedule from './schedule/schedule.jsx'
 import Highlight from './highlight/highlight.jsx'
 import News from './news/news.jsx';
 import Informations from './info/informations.jsx'
