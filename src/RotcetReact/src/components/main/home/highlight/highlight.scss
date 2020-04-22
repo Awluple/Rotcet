@@ -102,7 +102,7 @@
             border-radius: 0px;
         }
         p {
-            margin: 10px 0px;
+            margin: 10px 10px;
         }
 
         &:first-child {
@@ -125,8 +125,15 @@
         }
     }
     .movie__graphic {
+        width: 100%;
+        text-align: center !important; 
+        img {
+            width: 60%;
+            max-height: 350px;
+            height: auto;
+        }
         iframe {
-            width: 100vw;
+            width: 100%;
         }
     }
 }

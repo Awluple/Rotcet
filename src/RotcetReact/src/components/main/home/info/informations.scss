@@ -13,13 +13,24 @@
 .informations__social_media {
     display: flex;
 }
-
+.informations__buttons {
+    &-big {
+        width: 100%;
+        .informations__link:first-child:hover{
+            background: $darker-silver;
+        }
+    }
+    &-small {
+        display: flex;
+        flex-direction: column;
+        width: 75%;
+    }
+}
 .informations__link {
     background: $darker-silver;
     font-family: $content-font;
     font-weight: 400;
     font-size: 1.9em;
-    width: 75%;
     border-radius: 10px;
     border-radius: 70px 0px 0px 70px;
     text-align: center;
@@ -30,14 +41,52 @@
         @include flex-center(row);
         font-weight: 600;
         font-size: 2.7em;
-        width: 100%;
     }
     &:hover{
         background: #969696;
     }
-    &:first-child{
-        &:hover{
-            background: $darker-silver;
+
+}
+
+@media only screen and (max-width: 1500px) {
+    .informations {
+        width: 23%;
+        svg {
+            width: 50px;
+        }
+    }
+    .informations__link {
+        &--big {
+            font-size: 2.3em;
+        }
+    }
+}
+@media only screen and (max-width: 1024px) {
+    .informations {
+        width: 100%;
+        align-items: center;
+        svg {
+            width: 50px;
+        }
+    }
+    .informations__buttons {
+        &-big {
+            @include flex-center(column, true)
+        }
+        &-small {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            width: 350px;
+            justify-content: center;
+        }
+    }
+    .informations__link {
+        border-radius: 70px;
+        width: 150px;
+        margin: 8px;
+        &--big {
+            width: 300px;
         }
     }
 }

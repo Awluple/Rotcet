@@ -11,12 +11,11 @@ const Home = () => {
         <React.Fragment>
             <Schedule />
             <Highlight />
-            { /*
             <div className='news_and_info'>
                 <News />
                 <Informations />
             </div>
-            <Upcoming /> */}
+            {/* <Upcoming /> */}
         </React.Fragment>
     )
 }
