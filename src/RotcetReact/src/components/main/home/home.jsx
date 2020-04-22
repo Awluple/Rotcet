@@ -10,7 +10,8 @@ const Home = () => {
     return (
         <React.Fragment>
             <Schedule />
-            {/* <Highlight />
+            <Highlight />
+            { /*
             <div className='news_and_info'>
                 <News />
                 <Informations />

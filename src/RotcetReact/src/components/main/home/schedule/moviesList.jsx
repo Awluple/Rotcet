@@ -6,6 +6,8 @@ import LoadingGif from 'media/gifs/loading.jsx'
 import Movie from './movie.jsx'
 import SliderInfo from './sliderInfo.jsx'
 
+import {useScreenWidth} from 'utilities/hooks/hooks.js'
+
 const MoviesList = props => {
 
     const moviesRef = useRef(null);
@@ -13,14 +15,14 @@ const MoviesList = props => {
     const [position, setPosition] = useState(0);
     const [isOverWidth, setIsOverWidth] = useState(false);
 
-    const [smallDevice, setSmallDevice] = useState(false)
-
     const [touchStartPosition, setTouchStartPosition] = useState(0)
     const [touchPosition, setTouchPosition] = useState(0)
 
     const resetPosition = () => {
         setPosition(0)
     }
+
+    const smallDevice = useScreenWidth(600, [resetPosition])
 
     const overWidth = () => {
         resetPosition()
@@ -79,15 +81,6 @@ const MoviesList = props => {
 
     // =========== FOR MOBILE ===========
 
-    const changeSize = (size) => {
-        resetPosition()
-        if(size.matches) {
-            setSmallDevice(true)
-        }else {
-            setSmallDevice(false)
-        }
-    }
-
     useEffect(() => {
         // resets list position and hides arrow if needed
         window.addEventListener('resize', overWidth);
@@ -97,20 +90,10 @@ const MoviesList = props => {
      }, [])
 
     useEffect(() => {
-        // activates list move by touch
-        const small = window.matchMedia("(max-width: 600px)")
-        changeSize(small)
-        small.addListener(changeSize)
-        return () => {
-            small.removeListener(changeSize)
-        }
-    }, [])
-
-    useEffect(() => {
         const medium = window.matchMedia("(max-width: 1024px)")
         medium.addListener(resetPosition)
         return () => {
-            medium.removeListener(changeSize)
+            medium.removeListener(resetPosition)
         }
     }, [])
 
