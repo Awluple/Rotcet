@@ -7,7 +7,6 @@
 
 body{
     background: #151d23;
-    font-family: $headers-font
 }
 *{
     margin: 0px;
@@ -58,6 +57,19 @@ a {
     }
     &-small {
         box-shadow: 0px 5px 4px 0px rgba(0,0,0,0.5);
+    }
+}
+
+@media only screen and (min-width: 2100px) {
+    body {
+        background: #273642;
+        display: flex;
+        justify-content: center
+    }
+    .App {
+        width: 2100px;
+        box-shadow: 0px 0px 20px 9px rgba(0,0,0,0.5);
+        background: #151d23;
     }
 }
 

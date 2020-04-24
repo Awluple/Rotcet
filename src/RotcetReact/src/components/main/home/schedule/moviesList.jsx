@@ -19,14 +19,16 @@ const MoviesList = props => {
     const [touchPosition, setTouchPosition] = useState(0)
 
     const resetPosition = () => {
+        console.log('jo!')
         setPosition(0)
     }
 
-    const smallDevice = useScreenWidth(600, [resetPosition])
+    const smallDevice = useScreenWidth(600)
 
     const overWidth = () => {
+        const width = window.innerWidth <= 2100 ? window.innerWidth : 2100
         resetPosition()
-        if (moviesRef.current.scrollWidth < window.innerWidth){
+        if (moviesRef.current.scrollWidth < width){
             setIsOverWidth(true)
         }else {
             setIsOverWidth(false)
@@ -40,12 +42,12 @@ const MoviesList = props => {
         // removes the slider arrow if element size is lesser than window size
         let iterations = 0;
         let waitForFlexbox
-
+        const width = window.innerWidth <= 2100 ? window.innerWidth : 2100
         const checkWidth = () => {
             iterations++
             if (!(moviesRef.current.scrollWidth === 50) && isOverWidth !== true){
                 clearInterval(waitForFlexbox)
-                setIsOverWidth(moviesRef.current.scrollWidth < window.innerWidth)
+                setIsOverWidth(moviesRef.current.scrollWidth < width)
                 return
             }
             if (iterations === 5){
@@ -61,20 +63,21 @@ const MoviesList = props => {
       },[props.movies]);
 
     const moveMovies = (operator) => {
+        const width = window.innerWidth <= 2100 ? window.innerWidth : 2100
         if(operator === 'add') {
-            if((position + 800) < moviesRef.current.scrollWidth - window.innerWidth){
-                setPosition(position + pxToScroll)
+            if((position + 800) < moviesRef.current.scrollWidth - width){
+                setPosition(position + 500)
             }else{
                 // don't let the slider go further when no movies remain
                 setIsOverWidth(true)
-                setPosition(moviesRef.current.scrollWidth - window.innerWidth)
+                setPosition(moviesRef.current.scrollWidth - width)
             }
         }else {
             setIsOverWidth(false)
             if(position < 800){
                 setPosition(0)
             }else{
-                setPosition(position - pxToScroll)
+                setPosition(position - 500)
             }
         }
     }

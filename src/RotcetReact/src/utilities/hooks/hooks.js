@@ -1,14 +1,9 @@
-import {useState, useEffect} from 'react'
+import {useState, useEffect, useRef} from 'react'
 
-export function useScreenWidth(width, functionsToCallOnResize) {
+export function useScreenWidth(width) {
     const [smallDevice, setSmallDevice] = useState(false);
-  
+
     const changeSize = (size) => {
-        if (functionsToCallOnResize) {
-            functionsToCallOnResize.map(func => {
-                func()
-            })
-        }
         if(size.matches) {
             setSmallDevice(true)
         }else {
@@ -24,6 +19,5 @@ export function useScreenWidth(width, functionsToCallOnResize) {
             small.removeListener(changeSize)
         }
     });
-  
     return smallDevice;
   }
