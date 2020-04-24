@@ -74,11 +74,9 @@
             @include flex-center(column, true)
         }
         &-small {
-            display: flex;
-            flex-direction: row;
+            @include flex-center(row);
             flex-wrap: wrap;
             width: 350px;
-            justify-content: center;
         }
     }
     .informations__link {
@@ -87,6 +85,30 @@
         margin: 8px;
         &--big {
             width: 300px;
+        }
+    }
+}
+@media only screen and (max-width: 350px) {
+    .informations {
+        svg {
+            width: 45px;
+        }
+    }
+    .informations__buttons {
+        &-big {
+            @include flex-center(column, true)
+        }
+        &-small {
+            width: 250px;
+        }
+    }
+    .informations__link {   
+        font-size: 1.6em;
+        margin: 7px;
+        width: 110px;
+        &--big {
+            font-size: 2.1em;
+            width: 250px;
         }
     }
 }

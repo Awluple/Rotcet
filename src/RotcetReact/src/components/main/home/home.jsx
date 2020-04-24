@@ -15,7 +15,7 @@ const Home = () => {
                 <News />
                 <Informations />
             </div>
-            {/* <Upcoming /> */}
+            <Upcoming />
         </React.Fragment>
     )
 }

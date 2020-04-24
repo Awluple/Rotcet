@@ -26,3 +26,14 @@
         }
     }
 }
+
+@media only screen and (max-width: 1024px) {
+    .footer {
+        flex-direction: column;
+        padding-bottom: 25px;
+        ul {
+            height: auto;
+            align-items: center;
+        }
+    }
+}
