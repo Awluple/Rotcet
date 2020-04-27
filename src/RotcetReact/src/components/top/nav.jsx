@@ -6,8 +6,8 @@ const Nav = () => {
         <div className='nav shadow-medium'>
             <ul>
                 <li><Link to="/">Home</Link></li>
-                <li><Link to="/programme">Programme</Link></li>
-                <li><Link to="/membershio">Membership</Link></li>
+                <li><Link to="/calendar">Programme</Link></li>
+                <li><Link to="/membership">Membership</Link></li>
                 <li><Link to="/news">News</Link></li>
             </ul>
             <div className='user-menu'>
