@@ -19,7 +19,6 @@ const MoviesList = props => {
     const [touchPosition, setTouchPosition] = useState(0)
 
     const resetPosition = () => {
-        console.log('jo!')
         setPosition(0)
     }
 
