@@ -1,0 +1,6 @@
+Object.defineProperty(window, 'matchMedia', {
+  value: () => ({
+    addListener: function(){return},
+    removeListener: function(){return},
+  }),
+});

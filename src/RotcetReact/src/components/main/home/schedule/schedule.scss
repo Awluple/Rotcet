@@ -1,4 +1,4 @@
-.shedule {
+.schedule {
     text-align: center;
     h2 {
         background: $darker-red;
@@ -12,7 +12,7 @@
     }
 }
 
-.shedule__calendar {
+.schedule__calendar {
     text-align: center;
     a {
         display: inline-block;
@@ -33,7 +33,7 @@
     }
 }
 
-.shedule__container {
+.schedule__container {
     text-align: left;
     overflow: hidden;
     position: relative;
@@ -49,7 +49,7 @@
         position: absolute;
         top: calc(50% - 50px);
         background: $darker-red;
-        opacity: 0.5;
+        opacity: 0.6;
         z-index: 1001;
 
         &:first-child {
@@ -67,7 +67,7 @@
     }
 }
 
-.shedule__movies {
+.schedule__movies {
     position: relative;
     list-style: none;
     padding: 0px;
@@ -88,7 +88,7 @@
     }
 
 }
-.shedule {
+.schedule {
     
 .movies__movie {
     display: flex;
@@ -109,6 +109,7 @@
 }
 
 .movie__all_times {
+    padding-top: 10px;
     text-align: right;
     margin-top: auto;
     a {
@@ -156,6 +157,7 @@
         justify-content: space-around;
     }
     li {
+        margin: 5px 0px;
         font-family: $content-font;
         font-weight: 100;
         font-size: 1.3em;
@@ -164,4 +166,121 @@
         border-radius: 0.5em;
     }
 }
+}
+
+.schedule_slider_info {
+    text-align: center;
+    background: $darker-red;
+    border-radius: 50px;
+    margin: 5px 0px;
+    svg {
+        fill: $darker-silver;
+        transform: rotate(90deg);
+        width: 50px;
+    }
+    &--last {
+        svg {
+            transform: rotate(-90deg);
+        }
+    }
+}
+
+@media only screen and (max-width: 1024px) {
+    .schedule {
+        .movie__image img {
+            width: 200px;
+        }
+        .movies__movie {
+            margin: 20px 0px 20px 20px;
+            padding-right: 15px;
+            h3 {
+                font-size: 2em;
+            }
+        }
+        .movie__screenings {
+            margin-left: 5px;
+        }
+        .movie__all_times {
+            margin-right: 10px;
+            a {
+                font-size: 1.6em;
+            }
+        }
+    }
+    .schedule__calendar {
+        a {
+            font-size: 1.6em;
+            width: 40%;
+            padding: 10px 0px;
+        }
+    }
+}
+@media only screen and (max-width: 600px) {
+    .schedule {
+        h2 {
+            font-size: 2.5em;
+        }
+    } 
+    .schedule__container {
+        button {
+            display: none;
+        }
+        .movie__image {
+            display: flex;
+            align-items: center;
+            img {
+                width: 40vw;
+            }
+        } 
+        .movies__movie {
+            margin: 0px;
+            border: 0px;
+            padding: 10px;
+            box-sizing: border-box;
+            width: 100vw;
+            h3 {
+                text-align: center;
+                font-size: 2em;
+            }
+        }
+        .movie__details {
+            justify-content: space-around;
+        }
+        .movie__all_times {
+            text-align: center;
+            a {
+                font-size: 1.4em;
+            }
+        }
+        
+    }
+    .schedule__calendar {
+        a {
+            font-size: 1.4em;
+            width: 60%;
+            padding: 10px 0px;
+        }
+    }
+}
+@media only screen and (max-width: 400px) {
+    .schedule {
+        .movies__movie {
+            h3 {
+                font-size: 1.5em;
+            }
+        }
+        .screenings__day {
+            h4 {
+                font-size: 1.2em;
+            }
+            ul {
+                width: 130px;
+            }
+            li {
+                margin: 3px 0px;
+                font-size: 1.1em;
+                width: 50px;
+            }
+        }
+    }
 }

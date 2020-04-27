@@ -1,4 +1,4 @@
-@import './shedule/shedule.scss';
+@import './schedule/schedule.scss';
 @import './highlight/highlight.scss';
 @import './news/news.scss';
 @import './info/informations.scss';
@@ -8,4 +8,9 @@
     display: flex;
     justify-content: space-between;
     margin-bottom: 75px;
+}
+@media only screen and (max-width: 1024px) {
+    .news_and_info {
+        flex-direction: column;
+    }
 }

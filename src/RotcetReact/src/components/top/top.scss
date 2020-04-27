@@ -45,3 +45,80 @@
         width: 40px;
     }
 }
+
+.top__button {
+    background: $main-red;
+    padding: 25px;
+    border-bottom-right-radius: 70px;
+    width: 10%;
+    text-align: center;
+    svg {
+        width: 50px;
+        fill: $silver;
+    }
+
+    &--right {
+        border-bottom-right-radius: 0px;
+        border-bottom-left-radius: 70px;
+    }
+}
+
+
+
+@media only screen and (max-width: 1024px) {
+    .top {
+        align-items: flex-start;
+    }
+}
+
+@media only screen and (max-width: 720px) {
+    .top__button {
+        border-bottom-right-radius: 50px;
+        svg {
+            width: 40px;
+            fill: $silver;
+        }
+        &--right {
+            border-bottom-right-radius: 0px;
+            border-bottom-left-radius: 50px;
+        }
+    }
+}
+
+@media only screen and (max-width: 400px) {
+    .top {
+        img {
+            width: 150px;
+        }
+    }
+    .top__button {
+        border-bottom-right-radius: 40px;
+        svg {
+            width: 35px;
+            fill: $silver;
+        }
+        &--right {
+            border-bottom-right-radius: 0px;
+            border-bottom-left-radius: 40px;
+        }
+    }
+}
+@media only screen and (max-width: 320px) {
+    .top {
+        img {
+            width: 110px;
+        }
+    }
+    .top__button {
+        padding: 15px;
+        border-bottom-right-radius: 30px;
+        svg {
+            width: 25px;
+            fill: $silver;
+        }
+        &--right {
+            border-bottom-right-radius: 0px;
+            border-bottom-left-radius: 30px;
+        }
+    }
+}

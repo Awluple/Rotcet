@@ -21,3 +21,15 @@
         color: white;
     }
 }
+
+@media only screen and (max-width: 1024px) {
+    .upcoming__movie {
+        img {
+            width: 170px;
+            margin-bottom: 20px;
+        }
+    }
+    p {
+        font-size: 1.4em;
+    }
+}

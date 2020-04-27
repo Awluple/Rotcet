@@ -27,31 +27,13 @@
     }
 }
 
-
-
-
-// .footer {
-//     padding: 50px 100px;
-//     background: #2C1111;
-//     ul {
-//         @include flex-center(column);
-//         padding: 0px;
-//         height: 160px;
-//         flex-wrap: wrap;
-//         list-style-type: none;
-//     }
-//     img {
-//         height: 110px;
-//     }
-//     a {
-//         color: white;
-//         font-family: $content-font;
-//         font-size: 1.6em;
-//         font-weight: 100;
-//         text-decoration: none;
-
-//         &:hover{
-//             text-decoration: underline;
-//         }
-//     }
-// }
+@media only screen and (max-width: 1024px) {
+    .footer {
+        flex-direction: column;
+        padding-bottom: 25px;
+        ul {
+            height: auto;
+            align-items: center;
+        }
+    }
+}

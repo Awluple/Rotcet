@@ -76,3 +76,64 @@
         margin-left: 0%;
     }
 }
+@media only screen and (max-width: 1200px) {
+    .movie__graphic {
+        iframe {
+            width: 550px;
+            height: 309px;
+        }
+        .highlight_movie--no_trailer img {
+            height: 309px;
+        }
+    }
+}
+
+@media only screen and (max-width: 1024px) {
+    .highlight_movie {
+        flex-direction: column;
+        align-items: center;
+
+        h3 {
+            text-align: center;
+            font-size: 2.4em;
+        }
+
+        iframe {
+            border-radius: 0px;
+        }
+        p {
+            margin: 10px 10px;
+        }
+
+        &:first-child {
+            margin-top: 30px;
+        }
+    }
+    .highlight {
+        .movie__description {
+            margin: 0px !important;
+        }
+        .movie__graphic {
+            margin: 0px;
+        }
+    }
+}
+@media only screen and (max-width: 600px) {
+    .highlight_movie {
+        h3 {
+            font-size: 2.2em;
+        }
+    }
+    .movie__graphic {
+        width: 100%;
+        text-align: center !important; 
+        img {
+            width: 60%;
+            max-height: 350px;
+            height: auto;
+        }
+        iframe {
+            width: 100%;
+        }
+    }
+}
