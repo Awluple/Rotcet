@@ -7,12 +7,6 @@ import Calendar from './calendar/calendar.jsx'
 const Main = () => {
     return (
         <div className='main'>
-                {/* <Route exact path="/">
-                    <Home />
-                </Route>
-                <Route exact path="/calendar">
-                    <Calendar />
-                </Route>        */}
             <Switch>
                 <Route path='/calendar' component={Calendar} />
                 <Route exact path='/' component={Home} />

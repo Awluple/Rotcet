@@ -18,5 +18,5 @@ class MarathonFilter(filters.FilterSet):
 
     class Meta:
         model = Marathon
-        exclude = ['image', 'description_html']
+        exclude = ['main_image', 'thumbnail', 'description_html']
         fields = '__all__'

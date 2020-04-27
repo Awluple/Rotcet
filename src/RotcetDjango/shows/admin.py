@@ -18,6 +18,7 @@ class MovieAdmin(admin.ModelAdmin):
 
 @admin.register(Marathon)
 class MarathonAdmin(admin.ModelAdmin):
+    readonly_fields=('thumbnail',)
     list_display = ('__str__', 'tickets_sale_date')
     search_fields = ('title', 'tickets_sale_date')
 
