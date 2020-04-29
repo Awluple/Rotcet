@@ -55,10 +55,5 @@ describe('Utilities screenings scripts tests', () => {
             }
             assert.deepEqual(returned, expected)
         })
-
-        it('adds 0 for minutes below 10', () => {
-            const returned = organizeScreenings([date1])
-            assert.equal(returned['20.7.2200'][0], '9:09')
-        })
     })
 });

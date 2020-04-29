@@ -1,16 +1,38 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import {Link} from 'react-router-dom'
+
+import {addZeroForBelowTen} from 'utilities/tools/tools.js'
 
 const Screenings = props => {
     return (
         <div className='calendar__screenings'>
-            
+            <h2>Shedule for {props.date}</h2>
+            {
+                props.screenings.map(screening => {
+                    const date = new Date(screening.date)
+                    const hour = addZeroForBelowTen(date.getHours())
+                    const minute = addZeroForBelowTen(date.getMinutes())
+                    return (
+                        <div key={screening.id} className='calendar__screening'>
+                            <h4>{`${hour}:${minute}`}</h4>
+                            {screening.image ? 
+                                <Link to=''><img src={screening.image} alt="show image"/></Link>
+                            :
+                                <Link to=''><img src="/static/images/logo.png" alt="logo"/></Link>
+                            }
+                            <Link to=''><h3>{screening.name}</h3></Link>
+                        </div>
+                    )
+                })
+            }
         </div>
     )
 }
 
 Screenings.propTypes = {
-    show: PropTypes.object.isRequired
+    screenings: PropTypes.array.isRequired,
+    date: PropTypes.string.isRequired
 }
 
 export default Screenings
