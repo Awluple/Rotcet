@@ -7,9 +7,8 @@ import {addZeroForBelowTen} from 'utilities/tools/tools.js'
 const Screenings = props => {
     return (
         <div className='calendar__screenings'>
-            <h2>Shedule for {props.date}</h2>
             {
-                props.screenings.map(screening => {
+                props.screenings.reverse().map(screening => {
                     const date = new Date(screening.date)
                     const hour = addZeroForBelowTen(date.getHours())
                     const minute = addZeroForBelowTen(date.getMinutes())
@@ -17,11 +16,11 @@ const Screenings = props => {
                         <div key={screening.id} className='calendar__screening'>
                             <h4>{`${hour}:${minute}`}</h4>
                             {screening.image ? 
-                                <Link to=''><img src={screening.image} alt="show image"/></Link>
+                                <Link className='calendar__screening__img' to=''><img src={screening.image} alt="show image"/></Link>
                             :
-                                <Link to=''><img src="/static/images/logo.png" alt="logo"/></Link>
+                                <Link className='calendar__screening__img' to=''><img src="/static/images/logo.png" alt="logo"/></Link>
                             }
-                            <Link to=''><h3>{screening.name}</h3></Link>
+                            <Link className='calendar__screening__name' to=''><h3>{screening.name}</h3></Link>
                         </div>
                     )
                 })
@@ -32,7 +31,6 @@ const Screenings = props => {
 
 Screenings.propTypes = {
     screenings: PropTypes.array.isRequired,
-    date: PropTypes.string.isRequired
 }
 
 export default Screenings

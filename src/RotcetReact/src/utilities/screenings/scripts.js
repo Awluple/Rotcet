@@ -33,8 +33,8 @@ export const organizeScreenings = (screeningsArray) => {
             return
         }
 
-        const dd = screening.getDate()
-        const mm = screening.getMonth() + 1
+        const dd = addZeroForBelowTen(screening.getDate())
+        const mm = addZeroForBelowTen(screening.getMonth() + 1)
         const yyyy = screening.getFullYear()
         
 

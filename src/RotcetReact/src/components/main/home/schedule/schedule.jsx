@@ -41,7 +41,7 @@ class Schedule extends Component {
     render() {
         return (
             <div className='schedule'>
-            <h2>SCHEDULE</h2>
+            <h2 className='main_section_header'>SCHEDULE</h2>
             <MovieList movies={this.state.movies} />
             <div className='schedule__calendar'>
                 <Link to='/calendar'>CALENDAR</Link>

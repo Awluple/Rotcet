@@ -42,13 +42,15 @@ const Calendar = () => {
 
     return (
         <div className='calendar'>
-            <Dates getScreenings={getScreenings} />
+            <h1 className='main_section_header'>Select date</h1>
+            <Dates selectedDate={selectedDate} getScreenings={getScreenings} />
+            <h2>Schedule for {selectedDate}</h2>
             {screenings && screenings.length !== 0 ?
-                <Screenings date={selectedDate} screenings={screenings} />
+                <Screenings screenings={screenings} />
                 : screenings === null ?
                 <LoadingGif />
                 :
-                <h3>There are no scheduled shows on the selected day</h3>
+                <h3 className='no_screenings'>There are no scheduled shows on the selected day</h3>
             }
         </div>
     )
