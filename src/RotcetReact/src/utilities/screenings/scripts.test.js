@@ -36,22 +36,22 @@ describe('Utilities screenings scripts tests', () => {
 
         it('creates dates list', () => {
             const returned = organizeScreenings([date1, date2, date3, date4])
-            const expectedDays = ['20.7.2200', '25.7.2200']
+            const expectedDays = ['20.07.2200', '25.07.2200']
             assert.deepEqual(returned['days'], expectedDays)
         })
 
         it('sorts ascending', () => {
             const returned = organizeScreenings([date3, date1])
-            const expectedDays = ['20.7.2200', '25.7.2200']
+            const expectedDays = ['20.07.2200', '25.07.2200']
             assert.deepEqual(returned['days'], expectedDays)
         })
 
         it('organize screenings', () => {
             const returned = organizeScreenings([date1, date2, date3, date4])
             const expected = {
-                days: ['20.7.2200', '25.7.2200'],
-                '20.7.2200': ['9:09', '11:11'],
-                '25.7.2200': ['11:11']
+                days: ['20.07.2200', '25.07.2200'],
+                '20.07.2200': ['9:09', '11:11'],
+                '25.07.2200': ['11:11']
             }
             assert.deepEqual(returned, expected)
         })

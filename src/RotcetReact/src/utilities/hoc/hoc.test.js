@@ -23,14 +23,14 @@ describe('HOCs tests', () => {
             global.wrapper = mount(<Slider close={function(){}} ><TestNode/></Slider>)
             global.wrapper2 = mount(<Slider from={'right'} close={fake} ><TestNode/></Slider>)
         })
-        it('Has appropriate position class name', () => {
+        it('has appropriate position class name', () => {
             assert.isTrue(wrapper.find('.slider--left').exists())
             assert.isTrue(wrapper2.find('.slider--right').exists())
         });
-        it('Renders children node', () => {
+        it('renders children node', () => {
             assert.lengthOf(wrapper.find(TestNode), 1)
         });
-        it('Calls close function on X svg click', function(done) {
+        it('calls close function on X svg click', function(done) {
             wrapper2.find('svg').simulate('click')
             setTimeout(function () {
                 assert.propertyVal(wrapper2.find('div').get(0).props.style, 'left', '100%')
