@@ -70,7 +70,11 @@
         height: 250px;
         @include flex-center(row);
         h2 {
-            background: none;
+            color: $silver;
+            font-family: $headers-font;
+            font-weight: 100;
+            font-size: 3em;
+            text-align: center;
         }
         .loading_gif {
             width: 150px;
@@ -197,6 +201,9 @@
             }
         }
     }
+    .schedule__movies h2 {
+        font-size: 2em;
+    }
     .schedule__calendar {
         a {
             font-size: 1.6em;
@@ -206,6 +213,9 @@
     }
 }
 @media only screen and (max-width: 600px) {
+    .schedule__movies h2 {
+        font-size: 1.7em;
+    }
     .schedule__container {
         button {
             display: none;

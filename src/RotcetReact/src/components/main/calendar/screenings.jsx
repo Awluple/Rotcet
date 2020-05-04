@@ -8,7 +8,7 @@ const Screenings = props => {
     return (
         <div className='calendar__screenings'>
             {
-                props.screenings.reverse().map(screening => {
+                props.screenings.map(screening => {
                     const date = new Date(screening.date)
                     const hour = addZeroForBelowTen(date.getHours())
                     const minute = addZeroForBelowTen(date.getMinutes())

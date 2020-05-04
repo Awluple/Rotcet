@@ -69,7 +69,8 @@
         font-family: $content-font;
         font-size: 1.9em;
         font-weight: 600;
-        background: $silver;
+        color: white;
+        background: $main-red;
         border-top-left-radius: 50px;
         border-top-right-radius: 50px;
     }
@@ -88,5 +89,60 @@
     img {
         width: 300px;
         max-height: 400px;
+    }
+}
+@media only screen and (max-width: 1024px) {
+    .calendar__dates li {
+        margin: 7px;
+        height: 30px;
+        font-size: 1.1em;
+    }
+    .calendar__screening {
+        margin: 40px;
+    }
+    .calendar__screening__img {
+        img {
+            width: 260px;
+            max-height: 360px;
+        }
+    }
+}
+@media only screen and (max-width: 850px) {
+    .calendar{
+        h2 {
+            font-size: 1.7em;
+        }
+        .no_screenings {
+            font-size: 2em;
+        }
+    }
+    .calendar__dates li {
+        height: 26px;
+        font-size: 1em;
+    }
+}
+@media only screen and (max-width: 750px) {
+    .calendar__dates li {
+        width: 35%;
+    }
+}
+@media only screen and (max-width: 600px) {
+    .calendar {
+        h2 {
+            font-size: 1.4em;
+            margin: 30px 5%; 
+        }
+        svg {
+            width: 140px;
+        }
+    }
+    .calendar__screening {
+        margin: 30px;
+    }
+    .calendar__screening__img {
+        img {
+            width: 235px;
+            max-height: 320px;
+        }
     }
 }

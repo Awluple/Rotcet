@@ -17,7 +17,8 @@ const Calendar = () => {
         return axios.get('/api/screenings', {
             params: {
                 fields: 'id,name,show_id,show_type,image,date',
-                date: date
+                date: date,
+                ordering: 'date'
             }
         }).then(
             res => { return res.data.results }
