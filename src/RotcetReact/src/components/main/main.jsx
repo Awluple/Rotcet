@@ -1,17 +1,20 @@
 import React from 'react'
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 
 import Home from './home/home.jsx'
+import Calendar from './calendar/calendar.jsx'
 
 const Main = () => {
     return (
-        <Router>
         <div className='main'>
-            <Route exact path="/">
-                <Home />
-            </Route>          
+            <Switch>
+                <Route path='/calendar' component={Calendar} />
+                <Route exact path='/' component={Home} />
+                <Route >
+                    <h1>No mach</h1>
+                </Route>
+            </Switch>
         </div>
-        </Router>
     )
 }
 

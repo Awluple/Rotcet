@@ -1,3 +1,5 @@
+import {addZeroForBelowTen} from '../tools/tools.js'
+
 export const toDateObjects = (screenings) => {
     /* Converts api's dates as string ("2020-02-23T12:09:43Z") to JS Date object */
     screenings = screenings.map(screening => {
@@ -20,7 +22,7 @@ export const checkIfOutdated = date => {
 }
 
 export const organizeScreenings = (screeningsArray) => {
-    /* Changes array of dates to organised object */
+    /* Changes array of dates to organised objects */
     screeningsArray = screeningsArray.sort((date1, date2) => {return date1.getTime() - date2.getTime()}) // set dates in ascending order
     let organized = {
         days: []
@@ -31,17 +33,15 @@ export const organizeScreenings = (screeningsArray) => {
             return
         }
 
-        const dd = screening.getDate()
-        const mm = screening.getMonth() + 1
+        const dd = addZeroForBelowTen(screening.getDate())
+        const mm = addZeroForBelowTen(screening.getMonth() + 1)
         const yyyy = screening.getFullYear()
         
 
         organized['days'].push(`${dd}.${mm}.${yyyy}`) // list of all dates
 
         const hour = screening.getHours()
-        let minute = screening.getMinutes()
-
-        minute = minute < 10 ? `0${minute}` : minute // if minute is less then 0, add 0 before (9 => 09)
+        const minute = addZeroForBelowTen(screening.getMinutes())
         
         if (`${dd}.${mm}.${yyyy}` in organized){
             organized[`${dd}.${mm}.${yyyy}`].push(`${hour}:${minute}`)

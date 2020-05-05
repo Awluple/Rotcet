@@ -23,6 +23,8 @@ class ScreeningSerializer(DynamicFieldsModelSerializer):
     type = serializers.SerializerMethodField()
     room = serializers.SerializerMethodField()
     url = serializers.SerializerMethodField()
+    image = serializers.SerializerMethodField()
+    show_id = serializers.SerializerMethodField()
 
     class Meta:
         model = Screening
@@ -41,6 +43,21 @@ class ScreeningSerializer(DynamicFieldsModelSerializer):
 
     def get_room(self, obj):
         return obj.room.number
+
+    def get_image(self, obj):
+        if obj.show.type == 'MV':
+            return self.context['request'].build_absolute_uri(obj.show.movie.thumbnail.url)
+        elif obj.show.type == 'MR':
+            if obj.show.marathon.thumbnail:
+                return self.context['request'].build_absolute_uri(obj.show.marathon.thumbnail.url)
+            else:
+                return None
+    
+    def get_show_id(self, obj):
+        if obj.show.type == 'MV':
+            return obj.show.movie.pk
+        elif obj.show.type == 'MR':
+            return obj.show.marathon.pk
 
 class RoomSerializer(serializers.ModelSerializer):
 

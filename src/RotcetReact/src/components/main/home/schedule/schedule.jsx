@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { Link } from "react-router-dom"
 import axios from 'axios'
 
+import {addZeroForBelowTen} from 'utilities/tools/tools.js'
+
 import MovieList from './moviesList.jsx'
 
 class Schedule extends Component {
@@ -22,8 +24,8 @@ class Schedule extends Component {
     componentDidMount() {
         let time = new Date()
         const year = time.getUTCFullYear()
-        const month = time.getUTCMonth() + 1
-        const day = time.getUTCDate()
+        const month = addZeroForBelowTen(time.getUTCMonth() + 1)
+        const day = addZeroForBelowTen(time.getUTCDate())
         const query = {
             'fields': 'id,name,has_3D,screenings,thumbnail',
             'screenings_min': `${year}-${month}-${day}`,
@@ -39,7 +41,7 @@ class Schedule extends Component {
     render() {
         return (
             <div className='schedule'>
-            <h2>SCHEDULE</h2>
+            <h2 className='main_section_header'>SCHEDULE</h2>
             <MovieList movies={this.state.movies} />
             <div className='schedule__calendar'>
                 <Link to='/calendar'>CALENDAR</Link>

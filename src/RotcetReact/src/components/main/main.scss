@@ -1,1 +1,23 @@
-@import './home/home.scss'
+@import './home/home.scss';
+@import './calendar/calendar.scss';
+
+.main_section_header {
+    background: $darker-red;
+    color: $silver;
+    font-family: $headers-font;
+    font-weight: 100;
+    font-size: 3em;
+    text-align: center;
+    border-top-left-radius: 2em;
+    border-top-right-radius: 2em;
+}
+@media only screen and (max-width: 600px) {
+.main_section_header {
+    font-size: 2.5em;
+}
+}
+@media only screen and (max-width: 400px) {
+    .main_section_header {
+        font-size: 2.2em;
+    }
+}

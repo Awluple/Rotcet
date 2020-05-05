@@ -148,13 +148,13 @@ class MarathonAPITestCase(APITestCase):
         self.assertListEqual(['id', 'url', 'title'], list(keys))
 
     def test_dynamic_fields(self):
-        response = self.client.get(self.url, {'fields':'id,title,tickets_sale_date,image'})
+        response = self.client.get(self.url, {'fields':'id,title,tickets_sale_date,main_image'})
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
         data = response.data['results']
         keys = data[0].keys()
         self.assertEqual(4, len(keys))
-        self.assertListEqual(['id', 'title', 'image', 'tickets_sale_date'], list(keys))
+        self.assertListEqual(['id', 'title', 'main_image', 'tickets_sale_date'], list(keys))
 
     def test_ordering(self):
         response = self.client.get(self.url, {'fields':'id,tickets_sale_date'})
