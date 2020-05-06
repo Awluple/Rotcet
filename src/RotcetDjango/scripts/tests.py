@@ -35,7 +35,7 @@ class HandleTestFileTestCase(TestCase):
         self.assertEqual(new_path, path)
     
     def test_no_redirection(self):
-        path = '/test/path/test_image.jpg'
+        path = '/test/path/testing_image.jpg'
         new_path = handle_test_file(path, 'test_image.jpg')
         self.assertEqual(new_path, 'tests/test_image.jpg')
 
@@ -104,7 +104,7 @@ class NotBeforeTodayValidatorTestCase(TestCase):
 class ThumbnailsTestCase(TestCase):
 
     def setUp(self):
-        self.image = Path(__file__).parent.joinpath('tests_materials/test_img.jpg')
+        self.image = Path(__file__).parent.joinpath('tests_materials/testing_img.jpg')
     
     def test_thumbnail_create(self):
         tumb = Image.open(create_thumbnail(self.image))

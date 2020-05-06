@@ -34,9 +34,8 @@ class Movie(models.Model):
     def save(self, *args, **kwargs):
         old_instance = Movie.objects.filter(pk=self.pk).first()
 
-        if not re.search('test_*', self.main_image.name):
-            if self.thumbnail is not None or old_instance.main_image != self.main_image:
-                self.thumbnail = create_thumbnail(self.main_image, 450, 80)
+        if self.thumbnail is not None or old_instance.main_image != self.main_image:
+            self.thumbnail = create_thumbnail(self.main_image, 450, 80)
 
         super().save(*args, **kwargs)
         
@@ -97,9 +96,8 @@ class Marathon(models.Model):
     def save(self, *args, **kwargs):
         old_instance = Marathon.objects.filter(pk=self.pk).first()
 
-        if self.main_image and not re.search('test_*', self.main_image.name):
-            if self.thumbnail is not None or old_instance.main_image != self.main_image:
-                self.thumbnail = create_thumbnail(self.main_image, 450, 80)
+        if self.main_image and (self.thumbnail is not None or old_instance.main_image != self.main_image):
+            self.thumbnail = create_thumbnail(self.main_image, 450, 80)
 
         if self.main_image.name == '' and self.thumbnail.name != '':
             self.thumbnail.delete(save=True)

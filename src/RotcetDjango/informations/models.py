@@ -23,7 +23,7 @@ class News(models.Model):
 
     def save(self, *args, **kwargs):
         old_instance = News.objects.filter(pk=self.pk).first()
-        if not re.search('test_*', self.image.name) and not re.search('/assets/*', str(self.image)):
+        if not re.search('/assets/+', str(self.image)):
             if self.thumbnail is not None or old_instance.image != self.image:
                 self.thumbnail = create_thumbnail(self.image, 325, 70)
 

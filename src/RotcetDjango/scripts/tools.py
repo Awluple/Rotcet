@@ -1,6 +1,7 @@
 import os
 import sys
 import shutil
+import re
 from io import BytesIO
 from pathlib import Path
 
@@ -12,7 +13,7 @@ from django.utils.translation import gettext as _
 import re
 
 def handle_test_file(path, filename):
-    if re.search('test_*', filename):
+    if re.match('test_+', filename):
             return f'tests/{filename}'
     else:
         return path
@@ -38,6 +39,11 @@ def cleanup_tests_media():
 
 def create_thumbnail(image, max_size=450, quality=80):
 
+    basename = os.path.basename(image.name)
+    name, extension = os.path.splitext(basename)
+    if re.match('test_+', image.name): # ignore fake testing images from django's SimpleUploadedFile
+        return InMemoryUploadedFile(image,'ImageField', basename, f'image/{extension}', sys.getsizeof(image), None)
+
     original_image = PILImage.open(image)
     # scale image
     width, height = original_image.size
@@ -50,8 +56,6 @@ def create_thumbnail(image, max_size=450, quality=80):
         width = width * reduce
         height = height * reduce
     
-    basename = os.path.basename(image.name)
-    name, extension = os.path.splitext(basename)
     extension = extension.replace(".","")
     extension = extension if extension != 'jpg' else 'JPEG'
 
