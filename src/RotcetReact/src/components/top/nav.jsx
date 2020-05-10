@@ -1,14 +1,14 @@
 import React from 'react'
-import {Link} from 'react-router-dom'
+import {NavLink} from 'react-router-dom'
 
 const Nav = () => {
     return (
         <div className='nav shadow-medium'>
             <ul>
-                <li><Link to="/">Home</Link></li>
-                <li><Link to="/calendar">Programme</Link></li>
-                <li><Link to="/membership">Membership</Link></li>
-                <li><Link to="/news">News</Link></li>
+                <li><NavLink activeClassName="selected" exact to="/">Home</NavLink></li>
+                <li><NavLink activeClassName="selected" to="/calendar">Programme</NavLink></li>
+                <li><NavLink activeClassName="selected" to="/membership">Membership</NavLink></li>
+                <li><NavLink activeClassName="selected" to="/news">News</NavLink></li>
             </ul>
             <div className='user-menu'>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">

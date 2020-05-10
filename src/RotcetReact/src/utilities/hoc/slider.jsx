@@ -1,9 +1,11 @@
 import React, {useState, useEffect} from 'react'
 import PropTypes from 'prop-types'
+import { useHistory } from "react-router-dom";
 
 const Slider = props => {
 
     const [position, setPosition] = useState(null)
+    let history = useHistory();
 
     const hide = () => {
         if (props.from === 'left'){
@@ -20,6 +22,18 @@ const Slider = props => {
     useEffect(() => {
         setPosition(0)
         document.body.style.overflow = 'hidden' // disable scrolling
+    }, [])
+
+    useEffect(() => {
+        // hide slider after path changes
+        const unlisten = history.listen((location, action) => {
+            if (action === 'PUSH'){
+                hide()
+            }
+        });
+        return () => {
+            unlisten()
+        }
     }, [])
 
     return (

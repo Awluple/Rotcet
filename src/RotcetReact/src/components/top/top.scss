@@ -26,6 +26,14 @@
             text-decoration: underline;
         }
     }
+    .selected {
+        pointer-events: none;
+    }
+}
+.slider__ul {
+    .selected {
+        background: #b74949 !important;
+    }
 }
 .user-menu {
     @include flex-center(row);

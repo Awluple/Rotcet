@@ -26,19 +26,24 @@ const Calendar = () => {
     }
 
     const getScreenings = (year, month, day) => {
+        document.title = `Schedule for ${day}.${month}.${year}`
         setSelectedDate(`${day}.${month}.${year}`)
         setScreenings(null) // show loading gif
         makeRequest(`${year}-${month}-${day}`).then(data => {
             setScreenings(data)
         })
     }
-
     useEffect(() => {
         const date = new Date()
         const year = date.getUTCFullYear()
         const month = addZeroForBelowTen(date.getUTCMonth() + 1)
         const day = addZeroForBelowTen(date.getUTCDate())
+        document.title = `Schedule for ${day}.${month}.${year}`
         getScreenings(year, month, day)
+
+        return () => {
+            document.title = 'Rotcet Cinema'
+        }
     }, [])
 
     return (

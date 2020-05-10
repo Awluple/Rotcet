@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {Link} from 'react-router-dom'
+import {Link, NavLink} from 'react-router-dom'
 
 import Slider from 'utilities/hoc/slider.jsx'
 
@@ -17,11 +17,11 @@ const NavSlider = () => {
             
             {clicked && 
                 <Slider close={setClicked}>
-                    <ul className='slider_ul'>
-                        <li><Link to="/">Home</Link></li>
-                        <li><Link to="/calendar">Programme</Link></li>
-                        <li><Link to="/membershio">Membership</Link></li>
-                        <li><Link to="/news">News</Link></li>
+                    <ul className='slider__ul'>
+                        <li><NavLink exact activeClassName="selected" to="/">Home</NavLink></li>
+                        <li><NavLink activeClassName="selected" to="/calendar">Programme</NavLink></li>
+                        <li><NavLink activeClassName="selected" to="/membershio">Membership</NavLink></li>
+                        <li><NavLink activeClassName="selected" to="/news">News</NavLink></li>
                     </ul>
                 </Slider>
             }
