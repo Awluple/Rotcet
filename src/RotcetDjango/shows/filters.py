@@ -11,7 +11,7 @@ class MovieFilter(filters.FilterSet):
 
     class Meta:
         model = Movie
-        exclude = ['main_image', 'thumbnail']
+        exclude = ['main_image', 'thumbnail', 'trailer_thumbnail']
         fields = '__all__'
 
 class MarathonFilter(filters.FilterSet):
