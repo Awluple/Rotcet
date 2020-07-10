@@ -41,7 +41,7 @@ def cleanup_tests_media():
     shutil.rmtree(path)
     path.mkdir()
 
-def create_thumbnail(image, max_size=450, quality=80):
+def create_thumbnail(image, max_size=450, quality=70):
 
     basename = os.path.basename(image.name)
     name, extension = os.path.splitext(basename)
@@ -80,6 +80,5 @@ def get_youtube_thubnail(youtube_id, filename):
 
     temp = tempfile.TemporaryFile()
     temp.write(image.read())
-    file = InMemoryUploadedFile(temp,'ImageField', f'{filename}.jpg', f'image/JPEG', image.headers['content-length'], None)
-    return file
+    return InMemoryUploadedFile(temp,'ImageField', f'{filename}.jpg', f'image/JPEG', image.headers['content-length'], None)
 

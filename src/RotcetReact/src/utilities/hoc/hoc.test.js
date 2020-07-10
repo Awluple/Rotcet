@@ -4,6 +4,8 @@ import { assert } from 'chai';
 import Adapter from 'enzyme-adapter-react-16'
 import sinon from 'sinon'
 
+import { MemoryRouter, Link } from 'react-router-dom'
+
 import Slider from './slider.jsx'
 
 configure({ adapter: new Adapter() });
@@ -11,7 +13,7 @@ configure({ adapter: new Adapter() });
 const TestNode = () => {
     return (
       <div>
-        <h1>Test</h1>
+        <Link to='/test'>Test</Link>
       </div>
     );
   }
@@ -20,8 +22,8 @@ describe('HOCs tests', () => {
     describe('Slider component tests', () => {
         before(() => {
             global.fake = sinon.spy();
-            global.wrapper = mount(<Slider close={function(){}} ><TestNode/></Slider>)
-            global.wrapper2 = mount(<Slider from={'right'} close={fake} ><TestNode/></Slider>)
+            global.wrapper = mount(<MemoryRouter><Slider close={function(){}} ><TestNode/></Slider></MemoryRouter>)
+            global.wrapper2 = mount(<MemoryRouter><Slider from={'right'} close={fake} ><TestNode/></Slider></MemoryRouter>)
         })
         it('has appropriate position class name', () => {
             assert.isTrue(wrapper.find('.slider--left').exists())
@@ -38,5 +40,9 @@ describe('HOCs tests', () => {
                 done()
               }, 120);
         });
+        it('hides after path change', () => {
+          wrapper.find(Link).simulate('click', { button: 0 })
+          assert.propertyVal(wrapper.find('div').get(0).props.style, 'left', '-100%')
+        })
     });
 });

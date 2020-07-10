@@ -40,12 +40,16 @@ class Movie(models.Model):
     def save(self, *args, **kwargs):
         old_instance = Movie.objects.filter(pk=self.pk).first()
 
-        if self.thumbnail is None or old_instance.main_image != self.main_image:
+        if self.thumbnail is None or old_instance is not None and old_instance.main_image != self.main_image:
             self.thumbnail = create_thumbnail(self.main_image, 450, 80)
 
-        if self.trailer_thumbnail is None and self.main_trailer is not None and old_instance.main_trailer != self.main_trailer:
+        if (self.trailer_thumbnail is None and self.main_trailer is not None or 
+        old_instance is not None and old_instance.main_trailer != self.main_trailer and self.main_trailer is not None):
             trailer_thumbnail = get_youtube_thubnail(self.main_trailer, 'main_trailer')
-            self.trailer_thumbnail = create_thumbnail(trailer_thumbnail, 600, 75)
+            if trailer_thumbnail:
+                self.trailer_thumbnail = create_thumbnail(trailer_thumbnail, 600, 75)
+            else:
+                self.trailer_thumbnail = None
             
         if self.main_trailer is None:
             self.trailer_thumbnail = None
@@ -88,7 +92,8 @@ class Trailer(models.Model):
     def save(self, *args, **kwargs):
         old_instance = Trailer.objects.filter(pk=self.pk).first()
 
-        if self.trailer_thumbnail is None or self.trailer != old_instance.trailer:
+        if (self.trailer_thumbnail is None
+        or old_instance is not None and self.trailer != old_instance.trailer):
             trailer_thumbnail = get_youtube_thubnail(self.trailer, f'{self.movie.name}_trailer_{self.pk}')
             self.trailer_thumbnail = create_thumbnail(trailer_thumbnail, 600, 75)
 
