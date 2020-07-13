@@ -3,27 +3,27 @@ import 'regenerator-runtime/runtime'
 export default class YoutubeApi {
     // downloads YouTube api and oversees iframe loading
     constructor() {
-        this.api_called = false
-        this.is_ready = false
-        this.to_call = []
+        this.apiCalled = false
+        this.isReady = false
+        this.toCall = []
     }
     registerIframe(loadIframe) {
-        if(this.is_ready){
+        if(this.isReady){
             loadIframe()
         }else {
-            this.to_call.push(loadIframe)
+            this.toCall.push(loadIframe)
         }
 
-        if(!this.api_called){
+        if(!this.apiCalled){
             this._getApi()
         }
     }
 
     _getApi() {
-        this.api_called = true
+        this.apiCalled = true
         let tag = document.getElementById('youtube')
         if(tag !== null) {
-            this.is_ready = true
+            this.isReady = true
             this._loadIframes()
             return
         }
@@ -35,12 +35,13 @@ export default class YoutubeApi {
         root.parentNode.insertBefore(tag, root.nextSibling)
 
         window.onYouTubeIframeAPIReady = () => {
-            this.is_ready = true
+            this.isReady = true
             this._loadIframes()
         }
     }
 
     _loadIframes() {
-        this.to_call.map(func => {func()})
+        this.toCall.map(func => {func()})
+        this.toCall = []
     }
 }
