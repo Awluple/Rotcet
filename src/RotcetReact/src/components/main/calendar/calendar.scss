@@ -47,6 +47,7 @@
         font-weight: 600;
     }
     .selected {
+        pointer-events: none;
         color: white;
         background: #5f5f5f;
     }

@@ -30,6 +30,7 @@ const Top = () => {
         return (
             <div className='top'>
                 <div className='logo'>
+                    <img src="" alt=""/>
                     <img src="/static/images/logo.png" alt="Logo"/>
                 </div>
                 <Nav />

@@ -55,10 +55,8 @@ def validate_occupied_seats(room_seats, occupied_seats, raise_list_error=False):
     if len(no_dubles) > room_seats:
         raise ValidationError(_("No free seats"), code='full')
 
-if __name__ == '__main__':
-    pass
 
 def validate_available_in_3D(show, in_3D):
     if show.type == 'MV':
-        if not show.movie.has_3D == in_3D:
-            raise ValidationError(_("Movie %(movie_name)s is not 3D"), params={'movie_name': show.movie.name}, code='invalid')
+        if show.movie.has_3D == False and in_3D:
+            raise ValidationError(_("Movie %(movie_name)s has no 3D"), params={'movie_name': show.movie.name}, code='invalid')

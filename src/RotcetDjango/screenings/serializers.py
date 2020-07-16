@@ -46,11 +46,22 @@ class ScreeningSerializer(DynamicFieldsModelSerializer):
 
     def get_image(self, obj):
         if obj.show.type == 'MV':
-            return self.context['request'].build_absolute_uri(obj.show.movie.thumbnail.url)
+            try:
+                return self.context['request'].build_absolute_uri(obj.show.movie.thumbnail.url)
+            except ValueError as exc: # catch tests wihout thumbnail
+                if str(exc) != "The 'thumbnail' attribute has no file associated with it.":
+                    raise
+                return self.context['request'].build_absolute_uri(obj.show.movie.main_image.url)
+            
         elif obj.show.type == 'MR':
-            if obj.show.marathon.thumbnail:
-                return self.context['request'].build_absolute_uri(obj.show.marathon.thumbnail.url)
-            else:
+            try:
+                if obj.show.marathon.thumbnail:
+                    return self.context['request'].build_absolute_uri(obj.show.marathon.thumbnail.url)
+                else:
+                    return None
+            except ValueError as exc: # catch tests wihout thumbnail
+                if str(exc) != "The 'thumbnail' attribute has no file associated with it.":
+                    raise
                 return None
     
     def get_show_id(self, obj):

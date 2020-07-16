@@ -7,7 +7,7 @@ import { MemoryRouter } from 'react-router-dom'
 import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
 
-import YouTube from 'react-youtube';
+import YouTube from 'utilities/youtube/youtube.jsx';
 import LoadingGif from 'media/gifs/loading.jsx'
 
 import Highlight from './highlight.jsx'
@@ -19,6 +19,7 @@ const movie1 = {
     id: 1,
     name: 'Test 1',
     main_trailer: '748321',
+    trailer_thumbnail: '/trailer_thumb',
     thumbnail: '/test1.jpg',
     short_description: 'Test desc 1'
 }
@@ -77,7 +78,7 @@ describe('Highlight components tests', () => {
             global.wrapper2 = shallow(<Movie index={1} movie={movie2} />)
         })
         it('displays all data', () => {
-            assert.lengthOf(wrapper.find(YouTube), 1)
+            assert.lengthOf(wrapper.find('img'), 1)
             assert.equal(wrapper.find('h3').text(), 'Test 1')
             assert.equal(wrapper.find('p').text(), 'Test desc 1')
         })
@@ -88,8 +89,13 @@ describe('Highlight components tests', () => {
             assert.isTrue(wrapper2.find('img').exists())
         })
         it('does not display both main image and trailer', () => {
+            assert.isFalse(wrapper.find(YouTube).exists())
+            assert.equal(wrapper.find('img').first().prop('src'), '/trailer_thumb')
+        })
+        it('renders YouTube component', () => {
+            wrapper.find('.movie__trailer_thumbnail').simulate('click')
+            wrapper.update()
             assert.isTrue(wrapper.find(YouTube).exists())
-            assert.isFalse(wrapper.find('img').exists())
         })
     })
 });

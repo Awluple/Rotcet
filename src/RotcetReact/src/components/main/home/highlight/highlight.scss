@@ -6,7 +6,7 @@
     display: flex;
     margin: 60px 0px;
 
-    iframe {
+    iframe,.movie__trailer_thumbnail img {
         width: 750px;
         height: 422px;
         border-radius: 0px 300px 300px 0px;
@@ -37,6 +37,30 @@
             color: white;
         }
     }
+    .movie__graphic {
+        &--has_trailer {
+            width: 750px;
+            height: 422px;
+        }
+    }
+    .movie__trailer_thumbnail {
+        position: relative;
+
+        .youtube-button {
+            position: absolute;
+            top: 50%;
+            margin-top: -42px;
+            right: 50%;
+            margin-right: -42px;
+            width: 85px;
+            fill: rgba($color: #191919, $alpha: 0.85) !important;
+        }
+        &:hover {
+            .youtube-button {
+                fill: red !important;
+            }
+        }
+    }
 }
 
 .highlight_movie--no_trailer {
@@ -63,7 +87,7 @@
 .highlight_movie--left {
     flex-direction: row-reverse;
 
-    iframe {
+    iframe,.movie__trailer_thumbnail img {
         border-radius: 300px 0px 0px 300px;
     }
 
@@ -77,8 +101,15 @@
     }
 }
 @media only screen and (max-width: 1200px) {
+    .highlight_movie--left .movie__graphic {
+        text-align: right
+    }
+    .highlight_movie .movie__graphic--has_trailer {
+        width: 550px;
+        height: 309px;
+    }
     .movie__graphic {
-        iframe {
+        iframe,.movie__trailer_thumbnail img {
             width: 550px;
             height: 309px;
         }
@@ -98,7 +129,7 @@
             font-size: 2.4em;
         }
 
-        iframe {
+        iframe,.movie__trailer_thumbnail img {
             border-radius: 0px;
         }
         p {
@@ -125,15 +156,18 @@
         }
     }
     .movie__graphic {
-        width: 100%;
+        width: 100% !important;
         text-align: center !important; 
-        img {
+        &--no_trailer_image {
             width: 60%;
             max-height: 350px;
             height: auto;
         }
-        iframe {
+        iframe,.movie__trailer_thumbnail img {
             width: 100%;
+        }
+        .movie__trailer_thumbnail img {
+            object-fit: contain;
         }
     }
 }

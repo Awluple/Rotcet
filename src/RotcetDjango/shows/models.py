@@ -6,7 +6,12 @@ from django.utils.translation import gettext as _
 from django.core.validators import FileExtensionValidator
 
 from scripts.validators import validate_not_before_today
-from scripts.tools import create_thumbnail, handle_test_file
+from scripts.tools import create_thumbnail, handle_test_file, get_youtube_thubnail
+
+
+def main_trailer_directory_path(instance, filename):
+    path = f'movies/{instance.name}/{instance.relese_date}/trailers/{filename}'
+    return handle_test_file(path, filename)
 
 def main_image_directory_path(instance, filename):
     path = f'movies/{instance.name}/{instance.relese_date}/main_image/{filename}'
@@ -22,6 +27,7 @@ class Movie(models.Model):
     description = models.CharField(max_length=1000, blank=True, null=True)
     main_image = models.FileField(upload_to=main_image_directory_path, validators=[FileExtensionValidator(['jpg', 'png', 'jpeg'])])
     main_trailer = models.CharField(max_length=1000, null=True, blank=True)
+    trailer_thumbnail = models.FileField(upload_to=main_trailer_directory_path, blank=True, null=True)
     thumbnail = models.FileField(upload_to=thumbnail_image_directory_path, blank=True, null=True, editable=False)
     relese_date = models.DateField()
     tickets_sale_date = models.DateField(null=True, blank=True)
@@ -34,9 +40,19 @@ class Movie(models.Model):
     def save(self, *args, **kwargs):
         old_instance = Movie.objects.filter(pk=self.pk).first()
 
-        if not re.search('test_*', self.main_image.name):
-            if self.thumbnail is not None or old_instance.main_image != self.main_image:
-                self.thumbnail = create_thumbnail(self.main_image, 450, 80)
+        if self.thumbnail is None or old_instance is not None and old_instance.main_image != self.main_image:
+            self.thumbnail = create_thumbnail(self.main_image, 450, 80)
+
+        if (self.trailer_thumbnail is None and self.main_trailer is not None or 
+        old_instance is not None and old_instance.main_trailer != self.main_trailer and self.main_trailer is not None):
+            trailer_thumbnail = get_youtube_thubnail(self.main_trailer, 'main_trailer')
+            if trailer_thumbnail:
+                self.trailer_thumbnail = create_thumbnail(trailer_thumbnail, 600, 75)
+            else:
+                self.trailer_thumbnail = None
+            
+        if self.main_trailer is None:
+            self.trailer_thumbnail = None
 
         super().save(*args, **kwargs)
         
@@ -51,7 +67,7 @@ class Movie(models.Model):
     
 
 def image_directory_path(instance, filename):
-    path = f'movies/{instance.movie.name}/images/{filename}'
+    path = f'movies/{instance.movie.name}/{instance.movie.relese_date}/images/{filename}'
     return handle_test_file(path, filename)
 
 class Image(models.Model):
@@ -61,12 +77,27 @@ class Image(models.Model):
     def __str__(self):
         return self.movie.name
 
+def trailer_directory_path(instance, filename):
+    path = f'movies/{instance.movie.name}/{instance.movie.relese_date}/trailers/{filename}'
+    return handle_test_file(path, filename)
+
 class Trailer(models.Model):
     movie = models.ForeignKey(Movie, related_name='trailers', on_delete=models.CASCADE)
-    trailer_url = models.CharField(max_length=1000)
+    trailer = models.CharField(max_length=1000)
+    trailer_thumbnail = models.FileField(upload_to=trailer_directory_path, blank=True, null=True)
 
     def __str__(self):
         return self.movie.name
+
+    def save(self, *args, **kwargs):
+        old_instance = Trailer.objects.filter(pk=self.pk).first()
+
+        if (self.trailer_thumbnail is None
+        or old_instance is not None and self.trailer != old_instance.trailer):
+            trailer_thumbnail = get_youtube_thubnail(self.trailer, f'{self.movie.name}_trailer_{self.pk}')
+            self.trailer_thumbnail = create_thumbnail(trailer_thumbnail, 600, 75)
+
+        super().save(*args, **kwargs)
 
 
 def marathon_image_directory_path(instance, filename):
@@ -97,9 +128,8 @@ class Marathon(models.Model):
     def save(self, *args, **kwargs):
         old_instance = Marathon.objects.filter(pk=self.pk).first()
 
-        if self.main_image and not re.search('test_*', self.main_image.name):
-            if self.thumbnail is not None or old_instance.main_image != self.main_image:
-                self.thumbnail = create_thumbnail(self.main_image, 450, 80)
+        if self.main_image and (self.thumbnail is not None or old_instance.main_image != self.main_image):
+            self.thumbnail = create_thumbnail(self.main_image, 450, 80)
 
         if self.main_image.name == '' and self.thumbnail.name != '':
             self.thumbnail.delete(save=True)

@@ -167,6 +167,7 @@
     background: $darker-red;
     border-radius: 50px;
     margin: 5px 0px;
+    cursor: grab;
     svg {
         fill: $darker-silver;
         transform: rotate(90deg);
@@ -177,6 +178,10 @@
             transform: rotate(-90deg);
         }
     }
+    &:active {
+        cursor: grabbing;
+    }
+
 }
 
 @media only screen and (max-width: 1024px) {
@@ -195,6 +200,7 @@
             margin-left: 5px;
         }
         .movie__all_times {
+            user-select: none;
             margin-right: 10px;
             a {
                 font-size: 1.6em;

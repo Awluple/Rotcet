@@ -17,7 +17,7 @@ const UserSlider = () => {
             
             {clicked && 
                 <Slider from='right' close={setClicked}>
-                    <ul className='slider_ul'>
+                    <ul className='slider__ul'>
                         <li><a href="/login">Login</a></li>
                         <li><a href="/register">Register</a></li>
                     </ul>

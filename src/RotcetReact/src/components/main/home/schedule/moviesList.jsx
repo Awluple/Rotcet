@@ -118,10 +118,31 @@ const MoviesList = props => {
             }
         }
     }
+
+    const mouseStart = event => {
+        setTouchStartPosition(event.clientX)
+        setTouchPosition(0)
+    }
+
+    const mouseMove = event => {
+        setTouchPosition(event.clientX)
+    }
+
+    const mouseEnd = () => {
+        if (smallDevice && props.movies.length > 1 && touchPosition !== 0){
+            if (touchStartPosition - touchPosition >= 50 && position / 100 < props.movies.length - 1) { // next
+                setPosition(position + 100)
+            }else if (touchStartPosition - touchPosition <= -50 && position > 0){ // back
+                setPosition(position - 100)
+            }
+        }
+    }
     
 
     return (
-        <div onTouchMove={touchMove} onTouchStart={touchStart} onTouchEnd={touchEnd} className='schedule__container shadow-big'>
+        <div 
+        onTouchMove={touchMove} onTouchStart={touchStart} onTouchEnd={touchEnd}
+        className='schedule__container shadow-big'>
             { position !== 0 &&
                 <button onClick={() => {moveMovies('subtract')}}><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 3l3.057-3 11.943 12-11.943 12-3.057-3 9-9z"/></svg></button>
             }
@@ -149,7 +170,8 @@ const MoviesList = props => {
                 <button onClick={() => {moveMovies('add')}}><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 3l3.057-3 11.943 12-11.943 12-3.057-3 9-9z"/></svg></button>
             }
             { props.movies !== null && smallDevice && props.movies.length > 1 &&
-                <SliderInfo position={position} movies={props.movies.length} />
+                <SliderInfo mouseMove={mouseMove} mouseStart={mouseStart} mouseEnd={mouseEnd}
+                position={position} movies={props.movies.length} />
             }
         </div>
         
