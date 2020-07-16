@@ -47,7 +47,7 @@ class ScreeningSerializer(DynamicFieldsModelSerializer):
     def get_image(self, obj):
         if obj.show.type == 'MV':
             try:
-                self.context['request'].build_absolute_uri(obj.show.movie.thumbnail.url)
+                return self.context['request'].build_absolute_uri(obj.show.movie.thumbnail.url)
             except ValueError as exc: # catch tests wihout thumbnail
                 if str(exc) != "The 'thumbnail' attribute has no file associated with it.":
                     raise
