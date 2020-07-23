@@ -40,7 +40,7 @@ class Movie(models.Model):
     def save(self, *args, **kwargs):
         old_instance = Movie.objects.filter(pk=self.pk).first()
 
-        if self.thumbnail is None or old_instance is not None and old_instance.main_image != self.main_image:
+        if not bool(self.thumbnail) or (old_instance is not None and old_instance.main_image != self.main_image):
             self.thumbnail = create_thumbnail(self.main_image, 450, 80)
 
         if (self.trailer_thumbnail is None and self.main_trailer is not None or 
@@ -70,12 +70,25 @@ def image_directory_path(instance, filename):
     path = f'movies/{instance.movie.name}/{instance.movie.relese_date}/images/{filename}'
     return handle_test_file(path, filename)
 
+def image_thumbnail_directory_path(instance, filename):
+    path = f'movies/{instance.movie.name}/{instance.movie.relese_date}/images/thumbnail_{filename}'
+    return handle_test_file(path, filename)
+
 class Image(models.Model):
     movie = models.ForeignKey(Movie, related_name='images', on_delete=models.CASCADE)
     image = models.FileField(upload_to=image_directory_path, validators=[FileExtensionValidator(['jpg', 'png', 'jpeg'])])
+    thumbnail = models.FileField(upload_to=image_thumbnail_directory_path, blank=True, null=True, editable=False)
 
     def __str__(self):
         return self.movie.name
+    
+    def save(self, *args, **kwargs):
+        old_instance = Image.objects.filter(pk=self.pk).first()
+
+        if not bool(self.thumbnail)  or (old_instance is not None and old_instance.image != self.image):
+            self.thumbnail = create_thumbnail(self.image, 450, 80)
+
+        super().save(*args, **kwargs)
 
 def trailer_directory_path(instance, filename):
     path = f'movies/{instance.movie.name}/{instance.movie.relese_date}/trailers/{filename}'
@@ -92,7 +105,7 @@ class Trailer(models.Model):
     def save(self, *args, **kwargs):
         old_instance = Trailer.objects.filter(pk=self.pk).first()
 
-        if (self.trailer_thumbnail is None
+        if (not bool(self.trailer_thumbnail)
         or old_instance is not None and self.trailer != old_instance.trailer):
             trailer_thumbnail = get_youtube_thubnail(self.trailer, f'{self.movie.name}_trailer_{self.pk}')
             self.trailer_thumbnail = create_thumbnail(trailer_thumbnail, 600, 75)

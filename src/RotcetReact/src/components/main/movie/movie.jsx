@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import axios from 'axios'
 
+import {toDateObjects, organizeScreenings} from 'utilities/screenings/scripts.js'
 import LoadingGif from 'media/gifs/loading.jsx'
 
 import Details from './details.jsx'
@@ -10,11 +11,19 @@ import Tickets from './tickets.jsx'
 
 const Movie = (props) => {
     const [movie, setMovie] = useState(null)
+    const [dates, setDates] = useState(null)
 
     useEffect(() => {
         axios.get(`/api/movies/${props.match.params.id}`)
         .then(res => {
-            setMovie(res.data)
+            const movie = res.data
+            setMovie(movie)
+
+            if(movie.screenings.length > 0 && movie.tickets_sale_date){
+                let dates = toDateObjects(movie.screenings)
+                dates = organizeScreenings(dates)
+                setDates(dates)
+            }
         }).catch(err => {
             console.log(err)
             if(err.response.status == 404){
@@ -22,20 +31,19 @@ const Movie = (props) => {
             }
         })
     }, [])
-
     if(movie){
         return (
             <div className='movie'>
                 <Details name={movie.name} description={movie.description} shortDescription={movie.short_description}
                 image={movie.main_image} tickets={movie.tickets_sale_date} />
-                { movie.images.lenght > 0 && 
+                { movie.images.length > 0 && 
                     <Images images={movie.images} />
                 }
                 { movie.main_trailer || movie.trailers.length > 0 &&
                     <Trailers mainTrailer={movie.main_trailer} trailerThumbnail={movie.trailer_thumbnail} trailers={movie.trailers} />
                 }
-                { movie.screenings && 
-                    <Tickets screenings={movie.screenings} />
+                { dates && 
+                    <Tickets screenings={dates} />
                 }
             </div>
         )
