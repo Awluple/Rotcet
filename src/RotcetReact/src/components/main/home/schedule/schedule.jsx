@@ -4,7 +4,9 @@ import axios from 'axios'
 
 import {addZeroForBelowTen} from 'utilities/tools/tools.js'
 
-import MovieList from './moviesList.jsx'
+import Movie from './movie.jsx'
+import Slider from 'utilities/hoc/slider.jsx'
+import LoadingGif from 'media/gifs/loading.jsx'
 
 class Schedule extends Component {
 
@@ -42,7 +44,22 @@ class Schedule extends Component {
         return (
             <div className='schedule'>
             <h2 className='main_section_header'>SCHEDULE</h2>
-            <MovieList movies={this.state.movies} />
+            <Slider elementsNumber={this.state.movies ? this.state.movies.length : 0}
+            listClassName={'schedule__movies' + (this.state.movies === null || (this.state.movies && this.state.movies.length === 0) ? ' schedule__movies--no_movies' : '')}
+            containerClassName='schedule__container shadow-big'
+            sliderInfoClassName='schedule_slider_info'>
+                { this.state.movies !== null ? 
+                    this.state.movies.length > 0 ? 
+                        this.state.movies.map(movie => {
+                            return (
+                                <Movie key={movie.id} movie={movie} />
+                            )
+                        })
+                    :  <h2>Sorry, there are no screenings for now</h2>
+                :
+                <LoadingGif /> 
+            }
+            </Slider>
             <div className='schedule__calendar'>
                 <Link to='/calendar'>CALENDAR</Link>
             </div>

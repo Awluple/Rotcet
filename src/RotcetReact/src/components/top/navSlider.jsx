@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import {Link, NavLink} from 'react-router-dom'
 
-import Slider from 'utilities/hoc/slider.jsx'
+import MenuSlider from 'utilities/hoc/menuSlider.jsx'
 
 const NavSlider = () => {
 
@@ -16,14 +16,14 @@ const NavSlider = () => {
             </div>
             
             {clicked && 
-                <Slider close={setClicked}>
-                    <ul className='slider__ul'>
+                <MenuSlider close={setClicked}>
+                    <ul className='menu-slider__ul'>
                         <li><NavLink exact activeClassName="selected" to="/">Home</NavLink></li>
                         <li><NavLink activeClassName="selected" to="/calendar">Programme</NavLink></li>
                         <li><NavLink activeClassName="selected" to="/membershio">Membership</NavLink></li>
                         <li><NavLink activeClassName="selected" to="/news">News</NavLink></li>
                     </ul>
-                </Slider>
+                </MenuSlider>
             }
         </React.Fragment>
     )

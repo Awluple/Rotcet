@@ -32,6 +32,17 @@ const Movie = (props) => {
         })
     }, [])
     if(movie){
+        let trailers = movie.trailers
+        if (movie.main_trailer){
+            trailers = [
+                {
+                    id: 'main',
+                    trailer: movie.main_trailer,
+                    trailer_thumbnail: movie.trailer_thumbnail,
+                }
+            ].concat(movie.trailers)
+        }
+
         return (
             <div className='movie'>
                 <Details name={movie.name} description={movie.description} shortDescription={movie.short_description}
@@ -40,7 +51,7 @@ const Movie = (props) => {
                     <Images images={movie.images} />
                 }
                 { movie.main_trailer || movie.trailers.length > 0 &&
-                    <Trailers mainTrailer={movie.main_trailer} trailerThumbnail={movie.trailer_thumbnail} trailers={movie.trailers} />
+                    <Trailers trailers={trailers} />
                 }
                 { dates && 
                     <Tickets screenings={dates} />

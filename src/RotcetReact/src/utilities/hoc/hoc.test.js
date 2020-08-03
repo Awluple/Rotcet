@@ -6,7 +6,7 @@ import sinon from 'sinon'
 
 import { MemoryRouter, Link } from 'react-router-dom'
 
-import Slider from './slider.jsx'
+import MenuSlider from './menuSlider.jsx'
 
 configure({ adapter: new Adapter() });
 
@@ -22,12 +22,12 @@ describe('HOCs tests', () => {
     describe('Slider component tests', () => {
         before(() => {
             global.fake = sinon.spy();
-            global.wrapper = mount(<MemoryRouter><Slider close={function(){}} ><TestNode/></Slider></MemoryRouter>)
-            global.wrapper2 = mount(<MemoryRouter><Slider from={'right'} close={fake} ><TestNode/></Slider></MemoryRouter>)
+            global.wrapper = mount(<MemoryRouter><MenuSlider close={function(){}} ><TestNode/></MenuSlider></MemoryRouter>)
+            global.wrapper2 = mount(<MemoryRouter><MenuSlider from={'right'} close={fake} ><TestNode/></MenuSlider></MemoryRouter>)
         })
         it('has appropriate position class name', () => {
-            assert.isTrue(wrapper.find('.slider--left').exists())
-            assert.isTrue(wrapper2.find('.slider--right').exists())
+            assert.isTrue(wrapper.find('.menu-slider--left').exists())
+            assert.isTrue(wrapper2.find('.menu-slider--right').exists())
         });
         it('renders children node', () => {
             assert.lengthOf(wrapper.find(TestNode), 1)

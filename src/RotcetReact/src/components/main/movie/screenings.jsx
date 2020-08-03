@@ -4,11 +4,11 @@ import PropTypes from 'prop-types'
 const Screenings = props => {
     const fillScreenings = (screenings) => {
         screenings = screenings === null ? [] : screenings
-        if(screenings.length >= 7){
+        if(screenings.length >= 6){
             return screenings
         }
         const toFill = []
-        for (let numberOfScreenings = screenings.length; numberOfScreenings < 7; numberOfScreenings++) {
+        for (let numberOfScreenings = screenings.length; numberOfScreenings < 6; numberOfScreenings++) {
             toFill.push('')
         }
         return screenings.concat(toFill)
@@ -16,9 +16,9 @@ const Screenings = props => {
 
     const filledScreenings = fillScreenings(props.screenings)
     return (
-        <ul>
+        <ul className='tickets__hours'>
             {filledScreenings.map((screening, index) => {
-                return <li key={index}>{screening}</li>
+                return <li className={screening === '' ? 'tickets__hours--blank' : ''} key={index}>{screening}</li>
             })}
         </ul>
     )

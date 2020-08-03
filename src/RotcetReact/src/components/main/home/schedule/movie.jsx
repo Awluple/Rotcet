@@ -34,13 +34,13 @@ const Movie = props => {
         return (
             <li className='movies__movie'>
                 <h3>{props.movie.name}</h3>
-                <div className='movie__details'>
+                <div className='movies__details'>
 
-                    <div className='movie__image'>
+                    <div className='movies__image'>
                         <img src={props.movie.thumbnail} alt="movie image"/>
                     </div>
 
-                    <div className='movie__screenings'>
+                    <div className='movies__screenings'>
                         <p>{props.movie.has_3D ? '2D/3D' : '2D'}</p>
                         <Screenings day={screeningsDates.day1} />
                         {'day2' in screeningsDates &&
@@ -48,7 +48,7 @@ const Movie = props => {
                         }
                     </div>
                 </div>
-                <div className='movie__all_times'>
+                <div className='movies__all_times'>
                     <a className='shadow-small' href="">All times</a>
                 </div>
             </li>

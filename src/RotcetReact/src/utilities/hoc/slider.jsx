@@ -1,61 +1,175 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useRef, useEffect} from 'react'
 import PropTypes from 'prop-types'
-import { useHistory } from "react-router-dom";
+
+import {useScreenWidth} from 'utilities/hooks/hooks.js'
+
+import SliderInfo from './sliderInfo.jsx'
 
 const Slider = props => {
 
-    const [position, setPosition] = useState(null)
-    let history = useHistory();
+    const listRef = useRef(null);
 
-    const hide = () => {
-        if (props.from === 'left'){
-            setPosition(-100)
-        }else {
-            setPosition(100)
-        }
-        setTimeout(() => {
-            document.body.style.overflow = 'auto' // enable scrolling
-            props.close(false)
-        }, 100);
+    const [position, setPosition] = useState(0);
+    const [isOverWidth, setIsOverWidth] = useState(false);
+
+    const [touchStartPosition, setTouchStartPosition] = useState(0)
+    const [touchPosition, setTouchPosition] = useState(0)
+
+    const resetPosition = () => {
+        setPosition(0)
     }
 
-    useEffect(() => {
-        setPosition(0)
-        document.body.style.overflow = 'hidden' // disable scrolling
-    }, [])
+    const smallDevice = useScreenWidth(600)
+
+    const overWidth = () => {
+        const width = window.innerWidth <= 2100 ? window.innerWidth : 2100
+        resetPosition()
+        if (listRef.current.scrollWidth < width){
+            setIsOverWidth(true)
+        }else {
+            setIsOverWidth(false)
+        }
+    }
+    
+    // =========== FOR DESKTOP ===========
 
     useEffect(() => {
-        // hide slider after path changes
-        const unlisten = history.listen((location, action) => {
-            if (action === 'PUSH'){
-                hide()
+        // Flexbox needs some time to set width of a element. This function waits for it and
+        // removes the slider arrow if element size is lesser than window size
+        let iterations = 0;
+        let waitForFlexbox
+        const width = window.innerWidth <= 2100 ? window.innerWidth : 2100
+        const checkWidth = () => {
+            iterations++
+            if (!(listRef.current.scrollWidth === 50) && isOverWidth !== true){
+                clearInterval(waitForFlexbox)
+                setIsOverWidth(listRef.current.scrollWidth < width)
+                return
             }
-        });
+            if (iterations === 5){
+                clearInterval(waitForFlexbox)
+            }
+        }
+
+        if(props.elementsNumber !== 0) {
+            waitForFlexbox = setInterval(checkWidth, 100);
+        }else if(props.elementsNumber === 0){
+            setIsOverWidth(false)
+        }
+      },[props.elementsNumber]);
+
+    const moveList = (operator) => {
+        const width = window.innerWidth <= 2100 ? window.innerWidth : 2100
+        if(operator === 'add') {
+            if((position + 800) < listRef.current.scrollWidth - width){
+                setPosition(position + 500)
+            }else{
+                // don't let the slider go further when no elements remain
+                setIsOverWidth(true)
+                setPosition(listRef.current.scrollWidth - width)
+            }
+        }else {
+            setIsOverWidth(false)
+            if(position < 800){
+                setPosition(0)
+            }else{
+                setPosition(position - 500)
+            }
+        }
+    }
+
+    // =========== FOR MOBILE ===========
+
+    useEffect(() => {
+        // resets list position and hides arrow if needed
+        window.addEventListener('resize', overWidth);
         return () => {
-            unlisten()
+            window.removeEventListener('resize', overWidth);
+         }
+     }, [])
+
+    useEffect(() => {
+        const medium = window.matchMedia("(max-width: 1024px)")
+        medium.addListener(resetPosition)
+        return () => {
+            medium.removeListener(resetPosition)
         }
     }, [])
 
+
+    const touchStart = event => {
+        setTouchStartPosition(event.touches[0].clientX)
+        setTouchPosition(0)
+    }
+
+    const touchMove = event => {
+        setTouchPosition(event.touches[0].clientX)
+    }
+
+    const touchEnd = () => {
+        if (smallDevice && props.elementsNumber > 1 && touchPosition !== 0){
+            if (touchStartPosition - touchPosition >= 50 && position / 100 < (props.elementsNumber - 1) / props.elementsOnScreen) { // next
+                setPosition(position + 100)
+            }else if (touchStartPosition - touchPosition <= -50 && position > 0){ // back
+                setPosition(position - 100)
+            }
+        }
+    }
+
+    const mouseStart = event => {
+        setTouchStartPosition(event.clientX)
+        setTouchPosition(0)
+    }
+
+    const mouseMove = event => {
+        setTouchPosition(event.clientX)
+    }
+
+    const mouseEnd = () => {
+        if (smallDevice && props.elementsNumber > 1 && touchPosition !== 0){
+            if (touchStartPosition - touchPosition >= 50 && position / 100 < (props.elementsNumber - 1) / props.elementsOnScreen) { // next
+                setPosition(position + 100)
+            }else if (touchStartPosition - touchPosition <= -50 && position > 0){ // back
+                setPosition(position - 100)
+            }
+        }
+    }
+    
+
     return (
-        <div className={'slider ' + (props.from === 'left' ? 'slider--left' : 'slider--right') } style={{left: position + '%'}}>
-            <div className='slider__close'>
-                <svg onClick={hide} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                    <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm4.151 17.943l-4.143-4.102-4.117 4.159-1.833-1.833 4.104-4.157-4.162-4.119 1.833-1.833 4.155 4.102 4.106-4.16 1.849 1.849-4.1 4.141 4.157 4.104-1.849 1.849z"/>
-                </svg>
-            </div>
-            {props.children}
+        <div 
+        onTouchMove={touchMove} onTouchStart={touchStart} onTouchEnd={touchEnd}
+        className={'slider ' + (props.containerClassName ? props.containerClassName : '')}>
+            { position !== 0 && props.elementsNumber !== 0 &&
+                <button onClick={() => {moveList('subtract')}}><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 3l3.057-3 11.943 12-11.943 12-3.057-3 9-9z"/></svg></button>
+            }
+            <ul ref={listRef} style={{right: position + (smallDevice ? 'vw' : 'px')}} 
+            className={'slider__list ' + (props.listClassName ? props.listClassName : '')}>
+                {props.children}
+            </ul>
+            { props.elementsNumber !== 0 && !isOverWidth &&
+                <button onClick={() => {moveList('add')}}><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 3l3.057-3 11.943 12-11.943 12-3.057-3 9-9z"/></svg></button>
+            }
+            { smallDevice && props.elementsNumber > 1 &&
+                <SliderInfo sliderInfoClassName={props.sliderInfoClassName} mouseMove={mouseMove} mouseStart={mouseStart} mouseEnd={mouseEnd}
+                position={position} elementsNumber={props.elementsNumber} elementsOnScreen={props.elementsOnScreen}/>
+            }
         </div>
+        
     )
 }
 
 Slider.defaultProps = {
-    from: 'left',
+    elementsOnScreen: 1
 }
 
 Slider.propTypes = {
     children: PropTypes.node.isRequired,
-    close: PropTypes.func.isRequired,
-    from: PropTypes.string,
+    elementsNumber: PropTypes.number.isRequired,
+    elementsOnScreen: PropTypes.number, // number of list items on one page on a small device
+    containerClassName: PropTypes.string,
+    listClassName: PropTypes.string,
+    sliderInfoClassName: PropTypes.string,
 }
 
 export default Slider

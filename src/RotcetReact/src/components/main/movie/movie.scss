@@ -1,0 +1,193 @@
+.movie {
+    margin-top: 50px;
+}
+.movie__details {
+    display: flex;
+    font-family: $content-font;
+    margin: 0vw 10vw;
+    img {
+        width: 450px;
+    }
+}
+
+.movie__description {
+    text-align: center;
+    @include flex-center(column);
+    justify-content: space-between;
+
+    .description__info {
+        width: 80%;
+        h1 {
+            font-weight: 600;
+            font-size: 3em;
+            color: $silver;
+            margin: 20px;
+        }
+        .description {
+            color: white;
+
+            &--short {
+                font-size: 1.3em;
+            }
+            &--long {
+                font-size: 1.1em;
+            }
+        }
+    }
+
+    .description__tickets {
+        margin-top: 60px;
+        color: $silver;
+        h3 {
+            font-size: 2em;
+            margin: 10px;
+        }
+        button {
+            font-size: 1.7em; 
+            cursor: pointer;
+        }
+    }
+}
+.movie__images {
+    margin-top: 100px;
+    background: $darker-red;
+    padding: 20px 0px;
+    img {
+        cursor: pointer;
+        object-fit: cover;
+        max-height: 200px;
+        width: 300px;
+        margin: 0px 15px;
+    }
+}
+.movie__slider {
+    background: $darker-red;
+}
+.movie__list {
+    align-items: center
+}
+.movie__slider-info {
+    background: $main-red;
+}
+.movie__trailers {
+    margin-top: 50px;
+    li, .movie__primary_trailer {
+        position: relative;
+    }
+    .youtube-button {
+        position: absolute;
+        top: 50%;
+        margin-top: -42px;
+        right: 50%;
+        margin-right: -42px;
+        width: 85px;
+        fill: rgba($color: #191919, $alpha: 0.85) !important;
+        cursor: pointer;
+
+        &:hover {
+                fill: red !important;
+        }
+    }
+}
+
+.movie__primary_trailer {
+    height: 394;
+    text-align: center;
+    img {
+        width: 700px;
+        cursor: pointer;
+    }
+    img:hover + .youtube-button {
+        fill: red !important;
+    }
+}
+.movie__trailers-list {
+    @include flex-center(row);
+    flex-wrap: wrap;
+    margin-top: 60px;
+    list-style: none;
+    padding: 0px;
+    margin: 0px 10%;
+    img {
+        width: 400px;
+        cursor: pointer;
+    }
+    li {
+        margin: 15px;
+        &:hover {
+            .youtube-button {
+                fill: red !important;
+            }
+        }
+    }
+}
+
+.movie__tickets {
+    margin-top: 60px;
+    text-align: center;
+    font-family: $content-font;
+
+    h2 {
+        margin-bottom: 30px;
+    }
+
+    .button {
+        font-size: 1.7em;
+        padding: 0px 70px;
+    }
+
+    ul {
+        list-style: none;
+        padding: 0px;
+    }
+}
+.tickets {
+    &__list {
+        margin-top: 30px;
+        @include flex-center(column)
+    }
+    &__date {
+        display: flex;
+        margin: 10px 0px;
+    }
+    &__day-info {
+        width: 180px;
+        @include flex-center(column);
+        background: $darker-silver;
+        border-bottom-left-radius: 50px;
+        border-top-left-radius: 50px;
+
+        h4 {
+            font-size: 1.8em;
+            font-weight: 600;
+            margin: -10px;
+        }
+    }
+    &__hours {
+        @include flex-center(row);
+        background: $darker-red;
+        li {
+            @include flex-center(column);
+            width: 70px;
+            height: 40px;
+            margin: 10px;
+            background: $darker-silver;
+            font-size: 1.3em;
+        }
+        &--blank{
+            background: #424242 !important;
+        }
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .movie__list {
+        li {
+            width: 50vw;
+            @include flex-center(row);
+            img {
+                width: 90%;
+            }
+        }
+    }
+}

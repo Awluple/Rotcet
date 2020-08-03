@@ -61,22 +61,22 @@ const Tickets = props => {
 
     return (
         <div className='movie__tickets'>
-            <h2>Shedule and tickets</h2>
-            <ul>
+            <h2 className='header header--medium shadow-small'>Shedule and tickets</h2>
+            <Link className='button shadow-small' to='/pricing' target="_blank">Pricing</Link>
+            <ul className='tickets__list'>
                 {dates.map(date => {
                     return (
-                        <ul key={date.date}>
-                            <div>
+                        <li className='tickets__date' key={date.date}>
+                            <div className='tickets__day-info'>
                                 <h4>{date.day}</h4>
                                 <p>{date.date}</p>
                             </div>
                             <Screenings screenings={date.screenings} />
-                        </ul>
+                        </li>
                     )
                 })}
             </ul>
             <button onClick={loadMore}>Load more</button>
-            <Link to='/pricing'>Pricing</Link>
         </div>
     )
 }

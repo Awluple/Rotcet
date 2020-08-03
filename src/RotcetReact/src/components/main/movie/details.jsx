@@ -6,19 +6,21 @@ const Details = props => {
         <div className='movie__details'>
             <img src={props.image} alt="main image"/>
             <div className='movie__description'>
-                <h1>{props.name}</h1>
-                <p>{props.description ? props.description : props.shortDescription}</p>
-
-                <div className='description__tickets'>
-                    {props.tickets ? 
-                        <React.Fragment>
-                            <h3>On screen!</h3>
-                            <button>Tickets and shedule</button>
-                        </React.Fragment>
-                    : 
-                        null
+                <div className='description__info'>
+                    <h1>{props.name}</h1>
+                    {props.description ? 
+                        <p className='description description--long'>{props.description}</p>  : 
+                        <p className='description description--short'>{props.shortDescription}</p>
                     }
                 </div>
+                {props.tickets ? 
+                    <div className='description__tickets'>
+                                <h3>On screen!</h3>
+                                <button className='button shadow-small'>Tickets and shedule</button>
+                    </div>
+                : 
+                    null
+                }
             </div>
         </div>
     )
