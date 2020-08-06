@@ -1,11 +1,17 @@
-import React from 'react'
-import { Route, Switch } from "react-router-dom";
+import React, {useEffect} from 'react'
+import { Route, Switch, useLocation } from "react-router-dom";
 
 import Home from './home/home.jsx'
 import Calendar from './calendar/calendar.jsx'
 import Movie from './movie/movie.jsx'
 
 const Main = () => {
+    const { pathname } = useLocation()
+
+    useEffect(() => {
+        window.scrollTo(0,0)
+    }, [pathname])
+
     return (
         <div className='main'>
             <Switch>

@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useRef, useCallback} from 'react'
 import axios from 'axios'
 
 import {toDateObjects, organizeScreenings} from 'utilities/screenings/scripts.js'
@@ -12,6 +12,8 @@ import Tickets from './tickets.jsx'
 const Movie = (props) => {
     const [movie, setMovie] = useState(null)
     const [dates, setDates] = useState(null)
+
+    const tickets = useRef(null)
 
     useEffect(() => {
         axios.get(`/api/movies/${props.match.params.id}`)
@@ -31,6 +33,13 @@ const Movie = (props) => {
             }
         })
     }, [])
+
+    const scrollToTickets = () => {
+        document.documentElement.style.scrollBehavior = 'smooth'
+        window.scrollTo(0, tickets.current.offsetTop)
+        document.documentElement.style.scrollBehavior = 'auto'
+    }
+
     if(movie){
         let trailers = movie.trailers
         if (movie.main_trailer){
@@ -45,16 +54,16 @@ const Movie = (props) => {
 
         return (
             <div className='movie'>
-                <Details name={movie.name} description={movie.description} shortDescription={movie.short_description}
+                <Details scrollToTickets={scrollToTickets} name={movie.name} description={movie.description} shortDescription={movie.short_description}
                 image={movie.main_image} tickets={movie.tickets_sale_date} />
-                { movie.images.length > 0 && 
+                { movie.images.length > 0 &&
                     <Images images={movie.images} />
                 }
                 { movie.main_trailer || movie.trailers.length > 0 &&
                     <Trailers trailers={trailers} />
                 }
-                { dates && 
-                    <Tickets screenings={dates} />
+                { dates &&
+                    <Tickets ref={tickets} scrollToTickets={scrollToTickets} screenings={dates} />
                 }
             </div>
         )

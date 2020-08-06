@@ -38,7 +38,7 @@ const Movie = props => {
     return (
         <div className={'highlight_movie' + ((props.movie.main_trailer === null) ? ' highlight_movie--no_trailer' : '') + ((props.index === 1) ? ' highlight_movie--left' : '') }>
             {   smallDevice && 
-                <h3>{props.movie.name}</h3>
+                <Link to={`/movie/${props.movie.name}-${props.movie.id}`}><h3>{props.movie.name}</h3></Link>
             }
             <div className={'movie__graphic' + ((iframeClicked && props.movie.main_trailer) ? ' movie__graphic--remove-border-radius' : '')
                  + (props.movie.main_trailer ? ' movie__graphic--has_trailer' : '')}>
@@ -54,17 +54,19 @@ const Movie = props => {
                     onPlayerReady={onPlayerReady}
                     />
                 :
-                   <img className='movie__graphic--no_trailer_image' src={props.movie.thumbnail} alt="movie main image thumbnail"/>
+                    <Link to={`/movie/${props.movie.name}-${props.movie.id}`}>
+                        <img className='movie__graphic--no_trailer_image' src={props.movie.thumbnail} alt="movie main image thumbnail"/>
+                    </Link>
                 }
             </div>
             <div className='movie__description'>
                 <div className='movie__info'>
                     { !smallDevice && 
-                    <h3>{props.movie.name}</h3>
+                    <Link to={`/movie/${props.movie.name}-${props.movie.id}`}><h3>{props.movie.name}</h3></Link>
                     }
                     <p>{props.movie.short_description}</p>
                 </div>
-                <Link className='button shadow-small' to='' >Tickets</Link>
+                <Link className='button shadow-small' to={`/movie/${props.movie.name}-${props.movie.id}#tickets`}>Tickets</Link>
             </div>
         </div>
     )

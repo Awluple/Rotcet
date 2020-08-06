@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
+import { Link } from "react-router-dom";
 
 import {toDateObjects, organizeScreenings} from 'utilities/screenings/scripts.js'
 
@@ -29,15 +30,19 @@ const Movie = props => {
             setScreeningsDates({day1: day1})
         }
     }, [])
-    
+    // to={`/movie/${props.movie.name}-${props.movie.id}#tickets`}
     if (screeningsDates){
         return (
             <li className='movies__movie'>
-                <h3>{props.movie.name}</h3>
+                <Link to={`/movie/${props.movie.name}-${props.movie.id}`}>
+                    <h3>{props.movie.name}</h3>
+                </Link>
                 <div className='movies__details'>
 
                     <div className='movies__image'>
-                        <img src={props.movie.thumbnail} alt="movie image"/>
+                        <Link to={`/movie/${props.movie.name}-${props.movie.id}`}>
+                            <img src={props.movie.thumbnail} alt="movie image"/>
+                        </Link>
                     </div>
 
                     <div className='movies__screenings'>
@@ -49,7 +54,13 @@ const Movie = props => {
                     </div>
                 </div>
                 <div className='movies__all_times'>
-                    <a className='shadow-small' href="">All times</a>
+                    <Link className='shadow-small'
+                    to={{
+                        pathname: `/movie/${props.movie.name}-${props.movie.id}`,
+                        hash: "#tickets",
+                      }} >
+                        All times
+                    </Link>
                 </div>
             </li>
             )

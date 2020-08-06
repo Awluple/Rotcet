@@ -16,7 +16,7 @@ const Details = props => {
                 {props.tickets ? 
                     <div className='description__tickets'>
                                 <h3>On screen!</h3>
-                                <button className='button shadow-small'>Tickets and shedule</button>
+                                <button onClick={props.scrollToTickets} className='button shadow-small'>Tickets and shedule</button>
                     </div>
                 : 
                     null
@@ -31,7 +31,8 @@ Details.propTypes = {
     description: PropTypes.string,
     shortDescription: PropTypes.string.isRequired,
     image: PropTypes.string.isRequired,
-    tickets: PropTypes.string
+    tickets: PropTypes.string,
+    scrollToTickets: PropTypes.func.isRequired
 }
 
 export default Details

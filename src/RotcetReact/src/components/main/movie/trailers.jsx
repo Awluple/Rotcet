@@ -40,7 +40,7 @@ const Trailers = props => {
                     height={394}
                     />
                 :
-                    <div onClick={() => {setVideoPlay(true), setClicedOnceOrChanged(true)}}>
+                    <div className='youtube-thumbnail' onClick={() => {setVideoPlay(true), setClicedOnceOrChanged(true)}}>
                         <img src={primaryTrailer.trailer_thumbnail} alt="primary trailer"/>
                         {youtubeButton}
                     </div>

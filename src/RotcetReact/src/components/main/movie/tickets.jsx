@@ -1,6 +1,6 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useCallback} from 'react'
 import PropTypes from 'prop-types'
-import {Link} from 'react-router-dom'
+import {Link, useLocation} from 'react-router-dom'
 
 import LoadingGif from 'media/gifs/loading.jsx'
 
@@ -18,10 +18,10 @@ const days = {
     6: 'Saturday'
 }
 
-const Tickets = props => {
+const Tickets = React.forwardRef((props,ref) => {
 
     const [dates, setDates] = useState(null)
-
+    const { hash } = useLocation()
 
     const loadDays = daysNumber => {
         let date = new Date()
@@ -54,14 +54,21 @@ const Tickets = props => {
         setDates(loadDays(7))
     }, [])
 
+    const measuredRef = useCallback(node => {
+        if (node !== null) {
+          if(hash === '#tickets'){
+              window.scrollTo(0, node.offsetTop)
+          }
+        }
+      }, []);
 
     if (!dates){
         return <LoadingGif />
     }
 
     return (
-        <div className='movie__tickets'>
-            <h2 className='header header--medium shadow-small'>Shedule and tickets</h2>
+        <div ref={ref} className='movie__tickets'>
+            <h2 ref={measuredRef} className='header header--medium shadow-small'>Shedule and tickets</h2>
             <Link className='button shadow-small' to='/pricing' target="_blank">Pricing</Link>
             <ul className='tickets__list'>
                 {dates.map(date => {
@@ -76,10 +83,10 @@ const Tickets = props => {
                     )
                 })}
             </ul>
-            <button onClick={loadMore}>Load more</button>
+            <button className='button shadow-small' onClick={loadMore}>Load more</button>
         </div>
     )
-}
+})
 
 Tickets.propTypes = {
     screenings: PropTypes.object.isRequired

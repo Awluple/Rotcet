@@ -14,7 +14,7 @@
         left: 100%
     }
 }
-.menu-slider__close {
+.close-button {
     text-align: right;
     svg {
         fill: $silver;
@@ -120,7 +120,7 @@
             width: 90%;
         }
     }
-    .menu-slider__close {
+    .close-button {
         svg {
             width: 60px;
         }
