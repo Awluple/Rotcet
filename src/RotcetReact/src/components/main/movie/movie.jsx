@@ -51,7 +51,6 @@ const Movie = (props) => {
                 }
             ].concat(movie.trailers)
         }
-
         return (
             <div className='movie'>
                 <Details scrollToTickets={scrollToTickets} name={movie.name} description={movie.description} shortDescription={movie.short_description}
@@ -59,7 +58,7 @@ const Movie = (props) => {
                 { movie.images.length > 0 &&
                     <Images images={movie.images} />
                 }
-                { movie.main_trailer || movie.trailers.length > 0 &&
+                { (movie.main_trailer || movie.trailers.length > 0) &&
                     <Trailers trailers={trailers} />
                 }
                 { dates &&

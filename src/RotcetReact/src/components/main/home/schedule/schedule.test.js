@@ -59,7 +59,7 @@ describe('Schedule components tests', () => {
 
     describe('Movie component', () => {
         before(() => {
-            global.wrapper = mount(<Movie movie={movie} />)
+            global.wrapper = mount(<MemoryRouter><Movie movie={movie} /></MemoryRouter>)
         })
         it('renders name', () => {
             assert.isTrue(wrapper.find('h3').contains('Test'), true)
@@ -72,7 +72,7 @@ describe('Schedule components tests', () => {
         })
         it('renders good 2D/3D information with 2D only', () => {
             movie['has_3D'] = false
-            const wrapper = mount(<Movie movie={movie}/>)
+            const wrapper = mount(<MemoryRouter><Movie movie={movie} /></MemoryRouter>)
             assert.isTrue(wrapper.find('p').contains('2D'), true)
         })
         it('renders screening informations with 1 day', () => {
@@ -80,7 +80,7 @@ describe('Schedule components tests', () => {
         })
         it('renders screening informations with 2 days', () => {
             movie['screenings'] = ['2200-02-26T12:09:43Z', '2200-02-27T12:09:43Z']
-            const wrapper = mount(<Movie movie={movie}/>)
+            const wrapper = mount(<MemoryRouter><Movie movie={movie} /></MemoryRouter>)
             assert.lengthOf(wrapper.find(Screening), 2)
         })
     })

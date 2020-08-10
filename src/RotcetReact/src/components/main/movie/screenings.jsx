@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 const Screenings = props => {
     const fillScreenings = (screenings) => {
-        screenings = screenings === null ? [] : screenings
+        screenings = (screenings === null || screenings === undefined) ? [] : screenings
         if(screenings.length >= 6){
             return screenings
         }
