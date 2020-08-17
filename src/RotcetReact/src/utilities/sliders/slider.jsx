@@ -108,7 +108,7 @@ const Slider = props => {
 
     const touchEnd = () => {
         if (smallDevice && props.elementsNumber > 1 && touchPosition !== 0){
-            if (touchStartPosition - touchPosition >= 50 && position / 100 < (props.elementsNumber - 1) / props.elementsOnScreen) { // next
+            if (touchStartPosition - touchPosition >= 50 && position / 100 < Math.floor((props.elementsNumber - 1) / props.elementsOnScreen)) { // next
                 setPosition(position + 100)
             }else if (touchStartPosition - touchPosition <= -50 && position > 0){ // back
                 setPosition(position - 100)
@@ -127,7 +127,7 @@ const Slider = props => {
 
     const mouseEnd = () => {
         if (smallDevice && props.elementsNumber > 1 && touchPosition !== 0){
-            if (touchStartPosition - touchPosition >= 50 && position / 100 < (props.elementsNumber - 1) / props.elementsOnScreen) { // next
+            if (touchStartPosition - touchPosition >= 50 && position / 100 < Math.floor((props.elementsNumber - 1) / props.elementsOnScreen)) { // next
                 setPosition(position + 100)
             }else if (touchStartPosition - touchPosition <= -50 && position > 0){ // back
                 setPosition(position - 100)

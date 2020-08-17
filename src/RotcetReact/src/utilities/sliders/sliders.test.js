@@ -104,6 +104,7 @@ describe('Sliders components tests', () => {
       it('has correct svg for the last element', () => {
         const wrapper = mount(<SliderInfo position={400} elementsNumber={5} elementsOnScreen={1} mouseMove={function(){}} mouseStart={function(){}} mouseEnd={function(){}} />)
         assert.propertyVal(wrapper.find('path').props(), 'd', 'M 11,6 H 7 l 5,-6 5,6 h -4 v 3 h -2 z m 8,5 H 5 v 2 h 14 z')
+        assert.lengthOf(wrapper.find('.slider_info--last'), 1)
       })
   })
 })

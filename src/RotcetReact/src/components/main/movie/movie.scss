@@ -9,6 +9,12 @@
         width: 450px;
         object-fit: contain;
     }
+    h1 {
+        font-weight: 600;
+        font-size: 3em;
+        color: $silver;
+        margin: 20px;
+    }
 }
 
 .movie__description {
@@ -20,12 +26,6 @@
 
     .description__info {
         width: 80%;
-        h1 {
-            font-weight: 600;
-            font-size: 3em;
-            color: $silver;
-            margin: 20px;
-        }
         .description {
             color: white;
 
@@ -98,7 +98,7 @@
 }
 
 .movie__primary_trailer {
-    height: 394;
+    height: 394px;
     text-align: center;
     img {
         width: 700px;
@@ -109,6 +109,7 @@
     }
     .youtube-thumbnail {
         display: inline-block;
+        position: relative;
     }
 }
 .movie__trailers-list {
@@ -224,6 +225,109 @@
     }
 }
 
+@media only screen and (max-width: 1150px) {
+    .movie__details {
+        margin: 0px 2vw;
+
+        img {
+            width: 350px;
+        }
+
+        h1 {
+            font-size: 2.7em !important;
+        }
+
+        p {
+            font-size: 1.2em !important;
+        }
+
+        .button {
+            font-size: 1.5em !important;
+            padding: 0px 30px;
+        }
+    }
+}
+
+@media only screen and (max-width: 900px) {
+    .movie__details {
+        margin: 0px 1vw;
+
+        h1 {
+            font-size: 2.2em !important;
+        }
+
+        p {
+            font-size: 1em !important;
+        }
+    }
+    .description__tickets h3 {
+        font-size: 1.8em !important;
+    }
+    .tickets__day-info {
+        width: 125px;
+        h4 {
+            font-size: 1.4em;
+        }
+        p {
+            font-size: 1.1em;
+        }
+    }
+    .tickets__hours li {
+        width: 55px;
+        height: 32px;
+        margin: 7px;
+    }
+}
+
+@media only screen and (max-width: 700px) {
+    .movie {
+        margin-top: 0px;
+    }
+    .movie__details {
+        @include flex-center(column);
+
+        img {
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 2.5em !important;
+        }
+
+        p {
+            font-size: 1.1em !important;
+        }
+    }
+    .description__tickets {
+        margin-top: 30px !important;
+    }
+    .youtube-thumbnail {
+        width: 100%;
+        img {
+            width: 100%;
+        }
+    }
+    .movie__trailers-list img {
+        width: 45vw;
+    }
+    .movie__primary_trailer {
+        min-height: 150px;
+        height: auto;
+
+        iframe {
+            width: 100%;
+            height: auto;
+            min-height: 250px;
+        }
+    }
+    .movie__list {
+        height: 150px;
+        img {
+            max-height: 120px;
+        }
+    }
+}
+
 @media only screen and (max-width: 600px) {
     .movie__list {
         li {
@@ -232,6 +336,41 @@
             img {
                 width: 90%;
             }
+        }
+    }
+    .tickets__day-info {
+        width: 20vw;
+        h4 {
+            font-size: 3.5vw;
+            margin: -4px;
+        }
+        p {
+            font-size: 2.2vw;
+        }
+    }
+    .tickets__hours li {
+        width: 9vw;
+        height: 5vw;
+        margin: 1vw;
+        font-size: 3vw;
+    }
+
+    .movie__tickets .button {
+        font-size: 1.3em !important;
+        padding: 0px 45px !important;
+    }
+}
+
+@media only screen and (max-width: 400px) {
+    .movie__details {
+        img {
+            width: 100vw;
+        }
+    }
+    .movie__list {
+        height: 120px;
+        img {
+            max-height: 120px;
         }
     }
 }
