@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import {Link} from 'react-router-dom'
 
-import MenuSlider from 'utilities/hoc/menuSlider.jsx'
+import MenuSlider from 'utilities/sliders/menuSlider.jsx'
 
 const UserSlider = () => {
 

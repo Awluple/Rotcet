@@ -59,6 +59,9 @@ a {
     &-small {
         box-shadow: 0px 5px 4px 0px rgba(0,0,0,0.5);
     }
+    &-tiny {
+        box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.5);
+    }
 }
 
 @media only screen and (min-width: 2100px) {

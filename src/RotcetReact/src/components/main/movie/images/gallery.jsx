@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 import PropTypes from 'prop-types'
 import { useRouteMatch, Link } from "react-router-dom";
 
-import Slider from 'utilities/hoc/slider.jsx'
+import Slider from 'utilities/sliders/slider.jsx'
 
 const Gallery = props => {
     const match = useRouteMatch();

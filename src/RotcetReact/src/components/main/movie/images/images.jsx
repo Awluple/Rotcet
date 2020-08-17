@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Route, Switch, useRouteMatch, Link, Redirect, useLocation } from "react-router-dom";
 
-import Slider from 'utilities/hoc/slider.jsx'
+import Slider from 'utilities/sliders/slider.jsx'
 
 import Gallery from './gallery.jsx'
 

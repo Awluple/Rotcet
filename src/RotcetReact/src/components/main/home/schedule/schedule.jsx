@@ -5,7 +5,7 @@ import axios from 'axios'
 import {addZeroForBelowTen} from 'utilities/tools/tools.js'
 
 import Movie from './movie.jsx'
-import Slider from 'utilities/hoc/slider.jsx'
+import Slider from 'utilities/sliders/slider.jsx'
 import LoadingGif from 'media/gifs/loading.jsx'
 
 class Schedule extends Component {
@@ -46,7 +46,7 @@ class Schedule extends Component {
             <h2 className='main_section_header'>SCHEDULE</h2>
             <Slider elementsNumber={this.state.movies ? this.state.movies.length : 0}
             listClassName={'schedule__movies' + (this.state.movies === null || (this.state.movies && this.state.movies.length === 0) ? ' schedule__movies--no_movies' : '')}
-            containerClassName='schedule__container shadow-big'
+            containerClassName='schedule__container shadow-small'
             sliderInfoClassName='schedule_slider_info'>
                 { this.state.movies !== null ? 
                     this.state.movies.length > 0 ? 

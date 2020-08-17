@@ -31,7 +31,7 @@ const Trailers = props => {
 
     return (
         <div className='movie__trailers'>
-            <h2 className='header header--medium shadow-small'>Watch trailers</h2>
+            <h2 className='header header--medium shadow-tiny'>Watch trailers</h2>
             <div className='movie__primary_trailer'>
                 { videoPlay ? 
                     <YouTube videoId={primaryTrailer.trailer}

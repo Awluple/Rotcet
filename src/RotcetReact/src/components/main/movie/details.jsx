@@ -16,7 +16,7 @@ const Details = props => {
                 {props.tickets ? 
                     <div className='description__tickets'>
                                 <h3>On screen!</h3>
-                                <button onClick={props.scrollToTickets} className='button shadow-small'>Tickets and shedule</button>
+                                <button onClick={props.scrollToTickets} className='button shadow-tiny'>Tickets and shedule</button>
                     </div>
                 : 
                     null

@@ -188,6 +188,14 @@
             background: #424242 !important;
         }
     }
+    &__button {
+        background: $darker-red !important;
+        font-weight: 400 !important;
+
+        &:hover {
+            background: $main-red !important;
+        }
+    }
 }
 
 
@@ -196,15 +204,16 @@
     top: 0px;
     height: 100%;
     width: 100%;
+    max-width: 2100px;
     z-index: 10010;
-    align-items: none;
     @include flex-center(column);
+    justify-content: space-between;
     align-items: unset;
-    background: rgba($color: $main-red, $alpha: 0.85)
+    background: rgba($color: $main-red, $alpha: 0.85);
 }
 .gallery__main-image {
     @include flex-center(column);
-    height: 70%;
+    height: 50%;
     margin-bottom: 20px;
     img {
         max-width: 90%;
