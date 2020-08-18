@@ -12,6 +12,7 @@ import Tickets from './tickets.jsx'
 const Movie = (props) => {
     const [movie, setMovie] = useState(null)
     const [dates, setDates] = useState(null)
+    const [trailers, setTrailers] = useState(null)
 
     const tickets = useRef(null)
 
@@ -20,7 +21,8 @@ const Movie = (props) => {
         .then(res => {
             const movie = res.data
             setMovie(movie)
-
+            document.title = movie.name
+            // get screenings dates if the movie has any
             if(movie.screenings.length > 0 && movie.tickets_sale_date){
                 let dates = toDateObjects(movie.screenings)
                 dates = organizeScreenings(dates)
@@ -40,7 +42,10 @@ const Movie = (props) => {
         document.documentElement.style.scrollBehavior = 'auto'
     }
 
-    if(movie){
+    useEffect(() => {
+        if(movie === null) return
+
+        // add main trailer to trailers array
         let trailers = movie.trailers
         if (movie.main_trailer){
             trailers = [
@@ -51,6 +56,10 @@ const Movie = (props) => {
                 }
             ].concat(movie.trailers)
         }
+        setTrailers(trailers)
+    }, [movie])
+
+    if(movie){
         return (
             <div className='movie'>
                 <Details scrollToTickets={scrollToTickets} name={movie.name} description={movie.description} shortDescription={movie.short_description}
@@ -58,7 +67,7 @@ const Movie = (props) => {
                 { movie.images.length > 0 &&
                     <Images images={movie.images} />
                 }
-                { (movie.main_trailer || movie.trailers.length > 0) &&
+                { (movie.main_trailer || movie.trailers.length > 0) && trailers &&
                     <Trailers trailers={trailers} />
                 }
                 { dates &&

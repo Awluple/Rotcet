@@ -1,11 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
 
 const Movie = props => {
     return (
         <div className='upcoming__movie'>
-            <img src={props.movie.thumbnail} alt="movie image"/>
-            <p>{props.movie.name}</p>
+            <Link to={`/movie/${props.movie.name}-${props.movie.id}`}>
+                <img src={props.movie.thumbnail} alt="movie image"/>
+                <p>{props.movie.name}</p>
+            </Link>
         </div>
     )
 }

@@ -23,7 +23,7 @@ const Upcoming = () => {
     const handleScroll = () => {
         let screenBottomPosition = window.pageYOffset + window.innerHeight
         let elementPosition = upcomingRef.current.offsetTop
-        if (screenBottomPosition - elementPosition > -700) { // if screen position to the element is less than 700px 
+        if (screenBottomPosition - elementPosition > -700) { // load if screen position to the element is less than 700px 
             window.removeEventListener('scroll', handleScroll);
             getMovies().then(data => {
                 setUpcoming(data)

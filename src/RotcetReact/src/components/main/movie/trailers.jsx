@@ -25,6 +25,7 @@ const Trailers = props => {
         }
     }, [videoPlay, clickedOnceOrChanged])
 
+    // delete primaryTrailer from the trailers
     const trailers = props.trailers.filter((trailer) => {
         return trailer.id !== primaryTrailer.id
     })

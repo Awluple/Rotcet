@@ -34,7 +34,7 @@ const Movie = props => {
     const onPlayerReady = event => {
         event.target.playVideo()
     }
-
+    console.log(props.movie)
     return (
         <div className={'highlight_movie' + ((props.movie.main_trailer === null) ? ' highlight_movie--no_trailer' : '') + ((props.index === 1) ? ' highlight_movie--left' : '') }>
             {   smallDevice && 
@@ -66,7 +66,11 @@ const Movie = props => {
                     }
                     <p>{props.movie.short_description}</p>
                 </div>
-                <Link className='button shadow-tiny' to={`/movie/${props.movie.name}-${props.movie.id}#tickets`}>Tickets</Link>
+                { props.movie.screenings.length !== 0 ? 
+                    <Link className='button shadow-tiny' to={`/movie/${props.movie.name}-${props.movie.id}#tickets`}>Tickets</Link>
+                :
+                    <Link className='button shadow-tiny' to={`/movie/${props.movie.name}-${props.movie.id}`}>See details</Link>
+                }
             </div>
         </div>
     )

@@ -1,5 +1,9 @@
 .movie {
     margin-top: 50px;
+
+    .loading_gif {
+        max-height: 40vw;
+    }
 }
 .movie__details {
     display: flex;
@@ -205,7 +209,7 @@
     top: 0px;
     height: 100%;
     width: 100%;
-    max-width: 2100px;
+    max-width: 2560px;
     z-index: 10010;
     @include flex-center(column);
     justify-content: space-between;
@@ -222,6 +226,12 @@
         width: auto;
         height: auto;
         object-fit: fill;
+    }
+}
+
+@media only screen and (min-width: 1921px) {
+    .movie .movie__description {
+        width: 1200px;
     }
 }
 
@@ -311,7 +321,7 @@
         width: 45vw;
     }
     .movie__primary_trailer {
-        min-height: 150px;
+        min-height: 60vw;
         height: auto;
 
         iframe {
@@ -325,6 +335,9 @@
         img {
             max-height: 120px;
         }
+    }
+    .movie__description {
+        margin-left: 0px;
     }
 }
 
@@ -354,17 +367,13 @@
         margin: 1vw;
         font-size: 3vw;
     }
-
-    .movie__tickets .button {
-        font-size: 1.3em !important;
-        padding: 0px 45px !important;
-    }
 }
 
 @media only screen and (max-width: 400px) {
     .movie__details {
         img {
             width: 100vw;
+            max-height: 100vw;
         }
     }
     .movie__list {

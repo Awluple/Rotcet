@@ -83,7 +83,9 @@ const Tickets = React.forwardRef((props,ref) => {
                     )
                 })}
             </ul>
-            <button className='button shadow-tiny' onClick={loadMore}>Load more</button>
+            { dates.length < 18 && 
+                <button className='button shadow-tiny' onClick={loadMore}>Load more</button>
+            }
         </div>
     )
 })

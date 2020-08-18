@@ -9,14 +9,14 @@ const Article = props => {
     return (
         <div className='news__article'>
             { !smallDevice &&
-                <div className='article--image'>
+                <div className='article__image'>
                     <Link to='/'><img src={props.article.image ? props.article.image : props.article.thumbnail } alt='Article image' /></Link>
                 </div>
             }
-            <div className='article--content'>
+            <div className='article__content'>
                 <Link to='/'><h4>{props.article.title}</h4></Link>
                 { smallDevice &&
-                    <div className='article--image'>
+                    <div className='article__image'>
                         <Link to='/'><img src={props.article.image ? props.article.image : props.article.thumbnail } alt='Article image' /></Link>
                     </div>
                 }

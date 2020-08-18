@@ -27,8 +27,8 @@ const Images = props => {
                 }
             </Slider>
             <Switch>
-                <Redirect from="/:url*(/+)" to={pathname.slice(0, -1)} /> remove trailing slash which breaks gallery links
-                <Route path={`${match.url}/images-:imageId`} render={ () => <Gallery url={match.url} images={props.images} />} />
+                <Redirect from="/:url*(/+)" to={pathname.slice(0, -1)} /> remove trailing slash which breaks gallery links  {/* delete trailing slash */}
+                <Route path={`${match.url}/images-:imageId`} render={ () => <Gallery url={match.url} images={props.images} />} /> 
             </Switch>
             
         </div>

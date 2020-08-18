@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 
 const Screenings = props => {
     const fillScreenings = (screenings) => {
+        // makes 6 spaces for hour of screenings. I should used table...
         screenings = (screenings === null || screenings === undefined) ? [] : screenings
         if(screenings.length >= 6){
             return screenings

@@ -64,14 +64,14 @@ a {
     }
 }
 
-@media only screen and (min-width: 2100px) {
+@media only screen and (min-width: 2560px) {
     body {
         background: #273642;
         display: flex;
         justify-content: center
     }
     .App {
-        width: 2100px;
+        width: 2560px;
         box-shadow: 0px 0px 20px 9px rgba(0,0,0,0.5);
         background: #151d23;
     }
@@ -101,6 +101,21 @@ a {
         &--medium {
             margin: 10px 0px;
             padding: 4px 0px;
+        }
+    }
+    .button {
+        font-size: 1.3em !important;
+        padding: 0px 45px !important;
+    }
+}
+
+@media only screen and (max-width: 400px) {
+    .header {
+        &--big {
+            font-size: 2.1em;
+        }
+        &--medium {
+            font-size: 1.8em;
         }
     }
 }

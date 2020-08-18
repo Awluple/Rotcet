@@ -1,7 +1,8 @@
 import React from 'react';
-import { configure, shallow } from 'enzyme';
+import { configure, shallow, mount } from 'enzyme';
 import { assert } from 'chai';
 import Adapter from 'enzyme-adapter-react-16'
+import { MemoryRouter } from 'react-router-dom'
 
 import Upcoming from './upcoming.jsx'
 import Movie from './movie.jsx'
@@ -24,7 +25,7 @@ describe('Upcoming components tests', () => {
     });
     describe('Movie component', () => {
         before(() => {
-            global.wrapper = shallow(<Movie movie={movie} />)
+            global.wrapper = mount(<MemoryRouter><Movie movie={movie} /></MemoryRouter>)
         })
         it('renders data', () => {
             assert.equal(wrapper.find('p').text(), 'Test 1')

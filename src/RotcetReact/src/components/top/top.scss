@@ -21,6 +21,7 @@
         padding: 0.8em;
         display: block;
         font-family: $content-font;
+        transition: margin-bottom 0.3s;
 
         &:hover {
             text-decoration: underline;
@@ -28,6 +29,9 @@
     }
     .selected {
         pointer-events: none;
+        text-decoration: overline;
+        margin-bottom: -20px;
+
     }
 }
 .slider__ul {

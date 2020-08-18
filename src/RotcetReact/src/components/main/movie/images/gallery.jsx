@@ -9,6 +9,7 @@ const Gallery = props => {
     const [image, setImage] = useState(null)
 
     const changeImage = (id) => {
+        // sets new main image
         let image = props.images.filter(image => {
             return image.id == id
         })[0]
@@ -16,6 +17,7 @@ const Gallery = props => {
     }
     
     useEffect(() => {
+        // sets the main image which has the same id as in url
         let image = props.images.filter(image => {
             return image.id == match.params.imageId
         })[0]
@@ -23,6 +25,7 @@ const Gallery = props => {
     }, [])
 
     useEffect(() => {
+        // disable scrolling when gallery is visable
         document.body.style.overflow = 'hidden';
         return () => {
             document.body.style.overflow = 'auto';
