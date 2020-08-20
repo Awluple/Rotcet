@@ -1,0 +1,21 @@
+{% extends "user_form.html" %}
+
+{% block form %}
+{{ form.non_field_errors }}
+
+{{ form.source.errors }}
+{{ form.source }}
+<form method="post" action="{% url 'user:register' %}">
+        {% csrf_token %}
+        {{ form.email.errors }}
+        {{ form.email }}
+
+        {{ form.password1.errors }}
+        {{ form.password1 }}
+
+        {{ form.password2.errors }}
+        {{ form.password2 }}
+
+        <button type='submit' value="Submit">Register</button>
+</form>
+{% endblock %}

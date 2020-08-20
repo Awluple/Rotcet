@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'user.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="root">
+        <a class="home_button" href="/">Home</a>
+        <img class="logo" src="{% static 'images/logo.png' %}" alt="logo">
+        <div class="user_form">
+            {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            {% block form %}
+                <link rel="stylesheet" href="{% static 'user.css' %}">
+            {% endblock %}
+        </div>
+    </div>
+{% endblock %}
+
