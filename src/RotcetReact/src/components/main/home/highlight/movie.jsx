@@ -34,7 +34,6 @@ const Movie = props => {
     const onPlayerReady = event => {
         event.target.playVideo()
     }
-    console.log(props.movie)
     return (
         <div className={'highlight_movie' + ((props.movie.main_trailer === null) ? ' highlight_movie--no_trailer' : '') + ((props.index === 1) ? ' highlight_movie--left' : '') }>
             {   smallDevice && 
