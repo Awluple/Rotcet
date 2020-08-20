@@ -3,7 +3,7 @@ import {NavLink} from 'react-router-dom'
 
 const Nav = () => {
     return (
-        <div className='nav shadow-medium'>
+        <div className='nav shadow-tiny'>
             <ul>
                 <li><NavLink activeClassName="selected" exact to="/">Home</NavLink></li>
                 <li><NavLink activeClassName="selected" to="/calendar">Programme</NavLink></li>

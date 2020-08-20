@@ -11,10 +11,8 @@ import MockAdapter from 'axios-mock-adapter'
 
 import Schedule from './schedule.jsx'
 import Movie from './movie.jsx'
-import MoviesList from './moviesList.jsx'
 import Screening from './screenings.jsx'
 
-import LoadingGif from 'media/gifs/loading.jsx'
 
 configure({ adapter: new Adapter() });
 
@@ -61,7 +59,7 @@ describe('Schedule components tests', () => {
 
     describe('Movie component', () => {
         before(() => {
-            global.wrapper = mount(<Movie movie={movie} />)
+            global.wrapper = mount(<MemoryRouter><Movie movie={movie} /></MemoryRouter>)
         })
         it('renders name', () => {
             assert.isTrue(wrapper.find('h3').contains('Test'), true)
@@ -74,7 +72,7 @@ describe('Schedule components tests', () => {
         })
         it('renders good 2D/3D information with 2D only', () => {
             movie['has_3D'] = false
-            const wrapper = mount(<Movie movie={movie}/>)
+            const wrapper = mount(<MemoryRouter><Movie movie={movie} /></MemoryRouter>)
             assert.isTrue(wrapper.find('p').contains('2D'), true)
         })
         it('renders screening informations with 1 day', () => {
@@ -82,7 +80,7 @@ describe('Schedule components tests', () => {
         })
         it('renders screening informations with 2 days', () => {
             movie['screenings'] = ['2200-02-26T12:09:43Z', '2200-02-27T12:09:43Z']
-            const wrapper = mount(<Movie movie={movie}/>)
+            const wrapper = mount(<MemoryRouter><Movie movie={movie} /></MemoryRouter>)
             assert.lengthOf(wrapper.find(Screening), 2)
         })
     })
@@ -101,28 +99,6 @@ describe('Schedule components tests', () => {
         it('renders screenings hours', () => {
             assert.lengthOf(wrapper.find('li'), 3)
             assert.equal(wrapper.find('li').at(0).text(), '9:10')
-        })
-    })
-
-
-    describe('MoviesList component', () => {
-        before(() => {
-            global.wrapper = mount(<MoviesList movies={[movie, movie2]} />)
-        })
-        it('renders loading when no movies yet', () => {
-            wrapper = shallow(<MoviesList movies={null} />)
-            assert.lengthOf(wrapper.find(LoadingGif), 1)
-        })
-        it('renders info when no movies', () => {
-            wrapper = mount(<MoviesList movies={[]} />)
-            assert.equal(wrapper.find('.schedule__movies').find('h2').text(), 'Sorry, there are no screenings for now')
-        })
-        it('renders movies', () => {
-            wrapper = mount(<MoviesList movies={[movie, movie2]} />)
-            assert.lengthOf(wrapper.find(Movie), 2)
-        })
-        it('has position set on list', () => {
-            assert.propertyVal(wrapper.find('ul').get(0).props.style, 'right', '0px')
         })
     })
 })

@@ -2,7 +2,7 @@
     display: inline-flex;
     flex-direction: column;
     width: 69%; 
-    .article--content {
+    .article__content {
         a {
             align-self: center;
             margin-top: 50px;
@@ -33,7 +33,7 @@
             font-size: 1.3em;
         }
 
-        .article--image {
+        .article__image {
             text-align: center;
             flex: 0 0 25%;
             img {
@@ -45,7 +45,7 @@
             }
         }
 
-        .article--content {
+        .article__content {
             margin-left: 50px;
             a {
                 display: inline-block;
@@ -60,9 +60,15 @@
     }
 }
 
+@media only screen and (min-width: 1921px) {
+    .article__image img {
+        width: 65% !important;
+    }
+}
+
 @media only screen and (max-width: 1500px) {
     .home__news {
-        .article--image {
+        .article__image {
             align-self: center;
         }
         .news__article {
@@ -102,13 +108,13 @@
                 border-bottom: 0px !important;
             }
         }
-        .article--content {
+        .article__content {
             margin: 0px 15px !important;
             a {
                 width: 100%
             }
         }
-        .article--image {
+        .article__image {
             margin: 10px 0px;
             a {
                 padding: 0px;

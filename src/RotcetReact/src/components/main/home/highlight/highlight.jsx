@@ -13,7 +13,7 @@ const Highlight = () => {
         return axios.get('/api/movies', {
             params: {
                 'highlight': true,
-                'fields': 'id,name,main_trailer,thumbnail,short_description,trailer_thumbnail'
+                'fields': 'id,name,main_trailer,thumbnail,short_description,trailer_thumbnail,screenings'
             }
         }).then(
             res => { return res.data.results }

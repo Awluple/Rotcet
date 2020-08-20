@@ -1,0 +1,136 @@
+.menu-slider{
+    transition: left 0.1s linear;
+    position: fixed;
+    z-index: 1005;
+    background: $main-red;
+    height: 100%;
+    width: 100%;
+    text-align: center;
+
+    &--left {
+        left: -100%
+    }
+    &--right {
+        left: 100%
+    }
+}
+.close-button {
+    text-align: right;
+    svg {
+        fill: $silver;
+        width: 75px;
+        margin: 20px;
+    }
+}
+
+.menu-slider__ul {
+    padding: 0px;
+    list-style: none;
+    @include flex-center(column);
+    li {
+        width: 65%;
+        border-bottom: 5px solid $darker-red;
+        &:first-child {
+            border-top: 5px solid $darker-red;
+        }
+    }
+    a {
+        font-family: $content-font;
+        font-size: 2.5em;
+        color: $silver;
+        text-decoration: none;
+        padding: 0.2em;
+        display: block;
+        
+    }
+}
+
+.slider__list {
+    position: relative;
+    list-style: none;
+    padding: 0px;
+    @include flex-center(row, true);
+    justify-content: flex-start;
+    align-items: stretch;
+    transition: right 0.3s linear;
+
+    .loading_gif {
+        width: 150px;
+    }
+    
+
+}
+.slider {
+    text-align: left;
+    overflow: hidden;
+    position: relative;
+    background: $main-red;
+
+    svg {
+        width: 50px;
+    }
+    button {
+        @include delete-border;
+        padding: 15px;
+        border-radius: 50%;
+        position: absolute;
+        top: calc(50% - 50px);
+        background: $darker-red;
+        opacity: 0.6;
+        z-index: 1001;
+
+        &:first-child {
+            left: 20px;
+            transform: scaleX(-1);
+        }
+
+        &:last-child {
+            right: 20px;
+        }
+
+        &:hover {
+            opacity: 1;
+        }
+    }
+}
+.slider_info {
+    text-align: center;
+    background: $darker-red;
+    border-radius: 50px;
+    margin: 5px 0px;
+    cursor: grab;
+    svg {
+        fill: $darker-silver;
+        transform: rotate(90deg);
+        width: 50px;
+    }
+    &--last {
+        svg {
+            transform: rotate(-90deg);
+        }
+    }
+    &:active {
+        cursor: grabbing;
+    }
+
+}
+@media only screen and (max-width: 720px) {
+    .menu-slider__ul {
+        li {
+            width: 90%;
+        }
+    }
+    .close-button {
+        svg {
+            width: 60px;
+        }
+    }
+  }
+
+  @media only screen and (max-width: 600px) {
+    .slider {
+        button {
+            display: none;
+        }      
+    }
+}

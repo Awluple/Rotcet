@@ -48,6 +48,18 @@
 
 }
 
+
+@media only screen and (min-width: 1921px) {
+    .informations__buttons {
+        &-big {
+            width: 70%;
+        }
+        &-small {
+            width: 40%
+        }
+    }
+}
+
 @media only screen and (max-width: 1500px) {
     .informations {
         width: 23%;

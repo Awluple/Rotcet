@@ -17,7 +17,7 @@ const Dates = props => {
                     const year = date.getUTCFullYear()
                     const month = addZeroForBelowTen(date.getUTCMonth() + 1)
                     const day = addZeroForBelowTen(date.getUTCDate())
-                    return <li className={'shadow-small' + (props.selectedDate === `${day}.${month}.${year}` ? ' selected' : '')} key={date.getUTCDate()} 
+                    return <li className={'shadow-tiny' + (props.selectedDate === `${day}.${month}.${year}` ? ' selected' : '')} key={date.getUTCDate()} 
                     onClick={() => {props.getScreenings(year, month, day)}}>{`${day}.${month}.${year}`}</li>
                 })}
             </ul>

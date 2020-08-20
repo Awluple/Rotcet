@@ -28,44 +28,9 @@
     overflow: hidden;
     position: relative;
     background: $main-red;
-
-    svg {
-        width: 50px;
-    }
-    button {
-        @include delete-border;
-        padding: 15px;
-        border-radius: 50%;
-        position: absolute;
-        top: calc(50% - 50px);
-        background: $darker-red;
-        opacity: 0.6;
-        z-index: 1001;
-
-        &:first-child {
-            left: 20px;
-            transform: scaleX(-1);
-        }
-
-        &:last-child {
-            right: 20px;
-        }
-
-        &:hover {
-            opacity: 1;
-        }
-    }
 }
 
 .schedule__movies {
-    position: relative;
-    list-style: none;
-    padding: 0px;
-    @include flex-center(row, true);
-    justify-content: flex-start;
-    align-items: stretch;
-    transition: right 0.3s linear;
-
     &--no_movies {
         height: 250px;
         @include flex-center(row);
@@ -75,9 +40,6 @@
             font-weight: 100;
             font-size: 3em;
             text-align: center;
-        }
-        .loading_gif {
-            width: 150px;
         }
     }
 
@@ -102,7 +64,7 @@
     }
 }
 
-.movie__all_times {
+.movies__all_times {
     padding-top: 10px;
     text-align: right;
     margin-top: auto;
@@ -117,13 +79,13 @@
         background: $darker-silver;
     }
 }
-.movie__details {
+.movies__details {
     display: flex;
     img {
         width: 250px;
     }
 }
-.movie__screenings {
+.movies__screenings {
     text-align: center;
     margin-left: 20px;
     p {
@@ -162,28 +124,6 @@
 }
 }
 
-.schedule_slider_info {
-    text-align: center;
-    background: $darker-red;
-    border-radius: 50px;
-    margin: 5px 0px;
-    cursor: grab;
-    svg {
-        fill: $darker-silver;
-        transform: rotate(90deg);
-        width: 50px;
-    }
-    &--last {
-        svg {
-            transform: rotate(-90deg);
-        }
-    }
-    &:active {
-        cursor: grabbing;
-    }
-
-}
-
 @media only screen and (max-width: 1024px) {
     .schedule {
         .movie__image img {
@@ -196,10 +136,10 @@
                 font-size: 2em;
             }
         }
-        .movie__screenings {
+        .movies__screenings {
             margin-left: 5px;
         }
-        .movie__all_times {
+        .movies__all_times {
             user-select: none;
             margin-right: 10px;
             a {
@@ -226,7 +166,7 @@
         button {
             display: none;
         }
-        .movie__image {
+        .movies__image {
             display: flex;
             align-items: center;
             img {
@@ -244,10 +184,10 @@
                 font-size: 2em;
             }
         }
-        .movie__details {
+        .movies__details {
             justify-content: space-around;
         }
-        .movie__all_times {
+        .movies__all_times {
             text-align: center;
             a {
                 font-size: 1.4em;

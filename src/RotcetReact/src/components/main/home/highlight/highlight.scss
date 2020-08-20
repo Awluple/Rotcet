@@ -100,6 +100,12 @@
         margin-left: 0%;
     }
 }
+
+@media only screen and (min-width: 1921px) {
+    .highlight_movie .movie__description {
+        width: 22% !important;
+    }
+}
 @media only screen and (max-width: 1200px) {
     .highlight_movie--left .movie__graphic {
         text-align: right
@@ -145,7 +151,7 @@
             margin: 0px !important;
         }
         .movie__graphic {
-            margin: 0px;
+            margin: 0px !important;
         }
     }
 }
@@ -169,5 +175,14 @@
         .movie__trailer_thumbnail img {
             object-fit: contain;
         }
+    }
+    .movie__graphic--no_trailer_image {
+        height: auto !important;
+        width: auto !important;
+        max-width: 100%;
+    }
+    .movie__graphic, .movie__trailer_thumbnail img {
+        height: auto !important;
+        min-height: 60vw;
     }
 }

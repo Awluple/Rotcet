@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import {Link} from 'react-router-dom'
 
-import Slider from 'utilities/hoc/slider.jsx'
+import MenuSlider from 'utilities/sliders/menuSlider.jsx'
 
 const UserSlider = () => {
 
@@ -16,12 +16,12 @@ const UserSlider = () => {
             </div>
             
             {clicked && 
-                <Slider from='right' close={setClicked}>
-                    <ul className='slider__ul'>
+                <MenuSlider from='right' close={setClicked}>
+                    <ul className='menu-slider__ul'>
                         <li><a href="/login">Login</a></li>
                         <li><a href="/register">Register</a></li>
                     </ul>
-                </Slider>
+                </MenuSlider>
             }
         </React.Fragment>
     )

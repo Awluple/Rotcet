@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
+import { Link } from "react-router-dom";
 
 import {toDateObjects, organizeScreenings} from 'utilities/screenings/scripts.js'
 
@@ -29,18 +30,22 @@ const Movie = props => {
             setScreeningsDates({day1: day1})
         }
     }, [])
-    
+    // to={`/movie/${props.movie.name}-${props.movie.id}#tickets`}
     if (screeningsDates){
         return (
             <li className='movies__movie'>
-                <h3>{props.movie.name}</h3>
-                <div className='movie__details'>
+                <Link to={`/movie/${props.movie.name}-${props.movie.id}`}>
+                    <h3>{props.movie.name}</h3>
+                </Link>
+                <div className='movies__details'>
 
-                    <div className='movie__image'>
-                        <img src={props.movie.thumbnail} alt="movie image"/>
+                    <div className='movies__image'>
+                        <Link to={`/movie/${props.movie.name}-${props.movie.id}`}>
+                            <img src={props.movie.thumbnail} alt="movie image"/>
+                        </Link>
                     </div>
 
-                    <div className='movie__screenings'>
+                    <div className='movies__screenings'>
                         <p>{props.movie.has_3D ? '2D/3D' : '2D'}</p>
                         <Screenings day={screeningsDates.day1} />
                         {'day2' in screeningsDates &&
@@ -48,8 +53,14 @@ const Movie = props => {
                         }
                     </div>
                 </div>
-                <div className='movie__all_times'>
-                    <a className='shadow-small' href="">All times</a>
+                <div className='movies__all_times'>
+                    <Link className='shadow-small'
+                    to={{
+                        pathname: `/movie/${props.movie.name}-${props.movie.id}`,
+                        hash: "#tickets",
+                      }} >
+                        All times
+                    </Link>
                 </div>
             </li>
             )

@@ -20,7 +20,7 @@ const Screenings = props => {
                             :
                                 <Link className='calendar__screening__img' to=''><img src="/static/images/logo.png" alt="logo"/></Link>
                             }
-                            <Link className='calendar__screening__name' to=''><h3>{screening.name}</h3></Link>
+                            <Link className='calendar__screening__name' to={`/movie/${screening.name}-${screening.show_id}`}><h3>{screening.name}</h3></Link>
                         </div>
                     )
                 })

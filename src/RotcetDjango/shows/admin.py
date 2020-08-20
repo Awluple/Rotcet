@@ -15,6 +15,7 @@ class MovieAdmin(admin.ModelAdmin):
     list_display = ('__str__', 'tickets_sale_date', 'relese_date')
     list_filter = ('highlight', 'has_3D')
     search_fields = ('name', 'tickets_sale_date', 'relese_date')
+    readonly_fields=('thumbnail',)
 
 @admin.register(Marathon)
 class MarathonAdmin(admin.ModelAdmin):
@@ -25,6 +26,7 @@ class MarathonAdmin(admin.ModelAdmin):
 @admin.register(Image)
 class ImageAdmin(admin.ModelAdmin):
     search_fields = ('movie__name',)
+    readonly_fields=('thumbnail',)
 
 @admin.register(Trailer)
 class TrailerAdmin(admin.ModelAdmin):
