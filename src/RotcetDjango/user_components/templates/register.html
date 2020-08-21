@@ -10,12 +10,13 @@
         {{ form.email.errors }}
         {{ form.email }}
 
-        {{ form.password1.errors }}
-        {{ form.password1 }}
+        {{ form.password.errors }}
+        {{ form.password }}
 
-        {{ form.password2.errors }}
-        {{ form.password2 }}
+        {{ form.password_confirmation.errors }}
+        {{ form.password_confirmation }}
 
         <button type='submit' value="Submit">Register</button>
 </form>
+<a href='{% url 'user:login' %}'>Login</a>
 {% endblock %}
