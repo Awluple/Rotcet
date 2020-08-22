@@ -10,7 +10,7 @@ body {
 }
 .user_form {
     background: #942121;
-    width: 60%;
+    padding: 20px 100px;
     margin-top: 50px;
 }
 .home_button {
@@ -26,6 +26,90 @@ body {
     text-align: center;
     border-bottom-right-radius: 30px;
 }
-.logo {
+.user_logo {
     margin-top: 100px;
+}
+.user_form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+.user_form h1 {
+    font-family: 'Lato';
+    letter-spacing: 4px;
+    color: #CDCDCD;
+    margin-bottom: 10px;
+}
+.user_form__image {
+    margin: 20px 0px 10px;
+    fill: #CDCDCD;
+    width: 80px;
+}
+.user_form form {
+    display: inline-block;
+}
+.user_input {
+    background: #CDCDCD;
+    margin: 15px;
+    display: flex;
+    padding: 5px
+}
+.user_input svg {
+    fill: #151d23;
+    margin-right: 5px;
+}
+.user_input input {
+    background: none;
+    outline: none;
+    border: 0px;
+    width: 100%;
+    font-size: 1em;
+}
+.user_form .submit {
+    font-family: 'Lato';
+    letter-spacing: 2px;
+    color: #CDCDCD;
+    background: #151d23;
+    border: 0px;
+    font-size: 1.4em;
+    padding: 7px 23px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+.user_form .submit:hover {
+    background: #0b1115;
+}
+.user_form .link {
+    display: block;
+    color: #CDCDCD;
+    font-family: 'Athiti';
+}
+.errorlist {
+    text-align: left;
+    padding: 0px;
+    list-style-type: none;
+    color: #C4C4C4;
+}
+
+@media only screen and (max-width: 600px) {
+    .user_logo {
+        display: none;
+    }
+    .user_form {
+        margin-top: 100px;
+        width: 100%;
+        max-width: 100%;
+        padding: 20px 0px;
+    }
+    .user_input input {
+        width: 60vw;
+    }
+}
+
+@media only screen and (max-width: 400px) {
+    .user_input input {
+        width: 80vw;
+    }
 }
