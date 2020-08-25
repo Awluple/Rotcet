@@ -3,6 +3,9 @@ from django.test import TestCase
 from django.contrib.auth.models import User
 from django.urls import reverse
 
+from rest_framework import status
+from rest_framework.test import APITestCase
+
 from .forms import UserRegistrationForm
 
 class LoginTestCase(TestCase):
@@ -33,6 +36,17 @@ class LoginTestCase(TestCase):
         self.assertEqual(str(messages[0]), 'Incorrect email or password')
         self.assertFalse(response.context['user'].is_active)
 
+class LogoutTestCase(TestCase):
+
+    def setUp(self):
+        User.objects.create_user(username='test@email.com', email='test@email.com', password='testpassword123')
+        self.url = reverse('user:logout')
+
+    def test_logout(self):
+        self.assertTrue(self.client.login(email='test@email.com', password='testpassword123'))
+
+        response = self.client.get(self.url, follow=True)
+        self.assertFalse(response.context['user'].is_active)
 
 class RegisterTestCase(TestCase):
 
@@ -100,4 +114,23 @@ class RegisterFormTestCase(TestCase):
         }
         form = UserRegistrationForm(data=data)
         self.assertFalse(form.is_valid())
+
+class SessionApiTestCase(APITestCase):
+
+    def setUp(self):
+        self.url = reverse('user:session')
+        User.objects.create_user('test', 'test@rotcet.com', 'testpassword123')
+        
+    def test_returns_true_if_logged(self):
+        
+        self.client.login(email='test@rotcet.com', password='testpassword123')
+        response = self.client.get(self.url)
+
+        self.assertTrue(response.data['logged'])
+
+    def test_returns_false_if_not_logged(self):
+        response = self.client.get(self.url)
+        self.client.logout()
+        
+        self.assertFalse(response.data['logged'])
         

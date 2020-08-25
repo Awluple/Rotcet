@@ -1,11 +1,16 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login as user_login
+from django.contrib.auth import authenticate, login as user_login, logout as user_logout
 from django.contrib.auth.models import User
 from django.contrib import messages
+
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 
 from .forms import UserRegistrationForm
 
 def login(request):
+    if request.user.is_authenticated:
+        return redirect('/')
     if request.method == 'POST':
         email = request.POST['email']
         password = request.POST['password']
@@ -17,14 +22,13 @@ def login(request):
         
         else:
             messages.add_message(request, messages.ERROR, 'Incorrect email or password')
-    
-    if request.method == 'GET' and request.user.is_authenticated:
-        return redirect('/')
 
     return render(request, 'login.html')
 
 
 def register(request):
+    if request.user.is_authenticated:
+        return redirect('/')
     if request.method == 'POST':
         form = UserRegistrationForm(request.POST)
 
@@ -40,3 +44,14 @@ def register(request):
 
     form = UserRegistrationForm()
     return render(request, 'register.html', {'form': form})
+
+def logout(request):
+    user_logout(request)
+    return redirect('/')
+
+@api_view()
+def is_logged(request):
+    if(request.user.is_authenticated):
+        return Response({"logged": True})
+    else:
+        return Response({"logged": False})

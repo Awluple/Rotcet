@@ -86,7 +86,7 @@ body {
     color: #CDCDCD;
     font-family: 'Athiti';
 }
-.errorlist {
+.errorlist, .messages {
     text-align: left;
     padding: 0px;
     list-style-type: none;

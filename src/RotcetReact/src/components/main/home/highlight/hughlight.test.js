@@ -9,6 +9,7 @@ import MockAdapter from 'axios-mock-adapter'
 
 import YouTube from 'utilities/youtube/youtube.jsx';
 import LoadingGif from 'media/gifs/loading.jsx'
+import {Link} from 'react-router-dom'
 
 import Highlight from './highlight.jsx'
 import Movie from './movie.jsx'
@@ -21,21 +22,24 @@ const movie1 = {
     main_trailer: '748321',
     trailer_thumbnail: '/trailer_thumb',
     thumbnail: '/test1.jpg',
-    short_description: 'Test desc 1'
+    short_description: 'Test desc 1',
+    screenings: [1,2,3]
 }
 const movie2 = {
     id: 2,
     name: 'Test 2',
     main_trailer: null,
     thumbnail: '/test2.jpg',
-    short_description: 'Test desc 2'
+    short_description: 'Test desc 2',
+    screenings: []
 }
 const movie3 = {
     id: 3,
     name: 'Test 3',
     main_trailer: '748321',
     thumbnail: '/test3.jpg',
-    short_description: 'Test desc 3'
+    short_description: 'Test desc 3',
+    screenings: [1,2,3]
 }
 
 
@@ -96,6 +100,10 @@ describe('Highlight components tests', () => {
             wrapper.find('.movie__trailer_thumbnail').simulate('click')
             wrapper.update()
             assert.isTrue(wrapper.find(YouTube).exists())
+        })
+        it('displays correct link to movie', () => {
+            assert.equal(wrapper.find(Link).last().props().to, '/movie/Test 1-1#tickets')
+            assert.equal(wrapper2.find(Link).last().props().to, '/movie/Test 2-2')
         })
     })
 });
