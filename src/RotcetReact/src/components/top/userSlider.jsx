@@ -1,11 +1,13 @@
-import React, {useState} from 'react'
-import {Link} from 'react-router-dom'
+import React, {useState, useContext} from 'react'
+import {NavLink} from 'react-router-dom'
 
+import { UserContext } from 'utilities/contexts.js'
 import MenuSlider from 'utilities/sliders/menuSlider.jsx'
 
 const UserSlider = () => {
 
     const [clicked, setClicked] = useState(false)
+    const userLogged = useContext(UserContext)
 
     return (
         <React.Fragment >
@@ -17,10 +19,18 @@ const UserSlider = () => {
             
             {clicked && 
                 <MenuSlider from='right' close={setClicked}>
+                { userLogged ? 
+                    <ul className='menu-slider__ul'>
+                        <li><NavLink exact to="/account">My account</NavLink></li>
+                        <li><NavLink exact to="/account/tickets">My tickets</NavLink></li>
+                        <li><a href="/logout">Logout</a></li>
+                    </ul>
+                :  
                     <ul className='menu-slider__ul'>
                         <li><a href="/login">Login</a></li>
                         <li><a href="/register">Register</a></li>
                     </ul>
+                }
                 </MenuSlider>
             }
         </React.Fragment>
