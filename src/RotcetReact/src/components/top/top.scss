@@ -14,6 +14,9 @@
         list-style: none;
         padding: 0.8em;
     }
+    li {
+        border: 2px solid $main-red;
+    }
     a {
         color: $silver;
         text-decoration: none;
