@@ -11,10 +11,7 @@ from pathlib import Path
 from PIL import Image as PILImage
 from django.core.files.uploadedfile import InMemoryUploadedFile
 
-from django.contrib import messages
-from django.core.exceptions import ValidationError
 from django.utils.translation import gettext as _
-import re
 
 def handle_test_file(path, filename):
     if re.match('test_+', filename):
