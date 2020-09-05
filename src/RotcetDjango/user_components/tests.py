@@ -35,6 +35,17 @@ class LoginTestCase(TestCase):
         self.assertEqual(len(messages), 1)
         self.assertEqual(str(messages[0]), 'Incorrect email or password')
         self.assertFalse(response.context['user'].is_active)
+    
+    def test_next(self):
+        url = '/login/?next=test/1'
+
+        response = self.client.post(url, data={
+            'email': 'test@email.com',
+            'password': 'testpassword123',
+        }, follow=True)
+        
+        self.assertRedirects(response, '/test/1/')
+
 
 class LogoutTestCase(TestCase):
 

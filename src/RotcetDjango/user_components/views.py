@@ -17,13 +17,30 @@ def login(request):
         user = authenticate(request, email=email, password=password)
         if user is not None:
             user_login(request, user)
-
-            return redirect('/')
+            # redirects to the page given in next
+            if 'next' in request.GET:
+                return redirect('/'+request.GET['next'])
+            elif 'next' in request.POST:
+                return redirect(request.POST['next'])
+            else:
+                return redirect('/')
         
         else:
             messages.add_message(request, messages.ERROR, 'Incorrect email or password')
 
-    return render(request, 'login.html')
+    context = {
+        'next': None
+    }
+    # adds next to the context and adds it as hidden form button in template
+    if 'next' in request.GET:
+        context['next'] = request.GET['next']
+    elif 'next' in request.POST:
+        context['next'] = request.POST['next']
+    
+    if 'login_required' in request.GET:
+        messages.add_message(request, messages.INFO, 'You must be logged in to continue')
+
+    return render(request, 'login.html', context=context)
 
 
 def register(request):
