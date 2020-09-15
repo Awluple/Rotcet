@@ -13,7 +13,6 @@ def room_scheme_path(instance, filename):
 class Room(models.Model):
     number = models.PositiveSmallIntegerField(unique=True)
     seats = models.PositiveSmallIntegerField()
-    room_scheme = models.FileField(upload_to=room_scheme_path, validators=[FileExtensionValidator(['html'])])
 
     def __str__(self):
         return str(self.number)

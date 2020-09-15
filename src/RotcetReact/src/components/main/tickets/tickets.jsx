@@ -3,10 +3,15 @@ import {useParams} from 'react-router-dom'
 import axios from 'axios'
 
 import { UserContext } from 'utilities/contexts.js'
+import LoadingGif from 'media/gifs/loading.jsx'
+
+import Info from './info.jsx'
+import Canvas from './canvas.jsx'
 
 const Tickets = () => {
     const userLoggedContext = useContext(UserContext)
     const [userLogged, setUserLogged] = useState(false)
+    const [screening, setScreening] = useState(null)
     const params = useParams()
 
     useEffect(() => {
@@ -25,10 +30,27 @@ const Tickets = () => {
         }
     }, [])
 
+    useEffect(() => {
+        if(userLogged){
+            axios.get(`/api/screenings/${params.screeningId}`).then(res => {
+                setScreening(res.data)
+            })
+        }
+    }, [userLogged])
+    console.log(screening)
+
+    if(screening === null){
+        return (
+            <div>
+                <LoadingGif />
+            </div>
+        )
+    }
+
     return (
-        <div>
-            <h1>Tickets</h1>
-            <h2>{params.screeningId}</h2>
+        <div className='tickets'>
+            <Info name={screening.name} date={screening.date} />
+            <Canvas occupied={screening} />
         </div>
     )
 }
