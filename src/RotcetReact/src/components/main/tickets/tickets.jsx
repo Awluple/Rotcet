@@ -6,7 +6,7 @@ import { UserContext } from 'utilities/contexts.js'
 import LoadingGif from 'media/gifs/loading.jsx'
 
 import Info from './info.jsx'
-import Canvas from './canvas.jsx'
+import Seats from './seats.jsx'
 
 const Tickets = () => {
     const userLoggedContext = useContext(UserContext)
@@ -50,7 +50,7 @@ const Tickets = () => {
     return (
         <div className='tickets'>
             <Info name={screening.name} date={screening.date} />
-            <Canvas occupied={screening} />
+            <Seats occupied={screening.occupied_seats} />
         </div>
     )
 }

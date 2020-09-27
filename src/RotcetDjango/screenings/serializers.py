@@ -1,6 +1,8 @@
 from django.urls import reverse
 from rest_framework import serializers
 
+from scripts.tools import string_list_to_python
+
 from .models import Screening, Room
 
 class DynamicFieldsModelSerializer(serializers.ModelSerializer):
@@ -29,6 +31,12 @@ class ScreeningSerializer(DynamicFieldsModelSerializer):
     class Meta:
         model = Screening
         fields = '__all__'
+
+    def to_representation(self, instance):
+        """Convert `occupied_seats` to array."""
+        ret = super().to_representation(instance)
+        ret['occupied_seats'] = string_list_to_python(ret['occupied_seats'])
+        return ret
 
     def get_url(self,obj):
         request = self.context['request']

@@ -79,3 +79,8 @@ def get_youtube_thubnail(youtube_id, filename):
     temp.write(image.read())
     return InMemoryUploadedFile(temp,'ImageField', f'{filename}.jpg', f'image/JPEG', image.headers['content-length'], None)
 
+def xstr(s):
+    """ Converts None to an empty string """
+    if s is None:
+        return ''
+    return str(s)

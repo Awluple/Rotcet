@@ -1,6 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import User
+
+from scripts.tools import xstr
+
 from screenings.models import Screening
+from screenings.validators import validate_occupied_seats
 
 class Ticket(models.Model):
 
@@ -22,6 +26,21 @@ class Ticket(models.Model):
 
     def __str__(self):
         return f'{self.user} {self.screening.show} {self.screening.date}'
+
+    def clean(self, *args, **kwargs):
+        validate_occupied_seats(self.screening.room.seats, xstr(self.screening.occupied_seats) + ',' + str(self.seat))
+    
+    def save(self, *args, **kwargs):
+        screening = Screening.objects.get(pk=self.screening.pk)
+
+        if self.screening.occupied_seats is None:
+            screening.occupied_seats=str(self.seat)
+        else:
+            screening.occupied_seats=(xstr(self.screening.occupied_seats) + ',' + str(self.seat))
+        screening.save()
+
+        super().save(*args, **kwargs)
+        
 
 class Membership(models.Model):
 

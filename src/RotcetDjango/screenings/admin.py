@@ -4,6 +4,7 @@ from .models import Screening, Show, Room
 @admin.register(Screening)
 class ScreeningAdmin(admin.ModelAdmin):
     list_display = ('__str__', 'show', 'room')
+    readonly_fields = ['occupied_seats']
     autocomplete_fields = ('show',)
     ordering = ['date']
     search_fields = ['show__movie__name','show__marathon__title', 'date']
