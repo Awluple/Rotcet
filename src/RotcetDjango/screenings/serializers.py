@@ -32,10 +32,11 @@ class ScreeningSerializer(DynamicFieldsModelSerializer):
         model = Screening
         fields = '__all__'
 
-    def to_representation(self, instance):
-        """Convert `occupied_seats` to array."""
-        ret = super().to_representation(instance)
-        ret['occupied_seats'] = string_list_to_python(ret['occupied_seats'])
+    def to_representation(self, instances):
+        """Convert `occupied_seats` saved as string to array."""
+        ret = super().to_representation(instances)
+        if 'occupied_seats' in ret:
+            ret['occupied_seats'] = string_list_to_python(ret['occupied_seats'])
         return ret
 
     def get_url(self,obj):
@@ -82,4 +83,4 @@ class RoomSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Room
-        fields = ['pk', 'number', 'seats', 'room_scheme']
+        fields = ['pk', 'number', 'seats']
