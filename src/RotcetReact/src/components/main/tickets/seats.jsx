@@ -40,7 +40,10 @@ const Seats = props => {
         <div>
             <canvas ref={canvasRef} />
             {smallDevice && 
-                <SeatsManager seats={chosenSeats} occupied={props.occupied} addSeat={addSeat} deleteSeat={deleteSeat} />
+                <div className='seats_manager'>
+                    <h2>Book seats</h2>
+                    <SeatsManager seats={chosenSeats} occupied={props.occupied} addSeat={addSeat} deleteSeat={deleteSeat} />
+                </div>
             }
         </div>
     )

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 const SeatsManager = props => {
     return (
-        <ul className='seats_manager'>
+        <ul>
         { props.seats.map(seat => {
             return (
                 <li key={seat}>{seat}</li>

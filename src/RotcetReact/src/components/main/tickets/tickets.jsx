@@ -41,7 +41,7 @@ const Tickets = () => {
 
     if(screening === null){
         return (
-            <div>
+            <div className='tickets'>
                 <LoadingGif />
             </div>
         )
