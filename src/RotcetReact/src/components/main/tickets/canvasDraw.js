@@ -1,6 +1,6 @@
 const drawSquare = (ctx, x, y, number, occupied, chosen) => {
+    // colors for seats, red: occupied, orange: already selected by user, green: free
     const color = occupied.includes(number) ? 'red' : chosen.includes(number) ? 'orange' : 'green'
-    // console.log(chosen)
     const rect = {
         x: x,
         y: y,
@@ -9,26 +9,29 @@ const drawSquare = (ctx, x, y, number, occupied, chosen) => {
         fill: color,
         number: number
     }
+    // seat draw
     ctx.fillStyle=rect.fill
     ctx.strokeStyle=rect.stroke
     ctx.fillRect(rect.x,rect.y,rect.width,rect.height)
-    // console.log(rect.x,rect.y,rect.width,rect.height)
 
+    // font settings and setting seat number on square
     ctx.textAlign="center" 
     ctx.textBaseline = "middle"
     ctx.fillStyle = "white"
     ctx.font="14px Arial"
 
-
     ctx.fillText(number, x+(rect.width/2), y+(rect.height/2))
+
     return rect
 }
 
 
 export const draw = (canvas, ctx, smallDevice, occupied, chosenSeats, addSeat, deleteSeat) => {
-    console.log('DRAW!')
-    let seats = []
-    let number = 108
+    // Draws cinema room
+
+    let seats = [] // list of all seats with their position, number, dimensions and color
+    let number = 108 // number of seats
+    // draws seats
     for (let y = 35; y <= 315; y = y + 35) {
         for (let x = 95; x <= 485; x = x + 35) {
             seats.push(drawSquare(ctx, x, y, number, occupied, chosenSeats))
@@ -38,6 +41,9 @@ export const draw = (canvas, ctx, smallDevice, occupied, chosenSeats, addSeat, d
     
 
     const handleClick = event => {
+        // Checks if user clicked on a square, avaliable only for bigger devices
+
+        // disable for small devices
         if (smallDevice || window.innerWidth <= 600) {
             return
         }
@@ -46,6 +52,10 @@ export const draw = (canvas, ctx, smallDevice, occupied, chosenSeats, addSeat, d
         const x = event.clientX - rect.left
         const y = event.clientY - rect.top
 
+        // goes through all seats positions and checks if any was under users click
+        // y: check if user clicked inside y axis of seat
+        // x: check if user clicked inside x axis of seat
+        // if seat exists add it to selected seats or delete it from
         for (const element of seats) {
             if (y > element.y && y < element.y + element.height 
                 && x > element.x && x < element.x + element.width) {
@@ -65,8 +75,9 @@ export const draw = (canvas, ctx, smallDevice, occupied, chosenSeats, addSeat, d
 
     canvas.addEventListener('click', handleClick);
 
+    // Draw stairs, screen, entrances
 
-   // --- Stairs and screen ---
+    // --- Stairs and screen ---
 
     ctx.fillStyle= 'grey'
     ctx.strokeStyle= 'white'

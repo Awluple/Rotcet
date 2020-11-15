@@ -23,7 +23,7 @@ const Seats = props => {
     }
 
     useEffect(() => {
-        console.log(smallDevice)
+        // init canvas draw and redraw if chosenSeats.length has changed
         const canvas = canvasRef.current
         canvas.width = 600
         canvas.height = 450
@@ -41,8 +41,8 @@ const Seats = props => {
             <canvas ref={canvasRef} />
             {smallDevice && 
                 <div className='seats_manager'>
-                    <h2>Book seats</h2>
-                    <SeatsManager seats={chosenSeats} occupied={props.occupied} addSeat={addSeat} deleteSeat={deleteSeat} />
+                    <h2>Select seats</h2>
+                    <SeatsManager chosenSeats={chosenSeats} occupied={props.occupied} addSeat={addSeat} deleteSeat={deleteSeat} />
                 </div>
             }
         </div>

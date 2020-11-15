@@ -41,6 +41,25 @@
         }
     }
 }
+.seats_selection {
+    position: fixed;
+    @include flex-center(column);
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    background: rgba($color: #565582, $alpha: 0.6);
+
+    form {
+        @include flex-center(column);
+    }
+
+    .disabled {
+        background: #7b5555;
+        &:active, &:hover {
+            background: #7b5555;
+        }
+    }
+}
 
 @media only screen and (max-width: 600px) {
     canvas {

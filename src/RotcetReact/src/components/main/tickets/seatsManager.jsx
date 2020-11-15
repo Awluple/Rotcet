@@ -1,21 +1,44 @@
-import React from 'react'
+import React, {useState} from 'react'
 import PropTypes from 'prop-types'
 
+import SeatsSelectMobile from './seatsSelectMobile.jsx'
+import DeletePanelMobile from './seatDeletePanelMobile.jsx'
+
 const SeatsManager = props => {
+    // Seats manager for small devices, big devices can click on canvas to select a seat
+    const [showSelectionPanel, setShowSelectionPanel] = useState(false)
+    const [showDeletePanel, setShowDeletePanel] = useState(false)
+    const [seatToDelete, setSeatToDelete] = useState(0)
+
+    const askToDelete = (seat) => {
+        setSeatToDelete(seat)
+        setShowDeletePanel(true)
+    }
+
     return (
         <ul>
-        { props.seats.map(seat => {
+        { showSelectionPanel && 
+            <SeatsSelectMobile chosenSeats={props.chosenSeats} occupied={props.occupied}
+            addSeat={props.addSeat} setShowSelectionPanel={setShowSelectionPanel} />
+        }
+
+        { showDeletePanel && 
+            <DeletePanelMobile seat={seatToDelete}
+            deleteSeat={props.deleteSeat} setShowDeletePanel={setShowDeletePanel} />
+        }
+
+        { props.chosenSeats.map(seat => {
             return (
-                <li key={seat}>{seat}</li>
+                <li key={seat} onClick={() => {askToDelete(seat)}}>{seat}</li>
             )
         })}
-        <li>+</li>
+        <li onClick={() => {setShowSelectionPanel(true)}}>+</li>
         </ul>
     )
 }
 
 SeatsManager.propTypes = {
-    seats: PropTypes.array.isRequired,
+    chosenSeats: PropTypes.array.isRequired,
     occupied: PropTypes.array.isRequired,
     addSeat: PropTypes.func.isRequired,
     deleteSeat: PropTypes.func.isRequired
