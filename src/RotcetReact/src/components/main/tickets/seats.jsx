@@ -37,11 +37,12 @@ const Seats = props => {
     }, [chosenSeats.length, smallDevice])
 
     return (
-        <div>
+        <div className='tickets__canvas'>
+            { !smallDevice && <h2>1. Select seats</h2>}
             <canvas ref={canvasRef} />
             {smallDevice && 
                 <div className='seats_manager'>
-                    <h2>Select seats</h2>
+                    <h2>1. Select seats</h2>
                     <SeatsManager chosenSeats={chosenSeats} occupied={props.occupied} addSeat={addSeat} deleteSeat={deleteSeat} />
                 </div>
             }

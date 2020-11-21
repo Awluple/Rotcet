@@ -37,7 +37,6 @@ const Tickets = () => {
             })
         }
     }, [userLogged])
-    console.log(screening)
 
     if(screening === null){
         return (

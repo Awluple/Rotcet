@@ -5,12 +5,14 @@ import SeatsSelectMobile from './seatsSelectMobile.jsx'
 import DeletePanelMobile from './seatDeletePanelMobile.jsx'
 
 const SeatsManager = props => {
-    // Seats manager for small devices, big devices can click on canvas to select a seat
+    // Seats manager for small devices, big devices can click on the canvas to select a seat
+
     const [showSelectionPanel, setShowSelectionPanel] = useState(false)
     const [showDeletePanel, setShowDeletePanel] = useState(false)
     const [seatToDelete, setSeatToDelete] = useState(0)
 
     const askToDelete = (seat) => {
+        // ask the user if the seat should be deleted
         setSeatToDelete(seat)
         setShowDeletePanel(true)
     }
