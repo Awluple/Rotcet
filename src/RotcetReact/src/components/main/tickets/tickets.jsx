@@ -55,7 +55,7 @@ const Tickets = () => {
         <div className='tickets'>
             <Info name={screening.name} date={screening.date} />
             <Seats occupied={screening.occupied_seats} chosenSeats={chosenSeats} setChosenSeats={setChosenSeats} />
-            <TicketsType />
+            <TicketsType chosenSeats={chosenSeats} />
         </div>
     )
 }

@@ -1,5 +1,6 @@
 .tickets {
     text-align: center;
+    margin-bottom: 300px;
     .loading-gif {
         width: 30%;
     }
@@ -10,10 +11,11 @@
     h2 {
         margin-top: 20px;
         font-family: $headers-font;
-        font-size: 1.4em;
+        font-size: 1.6em;
         background: $main-red;
         color: $silver;
-        width: 500px;
+        width: 45%;
+        min-width: 600px;
         padding: 7px 0px;
     }
 }
@@ -157,7 +159,88 @@
 
 .tickets__type {
     @include flex-center(column);
+    justify-content: flex-start;
     margin-top: 40px;
+    min-height: 150px;
+    h2 {
+        margin-bottom: 5px;
+    }
+
+    ul {
+        list-style: none;
+        padding: 0px;
+    }
+    li {
+        @include flex-center(row);
+        align-items: unset;
+        padding: 20px;
+        animation: newTicket 0.4s linear;
+    }
+    label {
+        margin: 0px 70px;
+        top: -19px;
+    }
+    input {
+        &[type="radio"]:checked,
+        &[type="radio"]:not(:checked) {
+            position: absolute;
+            left: -9999px;
+        }
+        &[type="radio"]:checked + label,
+        &[type="radio"]:not(:checked) + label
+        {
+            position: relative;
+            cursor: pointer;
+            line-height: 20px;
+            color: #666;
+        }
+        &[type="radio"]:checked + label:before,
+        &[type="radio"]:not(:checked) + label:before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 50px;
+            height: 38px;
+            border: 1px solid #ddd;
+            border-radius: 40%;
+            background: #fff;
+        }
+        &[type="radio"]:checked + label:after,
+        &[type="radio"]:not(:checked) + label:after {
+            content: '';
+            width: 18px;
+            height: 18px;
+            background: #252525;
+            position: absolute;
+            top: 11px;
+            left: 17px;
+            border-radius: 100%;
+            transition: all 0.2s ease;
+        }
+        &[type="radio"]:not(:checked) + label:after {
+            opacity: 0;
+            transform: scale(0);
+        }
+        &[type="radio"]:checked + label:after {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+}
+.tickets__select {
+    padding: 35px 54px 35px 0px;
+    background: #511616;
+}
+
+.tickets__seat {
+    @include flex-center(column);
+    background: $silver;
+    width: 115px;
+    border-bottom-left-radius: 25px;
+    border-top-left-radius: 25px;
+    font-family: $content-font;
+    font-size: 1.2em;
 }
 
 @media only screen and (max-width: 600px) {
@@ -170,4 +253,21 @@
         font-size: 1.2em;
         padding: 6px 0px;
     }
+}
+
+@keyframes newTicket {
+    0% {
+        height: 0px;
+        padding: 0px;
+        opacity: 0;
+    }
+    20% {
+        height: 70px;
+        padding: 20px;
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+
 }
