@@ -7,6 +7,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 from .forms import UserRegistrationForm
+from .models import Membership
 
 def login(request):
     if request.user.is_authenticated:
@@ -55,6 +56,9 @@ def register(request):
             User.objects.create_user(username=email, email=email, password=password)
             user = authenticate(request, email=email, password=password)
             user_login(request, user)
+
+            Membership.objects.create(user=request.user)
+
             return redirect('/')
 
         return render(request, 'register.html', {'form': form})
@@ -69,6 +73,7 @@ def logout(request):
 @api_view()
 def is_logged(request):
     if(request.user.is_authenticated):
-        return Response({"logged": True})
+        membership = request.user.membership.is_active
+        return Response({"logged": True, "membership": membership})
     else:
         return Response({"logged": False})

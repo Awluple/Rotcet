@@ -7,6 +7,7 @@ from rest_framework import status
 from rest_framework.test import APITestCase
 
 from .forms import UserRegistrationForm
+from .models import Membership
 
 class LoginTestCase(TestCase):
 
@@ -75,6 +76,16 @@ class RegisterTestCase(TestCase):
         self.assertEqual(User.objects.all().count(), 1)
         self.assertTrue(response.context['user'].is_active)
     
+    def test_membership(self):
+        response = self.client.post(self.url, data={
+            'email': 'test2@email.com',
+            'password': 'testpassword123',
+            'password_confirmation': 'testpassword123'
+        }, follow=True)
+
+        self.assertEqual(response.status_code, HTTPStatus.OK)
+        self.assertEqual(Membership.objects.all().count(), 1)
+    
     def test_form_not_valid(self):
         response = self.client.post(self.url, data={
             'email': 'test@email.com',
@@ -131,17 +142,34 @@ class SessionApiTestCase(APITestCase):
     def setUp(self):
         self.url = reverse('user:session')
         User.objects.create_user('test', 'test@rotcet.com', 'testpassword123')
+
+        user = User.objects.get(pk=1)
+        Membership.objects.create(user=user, is_active=True)
+
         
-    def test_returns_true_if_logged(self):
-        
+    def test_logged_true_if_logged(self):
         self.client.login(email='test@rotcet.com', password='testpassword123')
         response = self.client.get(self.url)
 
         self.assertTrue(response.data['logged'])
 
-    def test_returns_false_if_not_logged(self):
+    def test_logged_false_if_not_logged(self):
         response = self.client.get(self.url)
         self.client.logout()
         
         self.assertFalse(response.data['logged'])
+
+    def test_membership_not_exists_if_not_logged(self):
+        response = self.client.get(self.url)
+        self.client.logout()
+        
+        self.assertFalse('membership' in response.data)
+
+    def test_membership_exists_if_logged(self):
+        self.client.login(email='test@rotcet.com', password='testpassword123')
+        response = self.client.get(self.url)
+        self.client.logout()
+        
+        self.assertTrue('membership' in response.data)
+        self.assertTrue(response.data['membership'])
         

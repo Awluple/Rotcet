@@ -44,19 +44,10 @@ class Ticket(models.Model):
 
 class Membership(models.Model):
 
-    STANDARD = 'ST'
-    GOLD = 'GO'
-
-    MEMBERSHIP_CHOICES = [
-        (STANDARD, 'Standard'),
-        (GOLD, 'Gold')
-    ]
-
     user = models.OneToOneField(User, related_name='membership', on_delete=models.CASCADE)
-    type = models.CharField(max_length=2, choices=MEMBERSHIP_CHOICES)
-    is_active = models.BooleanField()
-    is_continued = models.BooleanField()
-    next_payment = models.DateField()
+    is_active = models.BooleanField(default=False)
+    is_continued = models.BooleanField(default=False)
+    next_payment = models.DateField(null=True, blank=True)
 
     def __str__(self):
-        return f'{self.user} {self.type}'
+        return f'{self.user} {self.is_active}'
