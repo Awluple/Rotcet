@@ -3,27 +3,25 @@ import PropTypes from 'prop-types'
 
 import {useScreenWidth} from 'utilities/hooks/hooks.js'
 
-import SeatsManager from './seatsManager.jsx'
+import SeatsManager from './mobileManager/seatsManager.jsx'
 
 import {draw} from './canvasDraw.js'
 
 const Seats = props => {
     const canvasRef = useRef(null)
-
-    const [chosenSeats, setChosenSeats] = useState([])
     
     const smallDevice = useScreenWidth(600)
 
     const addSeat = seat => {
-        setChosenSeats(chosenSeats.concat(seat))
+        props.setChosenSeats(props.chosenSeats.concat(seat))
     }
 
     const deleteSeat = seat => {
-        setChosenSeats(chosenSeats.filter(s => {return s !== seat}))
+        props.setChosenSeats(props.chosenSeats.filter(s => {return s !== seat}))
     }
 
     useEffect(() => {
-        // init canvas draw and redraw if chosenSeats.length has changed
+        // init canvas draw and redraw if props.chosenSeats.length has changed
         const canvas = canvasRef.current
         canvas.width = 600
         canvas.height = 450
@@ -33,8 +31,8 @@ const Seats = props => {
         ctx.beginPath();
 
 
-        draw(canvas, ctx, smallDevice, props.occupied, chosenSeats, addSeat, deleteSeat)
-    }, [chosenSeats.length, smallDevice])
+        draw(canvas, ctx, smallDevice, props.occupied, props.chosenSeats, addSeat, deleteSeat)
+    }, [props.chosenSeats.length, smallDevice])
 
     return (
         <div className='tickets__canvas'>
@@ -43,7 +41,7 @@ const Seats = props => {
             {smallDevice && 
                 <div className='seats_manager'>
                     <h2>1. Select seats</h2>
-                    <SeatsManager chosenSeats={chosenSeats} occupied={props.occupied} addSeat={addSeat} deleteSeat={deleteSeat} />
+                    <SeatsManager chosenSeats={props.chosenSeats} occupied={props.occupied} addSeat={addSeat} deleteSeat={deleteSeat} />
                 </div>
             }
         </div>
@@ -52,6 +50,8 @@ const Seats = props => {
 
 Seats.propTypes = {
     occupied: PropTypes.array.isRequired,
+    chosenSeats: PropTypes.array.isRequired,
+    setChosenSeats: PropTypes.func.isRequired
     // addTicket: PropTypes.func.isRequired
 }
 

@@ -8,10 +8,15 @@ import LoadingGif from 'media/gifs/loading.jsx'
 import Info from './info.jsx'
 import Seats from './seats.jsx'
 
+import TicketsType from './ticketsType.jsx'
+
 const Tickets = () => {
     const userLoggedContext = useContext(UserContext)
+
     const [userLogged, setUserLogged] = useState(false)
     const [screening, setScreening] = useState(null)
+    const [chosenSeats, setChosenSeats] = useState([])
+
     const params = useParams()
 
     useEffect(() => {
@@ -49,7 +54,8 @@ const Tickets = () => {
     return (
         <div className='tickets'>
             <Info name={screening.name} date={screening.date} />
-            <Seats occupied={screening.occupied_seats} />
+            <Seats occupied={screening.occupied_seats} chosenSeats={chosenSeats} setChosenSeats={setChosenSeats} />
+            <TicketsType />
         </div>
     )
 }
