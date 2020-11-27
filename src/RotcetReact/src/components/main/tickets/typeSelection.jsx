@@ -6,6 +6,10 @@ const TypeSelection = props => {
     const [type, setType] = useState(1)
 
     const validateType = (type) => {
+        // disable membership option for not members
+        if(!props.member && type === 3) {
+            return
+        }
         setType(type)
     }
 
@@ -32,6 +36,7 @@ const TypeSelection = props => {
                         <input id={`ticket-${props.seat}-3`} name={`ticket-${props.seat}`}
                         value={3} type="radio" checked={type === 3}
                         checked={type === 3}
+                        className={props.member ? '' : 'disabled'}
                         onChange={() => {return}}/>
                         <label htmlFor={`ticket-${props.seat}-3`} onClick={() => {validateType(3)}}></label>
                 </div>
@@ -42,7 +47,8 @@ const TypeSelection = props => {
 
 TypeSelection.propTypes = {
     seat: PropTypes.number.isRequired,
-    index: PropTypes.number.isRequired
+    index: PropTypes.number.isRequired,
+    member: PropTypes.bool.isRequired
 }
 
 export default TypeSelection

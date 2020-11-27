@@ -3,7 +3,7 @@ import './scss/App.scss';
 
 import {BrowserRouter} from 'react-router-dom'
 import YoutubeApi from 'utilities/youtube/youtube_api.js'
-import { UserContext } from 'utilities/contexts.js'
+import { UserContext, MembershipContext } from 'utilities/contexts.js'
 import axios from 'axios'
 
 import Top from './components/top/top.jsx'
@@ -14,10 +14,14 @@ function App() {
     window.YoutubeApi = new YoutubeApi()
 
     const [userLogged, setUserLogged] = useState(false)
+    const [userIsMember, setUserIsMember] = useState(false)
 
     useEffect(() => {
         axios.get('/api/session').then(res => {
             setUserLogged(res.data.logged)
+            if(res.data.logged) {
+                setUserIsMember(res.data.membership)
+            }
         })
     }, [])
 
@@ -25,9 +29,11 @@ function App() {
         <BrowserRouter>
         <div className="App">
             <UserContext.Provider value={userLogged}>
+            <MembershipContext.Provider value={userIsMember}>
                 <Top />
                 <Main />
                 <Footer />
+            </MembershipContext.Provider>
             </UserContext.Provider>
         </div>
         </BrowserRouter>

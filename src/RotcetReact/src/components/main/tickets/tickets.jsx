@@ -2,18 +2,21 @@ import React, {useContext, useEffect, useState} from 'react'
 import {useParams} from 'react-router-dom'
 import axios from 'axios'
 
-import { UserContext } from 'utilities/contexts.js'
+import { UserContext, MembershipContext } from 'utilities/contexts.js'
 import LoadingGif from 'media/gifs/loading.jsx'
 
-import Info from './info.jsx'
+import Header from './header.jsx'
 import Seats from './seats.jsx'
 
 import TicketsType from './ticketsType.jsx'
 
 const Tickets = () => {
     const userLoggedContext = useContext(UserContext)
+    const userMembershipContext = useContext(MembershipContext)
 
     const [userLogged, setUserLogged] = useState(false)
+    const [userIsMember, setUserIsMember] = useState(false)
+
     const [screening, setScreening] = useState(null)
     const [chosenSeats, setChosenSeats] = useState([])
 
@@ -26,6 +29,7 @@ const Tickets = () => {
             axios.get('/api/session').then(res => {
                 if(res.data.logged){
                     setUserLogged(res.data.logged)
+                    setUserIsMember(res.data.membership)
                 } else {
                     window.location.href = `/login?next=/tickets/${params.screeningId}&login_required=true`
                 }
@@ -53,9 +57,9 @@ const Tickets = () => {
 
     return (
         <div className='tickets'>
-            <Info name={screening.name} date={screening.date} />
+            <Header name={screening.name} date={screening.date} />
             <Seats occupied={screening.occupied_seats} chosenSeats={chosenSeats} setChosenSeats={setChosenSeats} />
-            <TicketsType chosenSeats={chosenSeats} />
+            <TicketsType member={userMembershipContext} chosenSeats={chosenSeats} />
         </div>
     )
 }

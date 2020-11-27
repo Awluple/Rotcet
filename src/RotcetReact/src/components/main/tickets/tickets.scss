@@ -8,7 +8,7 @@
         margin-top: 30px;
         background: rgba(49, 49, 49, 0.65);
     }
-    h2 {
+    h2, h3 {
         margin-top: 20px;
         font-family: $headers-font;
         font-size: 1.6em;
@@ -161,9 +161,15 @@
     @include flex-center(column);
     justify-content: flex-start;
     margin-top: 40px;
-    min-height: 150px;
+    min-height: 250px;
     h2 {
         margin-bottom: 5px;
+    }
+
+    h3 {
+        width: 35%;
+        min-width: 400px;
+        background: $darker-red;
     }
 
     ul {
@@ -173,13 +179,19 @@
     li {
         @include flex-center(row);
         align-items: unset;
-        padding: 20px;
+        padding: 0px 20px 20px;
         animation: newTicket 0.4s linear;
     }
     label {
-        margin: 0px 70px;
+        margin: 0px 75px;
         top: -19px;
     }
+    
+    .disabled + label:before{
+        background: #717171 !important;
+        border: 1px solid #404040 !important;
+    }
+
     input {
         &[type="radio"]:checked,
         &[type="radio"]:not(:checked) {
@@ -229,7 +241,7 @@
     }
 }
 .tickets__select {
-    padding: 35px 54px 35px 0px;
+    padding: 35px 43px 35px 0px;
     background: #511616;
 }
 
@@ -241,6 +253,34 @@
     border-top-left-radius: 25px;
     font-family: $content-font;
     font-size: 1.2em;
+}
+
+.tickets__tickets {
+    margin: 30px 0px;
+}
+
+.tickets__description {
+    @include flex-center(row);
+    animation: ticketsDescriptions 0.8s linear;
+    width: 493px;
+    margin-left: 135px;
+    p {
+        width: 146px;
+        font-size: 1.15em;
+        font-family: $content-font;
+        background: $silver;
+        padding: 5px 3px;
+        margin: 0px 6px;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+    }
+}
+
+.tickets__info {
+    font-family: $content-font;
+    color: $silver;
+    animation: ticketsDescriptions 0.8s linear;
+    margin: 0% 15% 0% 32%;
 }
 
 @media only screen and (max-width: 600px) {
@@ -264,6 +304,19 @@
     20% {
         height: 70px;
         padding: 20px;
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+
+}
+
+@keyframes ticketsDescriptions {
+    0% {
+        opacity: 0;
+    }
+    35% {
         opacity: 0;
     }
     100% {
