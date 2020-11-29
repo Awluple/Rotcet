@@ -1,17 +1,39 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 
 const TypeSelection = props => {
 
     const [type, setType] = useState(1)
 
-    const validateType = (type) => {
-        // disable membership option for not members
-        if(!props.member && type === 3) {
+    const validateType = (newType) => {
+        // disable membership option for not members and if no more member tickets available
+        if((!props.member && newType === 3) || (props.member && (props.memberTicketsChosen === props.membershipType) && newType === 3)) {
             return
+        } else if (newType === 3) {
+            setType(newType)
+            props.addMemberTicket()
+        } else {
+            if (type === 3){
+                props.subtractMemberTicket()
+            }
+            setType(newType)
         }
-        setType(type)
     }
+
+    useEffect(() => {
+        // set member ticket as default if possible
+        if(props.member && props.membershipType && (props.memberTicketsChosen !== props.membershipType)) {
+            setType(3)
+            props.addMemberTicket()
+        }
+        return () => {
+            if(type === 3) {
+                subtractMemberTicket()
+            }
+        }
+    }, [])
+
+    
 
     return (
         <div>
@@ -36,7 +58,7 @@ const TypeSelection = props => {
                         <input id={`ticket-${props.seat}-3`} name={`ticket-${props.seat}`}
                         value={3} type="radio" checked={type === 3}
                         checked={type === 3}
-                        className={props.member ? '' : 'disabled'}
+                        className={(props.member && ((props.memberTicketsChosen !== props.membershipType) || type === 3)) ? '' : 'disabled'}
                         onChange={() => {return}}/>
                         <label htmlFor={`ticket-${props.seat}-3`} onClick={() => {validateType(3)}}></label>
                 </div>
@@ -48,7 +70,11 @@ const TypeSelection = props => {
 TypeSelection.propTypes = {
     seat: PropTypes.number.isRequired,
     index: PropTypes.number.isRequired,
-    member: PropTypes.bool.isRequired
+    member: PropTypes.bool.isRequired,
+    membershipType: PropTypes.number.isRequired,
+    memberTicketsChosen: PropTypes.number.isRequired,
+    addMemberTicket: PropTypes.func.isRequired,
+    subtractMemberTicket: PropTypes.func.isRequired,
 }
 
 export default TypeSelection

@@ -14,13 +14,16 @@ function App() {
     window.YoutubeApi = new YoutubeApi()
 
     const [userLogged, setUserLogged] = useState(false)
-    const [userIsMember, setUserIsMember] = useState(false)
+    const [userMembership, setUserMembership] = useState({membership: false, type: 0})
 
     useEffect(() => {
         axios.get('/api/session').then(res => {
             setUserLogged(res.data.logged)
             if(res.data.logged) {
-                setUserIsMember(res.data.membership)
+                setUserMembership({
+                    membership: res.data.membership,
+                    type: res.data.membership_type
+                })
             }
         })
     }, [])
@@ -29,7 +32,7 @@ function App() {
         <BrowserRouter>
         <div className="App">
             <UserContext.Provider value={userLogged}>
-            <MembershipContext.Provider value={userIsMember}>
+            <MembershipContext.Provider value={userMembership}>
                 <Top />
                 <Main />
                 <Footer />

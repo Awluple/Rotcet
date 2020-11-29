@@ -45,6 +45,7 @@ class Ticket(models.Model):
 class Membership(models.Model):
 
     user = models.OneToOneField(User, related_name='membership', on_delete=models.CASCADE)
+    type = models.PositiveSmallIntegerField(default=0)
     is_active = models.BooleanField(default=False)
     is_continued = models.BooleanField(default=False)
     next_payment = models.DateField(null=True, blank=True)

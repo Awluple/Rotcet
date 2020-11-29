@@ -12,10 +12,9 @@ import TicketsType from './ticketsType.jsx'
 
 const Tickets = () => {
     const userLoggedContext = useContext(UserContext)
-    const userMembershipContext = useContext(MembershipContext)
 
     const [userLogged, setUserLogged] = useState(false)
-    const [userIsMember, setUserIsMember] = useState(false)
+    const [userMembership, setUserMembership] = useState({membership: false, type: 0})
 
     const [screening, setScreening] = useState(null)
     const [chosenSeats, setChosenSeats] = useState([])
@@ -29,13 +28,17 @@ const Tickets = () => {
             axios.get('/api/session').then(res => {
                 if(res.data.logged){
                     setUserLogged(res.data.logged)
-                    setUserIsMember(res.data.membership)
+                    setUserMembership({
+                        membership: res.data.membership,
+                        type: res.data.membership_type
+                    })
                 } else {
                     window.location.href = `/login?next=/tickets/${params.screeningId}&login_required=true`
                 }
             })
         } else {
             setUserLogged(true)
+            setUserMembership(MembershipContext)
         }
     }, [])
 
@@ -54,12 +57,11 @@ const Tickets = () => {
             </div>
         )
     }
-
     return (
         <div className='tickets'>
             <Header name={screening.name} date={screening.date} />
             <Seats occupied={screening.occupied_seats} chosenSeats={chosenSeats} setChosenSeats={setChosenSeats} />
-            <TicketsType member={userMembershipContext} chosenSeats={chosenSeats} />
+            <TicketsType member={userMembership.membership} membershipType={userMembership.type} chosenSeats={chosenSeats} />
         </div>
     )
 }

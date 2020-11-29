@@ -1,6 +1,6 @@
 .tickets {
     text-align: center;
-    margin-bottom: 300px;
+    margin-bottom: 200px;
     .loading-gif {
         width: 30%;
     }
@@ -157,6 +157,27 @@
     }   
 }
 
+.tickets__header {
+    display: inline-block;
+    max-width: 600px;
+    margin: auto;
+    padding: 30px 50px;
+    margin: 50px 0px;
+    border-radius: 5px;
+    background: $silver;
+
+    h1 {
+        font-family: $headers-font;
+        font-size: 2.3em;
+        margin-bottom: 10px;
+    }
+    p {
+        font-family: $content-font;
+        font-size: 1.4em;
+        margin: -10px;
+    }
+}
+
 .tickets__type {
     @include flex-center(column);
     justify-content: flex-start;
@@ -187,6 +208,13 @@
         top: -19px;
     }
     
+    .button {
+        display: inline-block;
+        font-size: 1.7em;
+        margin-left: 60%;
+        margin-top: 80px;
+    }
+
     .disabled + label:before{
         background: #717171 !important;
         border: 1px solid #404040 !important;
@@ -281,6 +309,20 @@
     color: $silver;
     animation: ticketsDescriptions 0.8s linear;
     margin: 0% 15% 0% 32%;
+}
+
+.tickets__info--membership {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+    a {
+        font-weight: 600;
+        color: $silver;
+        text-decoration: underline;
+
+        &:hover {
+            color: #868686;
+        }
+    }
 }
 
 @media only screen and (max-width: 600px) {

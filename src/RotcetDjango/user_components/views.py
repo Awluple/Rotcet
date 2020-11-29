@@ -74,6 +74,7 @@ def logout(request):
 def is_logged(request):
     if(request.user.is_authenticated):
         membership = request.user.membership.is_active
-        return Response({"logged": True, "membership": membership})
+        membership_type = request.user.membership.type
+        return Response({"logged": True, "membership": membership, "membership_type": membership_type})
     else:
         return Response({"logged": False})
