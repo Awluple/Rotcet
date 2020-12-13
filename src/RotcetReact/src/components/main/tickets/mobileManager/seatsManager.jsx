@@ -34,7 +34,7 @@ const SeatsManager = props => {
                 <li key={seat} onClick={() => {askToDelete(seat)}}>{seat}</li>
             )
         })}
-        <li onClick={() => {setShowSelectionPanel(true)}}>+</li>
+        <li className={props.chosenSeats.length === 0 ? 'empty' : ''} onClick={() => {setShowSelectionPanel(true)}}>+</li>
         </ul>
     )
 }

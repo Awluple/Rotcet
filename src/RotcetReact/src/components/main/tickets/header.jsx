@@ -12,8 +12,8 @@ const Header = props => {
     return (
         <div className='tickets__header'>
             <h1>{props.name}</h1>
-            <p>{hour}</p>
             <p>{date}</p>
+            <p>{hour}</p>
         </div>
     )
 }

@@ -4,36 +4,62 @@ import PropTypes from 'prop-types'
 const TypeSelection = props => {
 
     const [type, setType] = useState(1)
+    const [init, setInit] = useState(true)
+
+    const updateTickets = (newType) => {
+        const { setTickets, tickets } = props
+        let updated
+        if (tickets.length > 0 || newType !== type) {
+            updated = tickets.filter(ticket => {
+                return ticket.seat !== props.seat
+            })
+            updated = updated.concat([{seat: props.seat, type: newType}])
+        } else {
+            updated = [{seat: props.seat, type: newType}]
+        }
+        setTickets(updated)
+        setType(newType)
+    } 
 
     const validateType = (newType) => {
-        // disable membership option for not members and if no more member tickets available
+        // disable membership option for non members and if no more member tickets available
         if((!props.member && newType === 3) || (props.member && (props.memberTicketsChosen === props.membershipType) && newType === 3)) {
             return
         } else if (newType === 3) {
-            setType(newType)
+            updateTickets(newType)
             props.addMemberTicket()
         } else {
             if (type === 3){
                 props.subtractMemberTicket()
             }
-            setType(newType)
+            updateTickets(newType)
         }
     }
 
     useEffect(() => {
         // set member ticket as default if possible
         if(props.member && props.membershipType && (props.memberTicketsChosen !== props.membershipType)) {
-            setType(3)
+            updateTickets(3)
             props.addMemberTicket()
-        }
-        return () => {
-            if(type === 3) {
-                subtractMemberTicket()
-            }
         }
     }, [])
 
-    
+    useEffect(() => {
+        return () => {
+            if(type === 3) {
+                props.subtractMemberTicket()
+            }
+        }
+    }, [type])
+
+    useEffect(() => {
+        // ignore for first render
+        if(init) {
+            setInit(false)
+            return
+        }
+        updateTickets(type)
+    }, [props.index])
 
     return (
         <div>
@@ -75,6 +101,8 @@ TypeSelection.propTypes = {
     memberTicketsChosen: PropTypes.number.isRequired,
     addMemberTicket: PropTypes.func.isRequired,
     subtractMemberTicket: PropTypes.func.isRequired,
+    setTickets: PropTypes.func.isRequired,
+    tickets: PropTypes.array.isRequired
 }
 
 export default TypeSelection

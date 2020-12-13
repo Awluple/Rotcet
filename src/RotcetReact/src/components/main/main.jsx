@@ -4,7 +4,8 @@ import { Route, Switch, useLocation } from "react-router-dom";
 import Home from './home/home.jsx'
 import Calendar from './calendar/calendar.jsx'
 import Movie from './movie/movie.jsx'
-import Tickets from './tickets/tickets.jsx'
+
+import TicketsManager from './ticketsManager.jsx'
 
 const Main = () => {
     const { pathname } = useLocation()
@@ -17,7 +18,7 @@ const Main = () => {
         <div className='main'>
             <Switch>
                 <Route path='/movie/:name-:id' component={Movie} />
-                <Route path='/tickets/:screeningId' component={Tickets} />
+                <Route path='/tickets/:screeningId' component={TicketsManager} />
                 <Route path='/calendar' component={Calendar} />
                 <Route exact path='/' component={Home} />
                 <Route >

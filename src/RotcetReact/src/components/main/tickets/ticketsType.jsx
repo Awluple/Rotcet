@@ -32,6 +32,7 @@ const TicketsType = props => {
                         return (
                             <TypeSelection key={seat} seat={seat} index={index} member={props.member} membershipType={props.membershipType}
                             memberTicketsChosen={memberTicketsChosen} addMemberTicket={addMemberTicket} subtractMemberTicket={subtractMemberTicket}
+                            setTickets={props.setTickets} tickets={props.tickets}
                             />
                         )
                     })}
@@ -42,8 +43,6 @@ const TicketsType = props => {
                     <p className='tickets__info'>*Kids under 13 years old and seniors above 60</p>
                     <p className='tickets__info'>We may ask for age proof for kids/seniors ticket and
                     age restricted movies </p>
-
-                    <Link to='/' className='button shadow-tiny'>Continue</Link>
                 </div>
                 :
                 <h3>Please select a seat first</h3>
@@ -55,7 +54,9 @@ const TicketsType = props => {
 TicketsType.propTypes = {
     chosenSeats: PropTypes.array,
     member: PropTypes.bool.isRequired,
-    membershipType: PropTypes.number.isRequired
+    membershipType: PropTypes.number.isRequired,
+    setTickets: PropTypes.func.isRequired,
+    tickets: PropTypes.array.isRequired
 }
 
 export default TicketsType
