@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react'
 import { Route, Switch } from "react-router-dom";
-import {useParams} from 'react-router-dom'
+import {useParams, useHistory} from 'react-router-dom'
 import axios from 'axios'
 
 import { UserContext, MembershipContext } from 'utilities/contexts.js'
@@ -20,6 +20,7 @@ const TicketsManager = () => {
     const [screening, setScreening] = useState(null)
 
     const params = useParams()
+    const history = useHistory()
 
     const checkUser = () => {
         if(!userLoggedContext){
@@ -50,6 +51,11 @@ const TicketsManager = () => {
         if(userLogged){
             axios.get(`/api/screenings/${params.screeningId}`).then(res => {
                 setScreening(res.data)
+            }).catch(err => {
+                console.error(err)
+                if(err.response.status == 404){
+                    history.push('/errors/404')
+                }
             })
         }
     }, [userLogged])

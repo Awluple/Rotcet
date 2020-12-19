@@ -12,6 +12,7 @@ const Header = props => {
     return (
         <div className='tickets__header'>
             <h1>{props.name}</h1>
+            { props.in3D ? <h4>3D</h4> : ''}
             <p>{date}</p>
             <p>{hour}</p>
         </div>
@@ -20,7 +21,8 @@ const Header = props => {
 
 Header.propTypes = {
     date: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired
+    name: PropTypes.string.isRequired,
+    in3D: PropTypes.bool.isRequired
 }
 
 export default Header

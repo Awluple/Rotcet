@@ -6,7 +6,7 @@ import Adapter from 'enzyme-adapter-react-16'
 import sinon from 'sinon'
 import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
-import { MemoryRouter, Route, Link } from 'react-router-dom'
+import { MemoryRouter, Route } from 'react-router-dom'
 import LoadingGif from 'media/gifs/loading.jsx'
 import YouTube from 'utilities/youtube/youtube.jsx'
 

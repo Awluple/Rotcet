@@ -1,65 +1,57 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import PropTypes from 'prop-types'
 
 const TypeSelection = props => {
 
-    const [type, setType] = useState(1)
-    const [init, setInit] = useState(true)
-
-    const updateTickets = (newType) => {
-        const { setTickets, tickets } = props
-        let updated
-        if (tickets.length > 0 || newType !== type) {
-            updated = tickets.filter(ticket => {
-                return ticket.seat !== props.seat
-            })
-            updated = updated.concat([{seat: props.seat, type: newType}])
-        } else {
-            updated = [{seat: props.seat, type: newType}]
-        }
-        setTickets(updated)
-        setType(newType)
-    } 
+    const [type, setType] = useState(null)
 
     const validateType = (newType) => {
         // disable membership option for non members and if no more member tickets available
-        if((!props.member && newType === 3) || (props.member && (props.memberTicketsChosen === props.membershipType) && newType === 3)) {
-            return
-        } else if (newType === 3) {
-            updateTickets(newType)
-            props.addMemberTicket()
+        if(!props.member && newType === 3) {
+            return false
+        } else if (newType === 3 && props.memberTicketsChosen >= props.membershipType) {
+            return false
         } else {
-            if (type === 3){
-                props.subtractMemberTicket()
-            }
-            updateTickets(newType)
+            return true
         }
     }
 
     useEffect(() => {
-        // set member ticket as default if possible
-        if(props.member && props.membershipType && (props.memberTicketsChosen !== props.membershipType)) {
-            updateTickets(3)
-            props.addMemberTicket()
+        if (validateType(3)) {
+            setType(3)
+        } else {
+            setType(1)
+        }
+
+        return () => {
+             // remove this ticket
+             const updated = props.tickets.filter(ticket => {
+                 return ticket.seat !== props.seat
+                 })
+             props.setTickets(updated)
         }
     }, [])
 
-    useEffect(() => {
-        return () => {
-            if(type === 3) {
-                props.subtractMemberTicket()
-            }
+    const changeType = newType => {
+        if(validateType(newType)){
+            setType(newType)
         }
-    }, [type])
+    }
 
     useEffect(() => {
-        // ignore for first render
-        if(init) {
-            setInit(false)
-            return
+        // update tickets
+        const { setTickets, tickets } = props
+        let updated
+        if (tickets.length > 0) {
+            updated = tickets.filter(ticket => {
+                return ticket.seat !== props.seat
+            })
+            updated = updated.concat([{seat: props.seat, type: type}])
+        } else {
+            updated = [{seat: props.seat, type: type}]
         }
-        updateTickets(type)
-    }, [props.index])
+        setTickets(updated)
+    }, [type])
 
     return (
         <div>
@@ -73,20 +65,20 @@ const TypeSelection = props => {
                         value={1} type="radio" checked={type === 1}
                         checked={type === 1}
                         onChange={() => {return}}/>
-                        <label htmlFor={`ticket-${props.seat}-1`} onClick={() => {validateType(1)}}></label>
+                        <label htmlFor={`ticket-${props.seat}-1`} onClick={() => {changeType(1)}}></label>
                         
                         <input id={`ticket-${props.seat}-2`} name={`ticket-${props.seat}`}
                         value={2} type="radio" checked={type === 2}
                         checked={type === 2}
                         onChange={() => {return}}/>
-                        <label htmlFor={`ticket-${props.seat}-2`} onClick={() => {validateType(2)}}></label>
+                        <label htmlFor={`ticket-${props.seat}-2`} onClick={() => {changeType(2)}}></label>
 
                         <input id={`ticket-${props.seat}-3`} name={`ticket-${props.seat}`}
                         value={3} type="radio" checked={type === 3}
                         checked={type === 3}
                         className={(props.member && ((props.memberTicketsChosen !== props.membershipType) || type === 3)) ? '' : 'disabled'}
                         onChange={() => {return}}/>
-                        <label htmlFor={`ticket-${props.seat}-3`} onClick={() => {validateType(3)}}></label>
+                        <label htmlFor={`ticket-${props.seat}-3`} onClick={() => {changeType(3)}}></label>
                 </div>
             </li>
         </div>
@@ -99,8 +91,6 @@ TypeSelection.propTypes = {
     member: PropTypes.bool.isRequired,
     membershipType: PropTypes.number.isRequired,
     memberTicketsChosen: PropTypes.number.isRequired,
-    addMemberTicket: PropTypes.func.isRequired,
-    subtractMemberTicket: PropTypes.func.isRequired,
     setTickets: PropTypes.func.isRequired,
     tickets: PropTypes.array.isRequired
 }

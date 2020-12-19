@@ -29,7 +29,7 @@ const Movie = (props) => {
                 setDates(dates)
             }
         }).catch(err => {
-            console.log(err)
+            console.error(err)
             if(err.response.status == 404){
                 props.history.push('/errors/404')
             }

@@ -13,6 +13,7 @@ const Tickets = (props) => {
 
     const [chosenSeats, setChosenSeats] = useState([])
     const [tickets, setTickets] = useState([])
+    const [memberTicketsChosen, setMemberTicketsChosen] = useState(0)
 
     const [link, setLink] = useState('/')
 
@@ -21,7 +22,7 @@ const Tickets = (props) => {
     const { screening } = props
 
     useEffect(() => {
-        if (chosenSeats.length < tickets.length) {
+        if (chosenSeats.length !== tickets.length) {
             const updated = tickets.filter(ticket => {
                 return chosenSeats.includes(ticket.seat)
             })
@@ -31,14 +32,28 @@ const Tickets = (props) => {
 
 
     const setTicketsAndUpdateLink = (newTickets) => {
+        let memberTickets = 0
         let newLink = newTickets.map(ticket => {
+            if(ticket.type === 3) {
+                memberTickets = memberTickets + 1
+            }
             return `&ticket=${ticket.seat},${ticket.type - 1}`
         })
         newLink = `/tickets/${params.screeningId}/details?` + newLink
+
+        if(memberTickets > props.membership.type || (props.membership.membership === false && memberTickets !== 0)) {
+            // if bug with too many memberTickets have occurred, reset everything
+            setLink('/')
+            setTickets([])
+            setMemberTicketsChosen(0)
+            setChosenSeats([])
+            return
+        }
+
         setLink(newLink)
         setTickets(newTickets)
+        setMemberTicketsChosen(memberTickets)
     }
-
 
     if(screening === null){
         return (
@@ -50,10 +65,10 @@ const Tickets = (props) => {
 
     return (
         <div className='tickets'>
-            <Header name={screening.name} date={screening.date} />
+            <Header name={screening.name} date={screening.date} in3D={screening.in_3D} />
             <Seats occupied={screening.occupied_seats} chosenSeats={chosenSeats} setChosenSeats={setChosenSeats} />
             <TicketsType member={props.membership.membership} membershipType={props.membership.type} chosenSeats={chosenSeats}
-            setTickets={setTicketsAndUpdateLink} tickets={tickets}
+            setTickets={setTicketsAndUpdateLink} tickets={tickets} memberTicketsChosen={memberTicketsChosen}
             />
             { chosenSeats.length > 0 && 
                 <Link to={link} className='tickets__continue button shadow-tiny'>Continue</Link>

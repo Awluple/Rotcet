@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import PropTypes from 'prop-types'
 
 import { Link } from "react-router-dom";
@@ -6,16 +6,6 @@ import { Link } from "react-router-dom";
 import TypeSelection from './typeSelection.jsx'
 
 const TicketsType = props => {
-
-    const [memberTicketsChosen, setMemberTicketsChosen] = useState(0)
-
-    const addMemberTicket = () => {
-        setMemberTicketsChosen(memberTicketsChosen + 1)
-    }
-
-    const subtractMemberTicket = () => {
-        setMemberTicketsChosen(memberTicketsChosen - 1)
-    }
 
     return (
         <div className='tickets__type'>
@@ -31,7 +21,7 @@ const TicketsType = props => {
                     {props.chosenSeats.map((seat, index) => {
                         return (
                             <TypeSelection key={seat} seat={seat} index={index} member={props.member} membershipType={props.membershipType}
-                            memberTicketsChosen={memberTicketsChosen} addMemberTicket={addMemberTicket} subtractMemberTicket={subtractMemberTicket}
+                            memberTicketsChosen={props.memberTicketsChosen}
                             setTickets={props.setTickets} tickets={props.tickets}
                             />
                         )
@@ -56,7 +46,8 @@ TicketsType.propTypes = {
     member: PropTypes.bool.isRequired,
     membershipType: PropTypes.number.isRequired,
     setTickets: PropTypes.func.isRequired,
-    tickets: PropTypes.array.isRequired
+    tickets: PropTypes.array.isRequired,
+    memberTicketsChosen: PropTypes.number.isRequired
 }
 
 export default TicketsType
