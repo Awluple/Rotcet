@@ -20,7 +20,7 @@ def handle_test_file(path, filename):
         return path
 
 def string_list_to_python(string_list):
-    if string_list:
+    if string_list is not None:
         as_list = string_list.split(',')
     else:
         return []

@@ -6,8 +6,14 @@ from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
 
+from shows.models_values import movie_values
+from screenings.models_values import room_values, screening_values
+
+from shows.models import Movie
+from screenings.models import Room, Screening, Show
+
 from .forms import UserRegistrationForm
-from .models import Membership
+from .models import Membership, Ticket
 
 class LoginTestCase(TestCase):
 
@@ -172,4 +178,31 @@ class SessionApiTestCase(APITestCase):
         
         self.assertTrue('membership' in response.data)
         self.assertTrue(response.data['membership'])
+
+class TicketApiTestCase(APITestCase):
+
+    def setUp(self):
+        self.url = reverse('api:ticket-list')
+
+        User.objects.create_user(username='test@email.com', email='test@email.com', password='testpassword123')
+
+        Movie.objects.create(**movie_values)
+        Room.objects.create(**room_values)
+
+        movie = Movie.objects.get(pk=1)
+        Show.objects.create(type='MV', movie=movie)
+
+        show = Show.objects.get(pk=1)
+        room = Room.objects.get(pk=1)
+
+        screening_values['show'] = show
+        screening_values['room'] = room
+
+        Screening.objects.create(**screening_values)
+
+    def test_forbidden_for_not_logged(self):
+        response = self.client.get(self.url)
+
+        self.assertEqual(response.status_code, HTTPStatus.FORBIDDEN)
+        
         
