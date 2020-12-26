@@ -23,6 +23,9 @@ class TicketSerializer(serializers.ModelSerializer):
         occupied_seats = string_list_to_python(screening.occupied_seats)
         member_tickets = Ticket.objects.filter(screening=screening, type=2).count()
 
+        if not user.is_authenticated:
+            raise serializers.ValidationError({'details': 'User not authenticated'})
+
         if type not in [0,1,2]:
             raise serializers.ValidationError({'details': 'Incorrect ticket type'})
 
@@ -33,7 +36,7 @@ class TicketSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError({'details': 'Requested member ticket for non member user'})
         
         if type == 2 and not member_tickets + 1 <= user.membership.type:
-            raise serializers.ValidationError({'details': 'User already used all member tickets for this show'})        
+            raise serializers.ValidationError({'details': 'User has already used all member tickets for this show'})        
     
         if not seat in range(1, screening.room.seats + 1):
             raise serializers.ValidationError({'details': 'There is no seat with that number', 'seat': seat})

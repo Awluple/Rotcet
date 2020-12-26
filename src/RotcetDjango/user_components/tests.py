@@ -2,6 +2,7 @@ from http import HTTPStatus
 from django.test import TestCase
 from django.contrib.auth.models import User
 from django.urls import reverse
+from django.core.exceptions import ValidationError
 
 from rest_framework import status
 from rest_framework.test import APITestCase
@@ -179,12 +180,13 @@ class SessionApiTestCase(APITestCase):
         self.assertTrue('membership' in response.data)
         self.assertTrue(response.data['membership'])
 
-class TicketApiTestCase(APITestCase):
+class TicketTestCase(TestCase):
 
     def setUp(self):
-        self.url = reverse('api:ticket-list')
+        user = User.objects.create_user(username='test@email.com', email='test@email.com', password='testpassword123')
+        self.user = User.objects.get(pk=1)
 
-        User.objects.create_user(username='test@email.com', email='test@email.com', password='testpassword123')
+        Membership.objects.create(user=self.user, type=1, is_active=True)
 
         Movie.objects.create(**movie_values)
         Room.objects.create(**room_values)
@@ -197,12 +199,169 @@ class TicketApiTestCase(APITestCase):
 
         screening_values['show'] = show
         screening_values['room'] = room
+        screening_values['occupied_seats'] = '1,2'
+
+        self.screening = Screening.objects.create(**screening_values)
+
+    def test_adds_seat_to_session_occupied_seats(self):
+        Ticket.objects.create(user=self.user, screening=self.screening, type=0, seat=3)
+        screening = Screening.objects.get(pk=1)
+        self.assertEqual('1,2,3', screening.occupied_seats)
+
+    def test_changes_seat_in_session_occupied_seats_on_edit(self):
+        Ticket.objects.create(user=self.user, screening=self.screening, type=0, seat=3)
+        ticket = Ticket.objects.get(pk=1)
+        ticket.seat = 4
+        ticket.save()
+
+        screening = Screening.objects.get(pk=1)
+
+        self.assertEqual('1,2,4', screening.occupied_seats)
+
+    def test_blocks_type_change_if_member_tickets_full(self):
+        Ticket.objects.create(user=self.user, screening=self.screening, type=0, seat=3)
+        Ticket.objects.create(user=self.user, screening=self.screening, type=2, seat=3)
+        ticket = Ticket.objects.get(pk=1)
+        ticket.type = 2
+
+        self.assertRaises(ValidationError, ticket.clean)
+    
+    def test_type_in_range(self):
+        ticket = Ticket(user=self.user, screening=self.screening, type=4, seat=3)
+        self.assertRaises(ValidationError, ticket.clean)
+    
+    def test_seat_already_occupied(self):
+        ticket = Ticket(user=self.user, screening=self.screening, type=4, seat=2)
+        self.assertRaises(ValidationError, ticket.clean)
+
+    def test_member_tickets_full(self):
+        Ticket.objects.create(user=self.user, screening=self.screening, type=2, seat=3)
+        ticket = Ticket(user=self.user, screening=self.screening, type=2, seat=4)
+        self.assertRaises(ValidationError, ticket.clean)
+
+class TicketApiTestCase(APITestCase):
+
+    def setUp(self):
+        self.url = reverse('api:ticket-list')
+
+        user = User.objects.create_user(username='test@email.com', email='test@email.com', password='testpassword123')
+        user = User.objects.get(pk=1)
+
+        Membership.objects.create(user=user, type=1, is_active=False)
+
+        Movie.objects.create(**movie_values)
+        Room.objects.create(**room_values)
+
+        movie = Movie.objects.get(pk=1)
+        Show.objects.create(type='MV', movie=movie)
+
+        show = Show.objects.get(pk=1)
+        room = Room.objects.get(pk=1)
+
+        screening_values['show'] = show
+        screening_values['room'] = room
+        screening_values['occupied_seats'] = '1,2'
 
         Screening.objects.create(**screening_values)
-
-    def test_forbidden_for_not_logged(self):
+        
+    def test_get_forbidden_for_not_logged(self):
         response = self.client.get(self.url)
 
         self.assertEqual(response.status_code, HTTPStatus.FORBIDDEN)
+        self.assertEqual(response.data['details'], 'User not authenticated')
+
+    def test_post_forbidden_for_not_logged(self):
+        response = self.client.post(self.url, {
+            "type": 0,
+            "seat": 3,
+            "screening": 1
+        })
+
+        self.assertEqual(response.status_code, HTTPStatus.BAD_REQUEST)
+        self.assertEqual(response.data['details'], 'User not authenticated')
+
+    def test_ticket_booking(self):
+        self.client.login(email='test@email.com', password='testpassword123')
+
+        response = self.client.post(self.url, {
+            "type": 0,
+            "seat": 3,
+            "screening": 1
+        })
+        self.assertEqual(response.status_code, HTTPStatus.CREATED)
+    
+    def test_incorrect_type(self):
+        self.client.login(email='test@email.com', password='testpassword123')
+
+        response = self.client.post(self.url, {
+            "type": 3,
+            "seat": 3,
+            "screening": 1
+        })
+        self.assertEqual(response.status_code, HTTPStatus.BAD_REQUEST)
+        self.assertEqual(response.data['details'], 'Incorrect ticket type')
+
+    def test_seat_already_occupied(self):
+        self.client.login(email='test@email.com', password='testpassword123')
+
+        response = self.client.post(self.url, {
+            "type": 0,
+            "seat": 1,
+            "screening": 1
+        })
+        self.assertEqual(response.status_code, HTTPStatus.BAD_REQUEST)
+        self.assertEqual(response.data['details'], 'Seat already booked')
+
+    def test_user_not_member(self):
+        self.client.login(email='test@email.com', password='testpassword123')
+
+        response = self.client.post(self.url, {
+            "type": 2,
+            "seat": 3,
+            "screening": 1
+        })
+        self.assertEqual(response.status_code, HTTPStatus.BAD_REQUEST)
+        self.assertEqual(response.data['details'], 'Requested member ticket for non member user')
+
+    def test_member_ticket_book(self):
+        membership = Membership.objects.get(pk=1)
+        membership.is_active = True
+        membership.save()
+
+        self.client.login(email='test@email.com', password='testpassword123')
+
+        response = self.client.post(self.url, {
+            "type": 2,
+            "seat": 3,
+            "screening": 1
+        })
+        self.assertEqual(response.status_code, HTTPStatus.CREATED)
+    
+    def test_member_tickets_full(self):
+        membership = Membership.objects.get(pk=1)
+        membership.is_active = True
+        membership.save()
+        user = User.objects.get(pk=1)
+        screening = Screening.objects.get(pk=1)
+        Ticket.objects.create(user=user, screening=screening, seat=3, type=2)
+
+        self.client.login(email='test@email.com', password='testpassword123')
+
+        response = self.client.post(self.url, {
+            "type": 2,
+            "seat": 5,
+            "screening": 1
+        })
+        self.assertEqual(response.status_code, HTTPStatus.BAD_REQUEST)
+        self.assertEqual(response.data['details'], 'User has already used all member tickets for this show')
         
-        
+    def test_seat_out_of_range(self):
+        self.client.login(email='test@email.com', password='testpassword123')
+
+        response = self.client.post(self.url, {
+            "type": 0,
+            "seat": 9999,
+            "screening": 1
+        })
+        self.assertEqual(response.status_code, HTTPStatus.BAD_REQUEST)
+        self.assertEqual(response.data['details'], 'There is no seat with that number')
