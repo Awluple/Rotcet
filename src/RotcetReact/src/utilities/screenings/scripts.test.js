@@ -5,11 +5,11 @@ import {toDateObjects, checkIfOutdated, organizeScreenings} from './scripts.js'
 describe('Utilities screenings scripts tests', () => {
     describe('toDateObjects tests', () => {
         it('converts dates', () => {
-            const datesAsString = ["2020-02-26T12:09:43Z", "2020-02-26T14:31:38Z",]
+            const datesAsString = [{id: 1, date: "2020-02-26T12:09:43Z"}, {id: 2, date: "2020-02-26T14:31:38Z"}]
             const returned = toDateObjects(datesAsString)
             const date1 = new Date('2020-02-26T12:09:43')
             const date2 = new Date('2020-02-26T14:31:38')
-            assert.deepEqual(returned, [date1,date2])
+            assert.deepEqual(returned, [{id: 1, date: date1}, {id: 2, date: date2}])
         });
     });
     describe('checkIfOutdated tests', () => {
@@ -35,23 +35,25 @@ describe('Utilities screenings scripts tests', () => {
         })
 
         it('creates dates list', () => {
-            const returned = organizeScreenings([date1, date2, date3, date4])
+            const returned = organizeScreenings([{id: 1, date: date1}, {id: 2, date: date2},
+                {id: 3, date: date3}, {id: 4, date: date4}])
             const expectedDays = ['20.07.2200', '25.07.2200']
             assert.deepEqual(returned['days'], expectedDays)
         })
 
         it('sorts ascending', () => {
-            const returned = organizeScreenings([date3, date1])
+            const returned = organizeScreenings([{id: 1, date: date3}, {id: 2, date: date1}])
             const expectedDays = ['20.07.2200', '25.07.2200']
             assert.deepEqual(returned['days'], expectedDays)
         })
 
         it('organize screenings', () => {
-            const returned = organizeScreenings([date1, date2, date3, date4])
+            const returned = organizeScreenings([{id: 1, date: date1}, {id: 2, date: date2},
+                {id: 3, date: date3}, {id: 4, date: date4}])
             const expected = {
                 days: ['20.07.2200', '25.07.2200'],
-                '20.07.2200': ['9:09', '11:11'],
-                '25.07.2200': ['11:11']
+                '20.07.2200': [{id: 1, hour: '9:09'}, {id: 2, hour: '11:11'}],
+                '25.07.2200': [{id: 3, hour: '11:11'}]
             }
             assert.deepEqual(returned, expected)
         })

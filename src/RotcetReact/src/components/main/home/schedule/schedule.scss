@@ -115,11 +115,15 @@
     li {
         margin: 5px 0px;
         font-family: $content-font;
-        font-weight: 100;
+        font-weight: 400;
         font-size: 1.3em;
         width: 65px;
         background: $darker-silver;
         border-radius: 0.5em;
+    }
+
+    a {
+        color: black;
     }
 }
 }

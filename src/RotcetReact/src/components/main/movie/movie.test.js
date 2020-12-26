@@ -23,7 +23,7 @@ configure({ adapter: new Adapter() });
 const movie1 = {
     "id": 1,
     "screenings": [
-        "2200-08-04T15:44:31Z"
+        {id: 1, date: "2200-08-04T15:44:31Z"}
     ],
     "trailers": [
         {
@@ -104,9 +104,9 @@ const images = [
 ]
 
 const screenings = {
-    '10.10.2200': ['12:00'],
-    '11.10.2200': ['13:00'],
-    '12.10.2200': ['14:00'],
+    '10.10.2200': [{id: 1, hour: '12:00'}],
+    '11.10.2200': [{id: 2, hour: '13:00'}],
+    '12.10.2200': [{id: 3, hour: '14:00'}],
     days: ['10.10.2200','11.10.2200','12.10.2200']
 }
 
@@ -212,7 +212,7 @@ describe('Movie page', () => {
     });
     describe('Screenings component', () => {
         before(() => {
-            global.wrapper = shallow(<Screenings screenings={['1', '2']} />)
+            global.wrapper = shallow(<Screenings screenings={[{id: 1, hour: '12:00'}, {id: 2, hour: '13:00'}]} />)
             global.wrapper2 = shallow(<Screenings />)
          })
         it('has a length of 6', () => {
@@ -220,8 +220,8 @@ describe('Movie page', () => {
             assert.lengthOf(wrapper2.find('li'), 6)
         });
         it('fills cells', () => {
-            assert.equal(wrapper.find('li').at(0).text(), '1')
-            assert.equal(wrapper.find('li').at(1).text(), '2')
+            assert.equal(wrapper.find('li').at(0).text(), '12:00')
+            assert.equal(wrapper.find('li').at(1).text(), '13:00')
         });
     });
 

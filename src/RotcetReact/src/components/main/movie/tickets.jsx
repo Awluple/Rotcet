@@ -65,7 +65,6 @@ const Tickets = React.forwardRef((props,ref) => {
     if (!dates){
         return <LoadingGif />
     }
-
     return (
         <div ref={ref} className='movie__tickets'>
             <h2 ref={measuredRef} className='header header--medium shadow-tiny'>Shedule and tickets</h2>
