@@ -197,6 +197,10 @@
         }
         &--blank{
             background: #424242 !important;
+            
+            a {
+                cursor: default;
+            }
         }
     }
     &__button {

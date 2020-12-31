@@ -6,7 +6,7 @@ import Adapter from 'enzyme-adapter-react-16'
 import sinon from 'sinon'
 import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
-import { MemoryRouter, Route } from 'react-router-dom'
+import { MemoryRouter, Route, Link } from 'react-router-dom'
 import LoadingGif from 'media/gifs/loading.jsx'
 import YouTube from 'utilities/youtube/youtube.jsx'
 
@@ -222,6 +222,12 @@ describe('Movie page', () => {
         it('fills cells', () => {
             assert.equal(wrapper.find('li').at(0).text(), '12:00')
             assert.equal(wrapper.find('li').at(1).text(), '13:00')
+        });
+        it('adds link', () => {
+            assert.equal(wrapper.find('li').at(0).find(Link).props().to, '/tickets/1')
+        });
+        it('does not set link for blank cells', () => {
+            assert.equal(wrapper.find('li').at(3).find(Link).props().to, '#')
         });
     });
 

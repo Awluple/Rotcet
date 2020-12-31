@@ -22,7 +22,8 @@ const Screenings = props => {
         <ul className='tickets__hours'>
             {filledScreenings.map((screening, index) => {
                 return <li className={screening === '' ? 'tickets__hours--blank' : ''} key={index}>
-                        <Link to={`/tickets/${screening.id}`}>{screening.hour}</Link>
+                        <Link to={screening.id !== undefined ? `/tickets/${screening.id}` : '#'}>
+                            {screening.hour}</Link>
                     </li>
             })}
         </ul>

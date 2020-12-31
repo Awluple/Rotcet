@@ -12,10 +12,16 @@ export const toDateObjects = (screenings) => {
     return screenings
 }
 
-export const checkIfOutdated = date => {
-    date = new Date(date.getFullYear(), date.getMonth(), date.getDate())
+export const checkIfOutdated = (date, outdatedTimeDifference) => {
+
+    outdatedTimeDifference = outdatedTimeDifference === undefined ? 0 : outdatedTimeDifference
+
+    date = new Date(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes())
     let now = new Date()
-    now = new Date(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate())
+    now = new Date(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), now.getHours(), now.getMinutes())
+    
+    now.setMinutes(now.getMinutes() + outdatedTimeDifference)
+    
     if (date < now) {
         return true
     } else{
@@ -23,17 +29,20 @@ export const checkIfOutdated = date => {
     }
 }
 
-export const organizeScreenings = (screeningsArray) => {
-    /* Changes array of dates to organised objects */
+export const organizeScreenings = (screeningsArray, outdatedTimeDifference) => {
+    /* Changes array of dates to organised objects
+    outdatedTimeDifference - how much time a screening date may be differ from the current time, in minutes */
+
     screeningsArray = screeningsArray.sort((date1, date2) => {return date1.date.getTime() - date2.date.getTime()}) // set dates in ascending order
     let organized = {
         days: []
     }
     screeningsArray.map(screening => {
 
-        if (checkIfOutdated(screening.date)) { // ignore outdated screenings
+        if (checkIfOutdated(screening.date, outdatedTimeDifference)) { // ignore outdated screenings
             return
         }
+
         const id = screening.id
         screening = screening.date
 

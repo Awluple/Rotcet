@@ -12,7 +12,7 @@ const Movie = props => {
 
     useEffect(() => {
         let screenings = toDateObjects(props.movie.screenings)
-        screenings = organizeScreenings(screenings)
+        screenings = organizeScreenings(screenings, 30)
         let date = screenings['days'][0]
             const day1 = {
                 date: date,
