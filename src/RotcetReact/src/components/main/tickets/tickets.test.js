@@ -99,7 +99,7 @@ describe('Tickets tests', () => {
             wrapper.find(Seats).props().setChosenSeats([1, 2])
             wrapper.find(TicketsType).props().setTickets([{type: 0, seat: 1}], [{type: 2, seat: 2}])
             wrapper.update()
-            assert.equal(wrapper.find(Link).props().to, '/tickets/1/details?&ticket=2,2')
+            assert.equal(wrapper.find(Link).props().to, '/tickets/1/order?&ticket=2,2')
         })
         it('does not pass to many membership tickets', () => {
             wrapper.find(Seats).props().setChosenSeats([1, 2, 3])

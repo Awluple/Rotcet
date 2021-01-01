@@ -39,13 +39,17 @@ const OrderConfirmation = props => {
     }
 
     return (
-        <div>
-            {props.screening !== null && <Info screening={props.screening} />}
-            <Tickets tickets={tickets} />
-
-            <h1>Is that corrent?</h1>
-            <Link to={`/tickets/${params.screeningId}`}>No, back</Link>
-            <button onClick={proceed}>Yes, proceed to payment</button>
+        <div className='ticket'>
+            <h1 className='ticket__header'>Summary</h1>
+            <div className='ticket__info'>
+                {props.screening !== null && <Info screening={props.screening} />}
+                <Tickets tickets={tickets} />
+            </div>
+            <h3>Is that correct?</h3>
+            <div className='ticket__options'>
+                <Link className='ticket__back' to={`/tickets/${params.screeningId}`}>No, back</Link>
+                <button className='ticket__continue' onClick={proceed}>Yes, proceed to payment</button>
+            </div>
         </div>
     )
 }

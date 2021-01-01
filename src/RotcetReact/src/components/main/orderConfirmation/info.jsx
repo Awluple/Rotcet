@@ -10,7 +10,7 @@ const Info = props => {
     const hour = toCompactHour(jsDate)
 
     return (
-        <div>
+        <div className='ticket__show'>
             <h2>Movie</h2>
             <p>{props.screening.name}</p>
             <p>Time: {hour}</p>

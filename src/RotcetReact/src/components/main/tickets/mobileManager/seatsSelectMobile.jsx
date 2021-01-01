@@ -51,7 +51,7 @@ const SeatsSelectMobile = props => {
                 <h3 className='header header--medium'>Select a seat</h3>
                 <input ref={input} onChange={checkSeat} min='1' max='108' type="number"/>
                 <div className='seat-info'>
-                    {props.occupied.includes(seat) || seat > 108 ? 
+                    {props.occupied.includes(seat) || seat > 108 || props.chosenSeats.includes(seat) ? 
                     <React.Fragment>{unavailableSVG}<p>Seat unavailable</p></React.Fragment> :
                     (seat === null || isNaN(seat)) ? '' :
                     <React.Fragment>{availableSVG}<p>Seat available</p></React.Fragment>}

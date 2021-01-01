@@ -4,6 +4,7 @@ import {useParams, useHistory} from 'react-router-dom'
 import axios from 'axios'
 
 import { UserContext, MembershipContext } from 'utilities/contexts.js'
+import {convertDateToUTC} from 'utilities/tools/tools.js'
 
 import Tickets from './tickets/tickets.jsx'
 import OrderConfirmation from './orderConfirmation/orderConfirmation.jsx'
@@ -50,7 +51,15 @@ const TicketsManager = () => {
     useEffect(() => {
         if(userLogged){
             axios.get(`/api/screenings/${params.screeningId}`).then(res => {
-                setScreening(res.data)
+                let now = new Date()
+                now = convertDateToUTC(now)
+                now.setMinutes(now.getMinutes() + 30)
+                const screeningDate = new Date(res.data.date.replace('Z', ''))
+                if (screeningDate < now){
+                    history.push('/errors/outdated')
+                } else {
+                    setScreening(res.data)
+                }
             }).catch(err => {
                 console.error(err)
                 if(err.response.status == 404){
@@ -63,7 +72,7 @@ const TicketsManager = () => {
     return (
         <div>
             <Switch>
-                <Route path='/tickets/:screeningId/details' render={() => <OrderConfirmation screening={screening} />} />
+                <Route path='/tickets/:screeningId/order' render={() => <OrderConfirmation screening={screening} />} />
                 <Route exact path='/tickets/:screeningId' render={() => <Tickets screening={screening} membership={userMembership} />} />
             </Switch>
         </div>

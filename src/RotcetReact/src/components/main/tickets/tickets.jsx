@@ -39,7 +39,7 @@ const Tickets = (props) => {
             }
             return `&ticket=${ticket.seat},${ticket.type - 1}`
         })
-        newLink = `/tickets/${params.screeningId}/details?` + newLink
+        newLink = `/tickets/${params.screeningId}/order?` + newLink
 
         if(memberTickets > props.membership.type || (props.membership.membership === false && memberTickets !== 0)) {
             // if bug with too many memberTickets have occurred, reset everything

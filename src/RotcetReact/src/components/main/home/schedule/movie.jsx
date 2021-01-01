@@ -30,7 +30,7 @@ const Movie = props => {
             setScreeningsDates({day1: day1})
         }
     }, [])
-    // to={`/movie/${props.movie.name}-${props.movie.id}#tickets`}
+
     if (screeningsDates){
         return (
             <li className='movies__movie'>

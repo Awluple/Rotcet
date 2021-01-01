@@ -13,10 +13,187 @@
     border-top-left-radius: 2em;
     border-top-right-radius: 2em;
 }
+
+.ticket {
+    @include flex-center(column);
+    margin-top: 80px;
+
+    @media (max-width: $phone) {
+        margin-top: 30px;
+    }
+
+    h1 {
+        font-family: $headers-font;
+        color: $silver;
+        font-size: 3.3em;
+        font-weight: 100;
+        margin-bottom: 55px;
+
+        @media (max-width: $phone-small) {
+            font-size: 2.8em;
+        }
+    }
+
+    h2 {
+        font-family: $headers-font;
+        color: $silver;
+        font-size: 2em;
+        font-weight: 100;
+        width: 100px;
+        padding: 8px 0px;
+        background-color: $main-red;
+        text-align: center;
+        width: 270px;
+
+        @media (max-width: $tablet) {
+            width: 225px;
+        }
+        @media (max-width: $phone) {
+            width: 250px;
+        }
+        @media (max-width: $phone-small) {
+            font-size: 1.8em;
+        }
+    }
+
+    h3 {
+        font-family: $headers-font;
+        color: $silver;
+        background: $main-red;
+        font-size: 1.7em;
+        font-weight: 100;
+        padding: 10px 35px;
+        margin-top: 90px;
+    }
+
+    p {
+        font-family: $content-font;
+    }
+
+    &__info {
+        @include flex-center(row);
+        justify-content: space-between;
+        align-items: flex-start;
+        width: 60%;
+        max-width: 750px;
+
+        @media (max-width: $tablet) {
+            width: 80%;
+        }
+        @media (max-width: 800px) {
+            width: 90%;
+        }
+        @media (max-width: $phone) {
+            @include flex-center(column);
+        }
+    }
+
+    &__show {
+        p {
+            font-size: 1.8em;
+            color: white;
+            margin: 5px 0px;
+
+            @media (max-width: $phone-small) {
+                font-size: 1.6em;
+            }
+        }
+
+        @media (max-width: $phone) {
+            margin-bottom: 40px;
+        }
+    }
+
+    &__tickets {
+        @include flex-center(column);
+        ul {
+            margin-top: 10px;
+            padding: 0px;
+            list-style: none;
+        }
+
+        li {
+            @include flex-center(row);
+            justify-content: space-between;
+            font-size: 1.3em;
+            font-weight: 600;
+            width: 270px;
+            padding: 3px 9px;
+            margin: 7px 0px;
+            background: $darker-silver;
+            color: black;
+
+            @media (max-width: $tablet) {
+                width: 235px;
+                font-size: 1.2em;
+            }
+        }
+    }
+
+    &__total {
+        font-size: 1.3em;
+        font-weight: 600;
+        width: 120px;
+        background: $darker-silver;
+        align-self: flex-end;
+        text-align: center;
+    }
+
+    &__options {
+        @include flex-center(row);
+        margin: 10px 0px 350px;
+
+        @media (max-width: $phone) {
+            flex-direction: column;
+            margin-bottom: 250px;
+        }
+    }
+
+    &__back, &__continue {
+        @include flex-center(row);
+        @include delete-border;
+        font-family: $content-font;
+        font-size: 1.4em;
+        color: $silver;
+        width: 300px;
+        height: 50px;
+        margin: 10px 40px;
+        border-radius: 50px;
+
+        @media (max-width: $phone) {
+            margin: 10px 0px;
+            font-size: 1.4em;
+            width: 260px;
+        }
+
+        @media (max-width: $phone-small) {
+            width: 220px;
+            font-size: 1.2em;
+        }
+    }
+
+    &__back {
+        background: #511616;
+
+        &:hover {
+            background: #330d0d;
+        }
+    }
+
+    &__continue {
+        cursor: pointer;
+        background: #1E9739;
+
+        &:hover {
+            background: #137028;
+        }
+    }
+}
+
 @media only screen and (max-width: 600px) {
 .main_section_header {
     font-size: 2.5em;
-}
+    }
 }
 @media only screen and (max-width: 400px) {
     .main_section_header {
