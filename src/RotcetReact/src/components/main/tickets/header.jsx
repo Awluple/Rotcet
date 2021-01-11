@@ -22,7 +22,7 @@ const Header = props => {
 Header.propTypes = {
     date: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
-    in3D: PropTypes.bool.isRequired
+    in3D: PropTypes.bool.isRequired,
 }
 
 export default Header

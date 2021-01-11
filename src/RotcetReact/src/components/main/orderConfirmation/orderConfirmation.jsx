@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import PropTypes from 'prop-types'
 import qs from 'qs'
+import axios from 'axios'
 
 import { useLocation, useParams, useHistory, Link } from 'react-router-dom'
 
@@ -31,11 +32,53 @@ const OrderConfirmation = props => {
         setTickets(tickets)
     }, [])
     
-    const proceed = () => {
+    const simulatePayment = () => {
+        setTickets([])
         window.open('https://www.sandbox.paypal.com/checkoutnow', 'payment', "height=600,width=600")
         setTimeout(() => {
-            history.push('/accepted')
+            history.push('/tickets/accepted')
         }, 1500);
+    }
+
+    const proceed = () => {
+        const seats = tickets.map(ticket => {
+            return ticket[0]
+        })
+        const types = tickets.map(ticket => {
+            return ticket[1]
+        })
+
+        axios.post('/api/tickets-multiple-creation', {
+            screening: params.screeningId,
+            seats: seats.join(),
+            types: types.join()
+        }).then(res => {
+            if(res.status === 201) {
+                simulatePayment()
+            }
+        }).catch(error => {
+            console.error(error)
+            console.error(error.response.data)
+            if(error.response.status === 400){
+                props.reloadData(props.membership.membership, props.membership.defaultType)
+            } else {
+                history.push(`/errors/${error.response.status}`)
+            }
+            switch(error.response.data.code) {
+                case 1: // problem with ticket type
+                    history.push(`/tickets/${params.screeningId}/?error=type`)
+                break;
+                case 2: // seat occupied
+                    history.push(`/tickets/${params.screeningId}/?error=occupied&occupied=${error.response.data.seats.join()}`)
+                break;
+                case 3: //seat out of range
+                    history.push(`/tickets/${params.screeningId}/?error=range`)
+                break;
+                default:
+                    history.push('/errors/400')
+                break;
+              }
+        })
     }
 
     return (
@@ -55,7 +98,9 @@ const OrderConfirmation = props => {
 }
 
 OrderConfirmation.propTypes = {
-    screening: PropTypes.object
+    screening: PropTypes.object,
+    membership: PropTypes.object.isRequired,
+    reloadData: PropTypes.func.isRequired
 }
 
 export default OrderConfirmation

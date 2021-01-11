@@ -14,6 +14,7 @@ class Ticket(models.Model):
     type = models.PositiveSmallIntegerField(default=0)
     screening = models.ForeignKey(Screening, related_name='tickets', on_delete=models.CASCADE)
     seat = models.PositiveSmallIntegerField()
+    bulk_create = models.BooleanField(default=False, editable=False)
     #code = models.CharField(max_length=200)
 
     def __str__(self):
@@ -41,7 +42,7 @@ class Ticket(models.Model):
     def save(self, *args, **kwargs):
         old_instance = Ticket.objects.filter(pk=self.pk).first()
     
-        if old_instance is not None and old_instance.seat == self.seat:
+        if self.bulk_create or (old_instance is not None and old_instance.seat == self.seat):
             super().save(*args, **kwargs)
         elif old_instance is not None:
             # exchange seat in occupied_seats
@@ -63,7 +64,6 @@ class Ticket(models.Model):
                 screening.occupied_seats = str(self.seat)
             else:
                 screening.occupied_seats = (self.screening.occupied_seats + ',' + str(self.seat))
-
             screening.save()
 
             super().save(*args, **kwargs)

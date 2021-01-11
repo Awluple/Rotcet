@@ -8,6 +8,13 @@ import SeatsManager from './mobileManager/seatsManager.jsx'
 import {draw} from './canvasDraw.js'
 
 const Seats = props => {
+
+    const errors = {
+        'occupied': `You have selected seat which is already occupied: ${props.error !== null ? props.error.occupied : ''}`,
+        'type': `We are sorry, there was a problem with your tickets type, please select seats again`,
+        'range': 'We are sorry, there was a problem with your seat number, please select seats again'
+    }
+
     const canvasRef = useRef(null)
     
     const smallDevice = useScreenWidth(600)
@@ -32,10 +39,11 @@ const Seats = props => {
 
 
         draw(canvas, ctx, smallDevice, props.occupied, props.chosenSeats, addSeat, deleteSeat)
-    }, [props.chosenSeats.length, smallDevice])
+    }, [props.chosenSeats.length, smallDevice, props.occupied.length])
 
     return (
         <div className='tickets__canvas'>
+            { props.error !== null ? <p>{errors[props.error.name]}</p> : ''}
             { !smallDevice && <h2>1. Select seats</h2>}
             <canvas ref={canvasRef} />
             {smallDevice && 
@@ -48,11 +56,15 @@ const Seats = props => {
     )
 }
 
+Seats.defaultProps = {
+    error: null
+}
+
 Seats.propTypes = {
     occupied: PropTypes.array.isRequired,
     chosenSeats: PropTypes.array.isRequired,
-    setChosenSeats: PropTypes.func.isRequired
-    // addTicket: PropTypes.func.isRequired
+    setChosenSeats: PropTypes.func.isRequired,
+    error: PropTypes.object
 }
 
 export default Seats

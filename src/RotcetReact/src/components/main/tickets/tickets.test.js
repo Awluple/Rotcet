@@ -29,6 +29,7 @@ const screening = {
     "image": "http://192.168.88.48:8000/media/movies/The%20Movie/2020-04-27/main_image/thumbnail_img2_vtNB7gi.jpg",
     "show_id": 4,
     "date": "2020-09-17T16:00:00Z",
+    "member_tickets_left": 1,
     "occupied_seats": [
         9,
         10,
@@ -139,7 +140,7 @@ describe('Tickets tests', () => {
     describe('TicketsType component', () => {
         before(() => {
             global.wrapper = shallow(<TicketsType chosenSeats={[3,4]} member={session.membership} memberTicketsChosen={0}
-                membershipType={session.type} setTickets={function(){}} tickets={[]} />)
+                membershipDefault={1} membershipType={session.type} setTickets={function(){}} tickets={[]} />)
         })
         it('shows tickets price', () => {
             assert.lengthOf(wrapper.find('.tickets__description'), 1)

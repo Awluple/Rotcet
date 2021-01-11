@@ -28,6 +28,20 @@
 
 .tickets__canvas {
     @include flex-center(column);
+
+    p {
+        font-family: $content-font;
+        color: white;
+        font-size: 1.7em;
+        font-weight: 600;
+        width: 60%;
+        margin-top: 10px;
+        margin-bottom: 10px;
+
+        @media (max-width: $phone) {
+            font-size: 1.2em;
+        }
+    }
 }
 
 .seats_manager {

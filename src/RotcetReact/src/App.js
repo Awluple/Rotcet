@@ -17,6 +17,7 @@ function App() {
     const [userMembership, setUserMembership] = useState({membership: false, type: 0})
 
     useEffect(() => {
+        axios.defaults.xsrfHeaderName = "X-CSRFToken";
         axios.get('/api/session').then(res => {
             setUserLogged(res.data.logged)
             if(res.data.logged) {

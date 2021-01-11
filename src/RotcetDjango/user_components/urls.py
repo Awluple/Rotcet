@@ -7,5 +7,6 @@ urlpatterns = [
     path('login/', views.login, name='login'),
     path('register/', views.register, name='register'),
     path('logout/', views.logout, name='logout'),
-    path('api/session/', views.is_logged, name='session')
+    path('api/session/', views.is_logged, name='session'),
+    path('api/tickets-multiple-creation', views.multiple_tickets_creation, name='tickets_multiple_creation')
 ]

@@ -30,6 +30,11 @@ const TicketsType = props => {
                     {!props.member && 
                         <p className='tickets__info tickets__info--membership'>Visit us often? Try <Link to='/membership' target='blank'>membership</Link> option!</p>
                     }
+                    { props.membershipType !== props.membershipDefault && 
+                        <p className='tickets__info tickets__info--membership'>You have already used {props.membershipType === 0 ? 
+                        'all your member tickets for this show'
+                        : `some member tickets for this show, member tickets left for use: ${props.membershipType}`}</p>
+                    }
                     <p className='tickets__info'>*Kids under 13 years old and seniors above 60</p>
                     <p className='tickets__info'>We may ask for age proof for kids/seniors ticket and
                     age restricted movies </p>
@@ -45,6 +50,7 @@ TicketsType.propTypes = {
     chosenSeats: PropTypes.array,
     member: PropTypes.bool.isRequired,
     membershipType: PropTypes.number.isRequired,
+    membershipDefault: PropTypes.number.isRequired,
     setTickets: PropTypes.func.isRequired,
     tickets: PropTypes.array.isRequired,
     memberTicketsChosen: PropTypes.number.isRequired
