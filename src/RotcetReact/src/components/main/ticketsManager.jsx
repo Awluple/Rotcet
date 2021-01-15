@@ -32,6 +32,7 @@ const TicketsManager = () => {
             if (screeningDate < now){
                 history.push('/errors/outdated')
             } else {
+                document.title = `${res.data.name} - Booking`
                 setScreening(res.data)
                 setUserMembership({
                     membership: membership_active,

@@ -1,7 +1,12 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import {Link} from 'react-router-dom'
 
 const Accepted = () => {
+
+    useEffect(() => {
+        document.title = 'Payment accepted'
+    }, [])
+    
     return (
         <div class="ticket">
             <h1 className='ticket__header'>Payment accepted!</h1>

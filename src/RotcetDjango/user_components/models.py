@@ -28,14 +28,17 @@ class Ticket(models.Model):
 
         member_tickets = Ticket.objects.filter(screening=self.screening, type=2).count()
         validate_seat_in_range(self.seat, self.screening.room.seats)
-        
+
+        # ignore ticket update checks
         if old_instance is None:
             validate_seat_avaliable(self.seat, self.screening.occupied_seats)
             validate_member_tickets_count(self.type, member_tickets, self.user.membership.type)
 
+        # on update check if the new seat is avaliable
         if old_instance is not None and old_instance.seat != self.seat:
             validate_seat_avaliable(self.seat, self.screening.occupied_seats)
         
+        # on update check if the ticket type is avaliable
         if old_instance is not None and old_instance.type != self.type:
             validate_member_tickets_count(self.type, member_tickets, self.user.membership.type)
     
@@ -43,6 +46,7 @@ class Ticket(models.Model):
         old_instance = Ticket.objects.filter(pk=self.pk).first()
     
         if self.bulk_create or (old_instance is not None and old_instance.seat == self.seat):
+            # do not add seat to a screening's occupied seats if the ticket is added the bulk way
             super().save(*args, **kwargs)
         elif old_instance is not None:
             # exchange seat in occupied_seats

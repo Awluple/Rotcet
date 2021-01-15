@@ -18,6 +18,7 @@ const OrderConfirmation = props => {
     const history = useHistory()
 
     useEffect(() => {
+        // parse tickets from url
         let tickets = qs.parse(location.search.substring(1))
 
         tickets = tickets.ticket
@@ -33,6 +34,7 @@ const OrderConfirmation = props => {
     }, [])
     
     const simulatePayment = () => {
+        // fake payment process, opens paypal window and redirects to the accepted page
         setTickets([])
         window.open('https://www.sandbox.paypal.com/checkoutnow', 'payment', "height=600,width=600")
         setTimeout(() => {
@@ -58,7 +60,6 @@ const OrderConfirmation = props => {
             }
         }).catch(error => {
             console.error(error)
-            console.error(error.response.data)
             if(error.response.status === 400){
                 props.reloadData(props.membership.membership, props.membership.defaultType)
             } else {
@@ -72,7 +73,7 @@ const OrderConfirmation = props => {
                     history.push(`/tickets/${params.screeningId}/?error=occupied&occupied=${error.response.data.seats.join()}`)
                 break;
                 case 3: //seat out of range
-                    history.push(`/tickets/${params.screeningId}/?error=range`)
+                    history.push(`/tickets/${params.screeningId}/?error=seat`)
                 break;
                 default:
                     history.push('/errors/400')

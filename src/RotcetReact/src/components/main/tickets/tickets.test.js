@@ -41,6 +41,7 @@ const screening = {
 
 const session = {
     "logged": true,
+    "defaultType": 1,
     "membership": true,
     "type": 1
 }
@@ -78,7 +79,7 @@ describe('Tickets tests', () => {
                     fill: function(){}}
                 )
             }
-            global.wrapper = mount(<MemoryRouter initialEntries={['/tickets/1']}>
+            global.wrapper = mount(<MemoryRouter initialEntries={['/tickets/1?error=occupied&occupied=1,2']}>
                 <Route path='/tickets/:screeningId' render={() => <Tickets screening={screening} membership={session} />} />
             </MemoryRouter>)
 
@@ -108,6 +109,9 @@ describe('Tickets tests', () => {
             wrapper.update()
             assert.equal(wrapper.find('h3').text(), 'Please select a seat first')
         })
+        it('handles errors', () => {
+            assert.deepEqual(wrapper.find(Seats).props().error, {name: 'occupied', occupied: '1,2'})
+        })
     })
     describe('Seats component', () => {
         before(() => {
@@ -127,7 +131,7 @@ describe('Tickets tests', () => {
                     fill: function(){}}
                 )
             }
-            global.wrapper = mount(<Seats occupied={[1,2]} chosenSeats={[3,4]} setChosenSeats={function(){}} />)
+            global.wrapper = mount(<Seats error={{name: 'occupied', occupied: [1,2]}} occupied={[1,2]} chosenSeats={[3,4]} setChosenSeats={function(){}} />)
         })
         it('renders canvas', () => {
             assert.lengthOf(wrapper.find('canvas'), 1)
@@ -135,6 +139,9 @@ describe('Tickets tests', () => {
         it('clears canvas on chosenSeats change', () => {
             wrapper.setProps({ chosenSeats: [3,4,5] });
             assert.isTrue(clearRectSpy.calledTwice)
+        })
+        it('shows error', () => {
+            assert.equal(wrapper.find('p').first().text(), 'You have selected seat which is already occupied: 1,2')
         })
     })
     describe('TicketsType component', () => {
