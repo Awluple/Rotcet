@@ -25,12 +25,18 @@ class Schedule extends Component {
 
     componentDidMount() {
         let time = new Date()
+        time.setMinutes(time.getMinutes() + 30)
         const year = time.getUTCFullYear()
         const month = addZeroForBelowTen(time.getUTCMonth() + 1)
         const day = addZeroForBelowTen(time.getUTCDate())
+
+        const hours = addZeroForBelowTen(time.getUTCHours())
+        const minutes = addZeroForBelowTen(time.getUTCMinutes())
+        const seconds = addZeroForBelowTen(time.getUTCSeconds())
+
         const query = {
             'fields': 'id,name,has_3D,screenings,thumbnail',
-            'screenings_min': `${year}-${month}-${day}`,
+            'screenings_min': `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`,
             'page_size': 100
         }
         this.getMovies(query).then(data => {

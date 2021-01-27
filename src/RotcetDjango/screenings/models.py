@@ -4,7 +4,7 @@ from django.core.validators import FileExtensionValidator
 from .validators import validate_show, validate_occupied_seats, validate_positive_integers_list, validate_available_in_3D
 from scripts.validators import validate_not_before_today
 from shows.models import Movie, Marathon
-from scripts.tools import handle_test_file
+from scripts.tools import handle_test_file, string_list_to_python
 
 def room_scheme_path(instance, filename):
     path = f'/rooms/{filename}'
@@ -13,7 +13,6 @@ def room_scheme_path(instance, filename):
 class Room(models.Model):
     number = models.PositiveSmallIntegerField(unique=True)
     seats = models.PositiveSmallIntegerField()
-    room_scheme = models.FileField(upload_to=room_scheme_path, validators=[FileExtensionValidator(['html'])])
 
     def __str__(self):
         return str(self.number)
@@ -49,7 +48,7 @@ class Screening(models.Model):
     show = models.ForeignKey(Show, related_name='screenings', on_delete=models.CASCADE)
     date = models.DateTimeField()
     room = models.ForeignKey(Room, related_name='screenings', on_delete=models.CASCADE)
-    occupied_seats = models.CharField(max_length=1000, blank=True, null=True, validators=[validate_positive_integers_list])
+    occupied_seats = models.CharField(max_length=1000, blank=True, null=True, editable=False, validators=[validate_positive_integers_list])
     in_3D = models.BooleanField()
     
     def __str__(self):
@@ -60,3 +59,11 @@ class Screening(models.Model):
         validate_occupied_seats(self.room.seats, self.occupied_seats)
         validate_available_in_3D(self.show, self.in_3D)
     
+    def save(self, *args, **kwargs):
+        # sort occupied seats
+        if self.occupied_seats:
+            occupied_seats = string_list_to_python(self.occupied_seats)
+            occupied_seats.sort()
+            self.occupied_seats = ','.join(map(str, occupied_seats))
+
+        super().save(*args, **kwargs)

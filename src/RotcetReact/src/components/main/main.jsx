@@ -5,6 +5,9 @@ import Home from './home/home.jsx'
 import Calendar from './calendar/calendar.jsx'
 import Movie from './movie/movie.jsx'
 
+import TicketsManager from './ticketsManager.jsx'
+import Accepted from './orderConfirmation/accepted.jsx';
+
 const Main = () => {
     const { pathname } = useLocation()
 
@@ -16,6 +19,8 @@ const Main = () => {
         <div className='main'>
             <Switch>
                 <Route path='/movie/:name-:id' component={Movie} />
+                <Route path='/tickets/accepted' component={Accepted} />
+                <Route path='/tickets/:screeningId' component={TicketsManager} />
                 <Route path='/calendar' component={Calendar} />
                 <Route exact path='/' component={Home} />
                 <Route >

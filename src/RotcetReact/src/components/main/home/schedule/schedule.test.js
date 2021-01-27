@@ -22,7 +22,7 @@ const movie = {
     'name': 'Test',
     'thumbnail': '/test.img',
     'has_3D': true,
-    'screenings': ['2200-02-26T12:09:43Z']
+    'screenings': [{id: 1, date: '2200-02-26T12:09:43Z'}]
 }
 
 const movie2 = {
@@ -30,15 +30,9 @@ const movie2 = {
     'name': 'Test2',
     'thumbnail': '/test.img',
     'has_3D': true,
-    'screenings': ['2200-02-26T12:09:43Z']
+    'screenings': [{id: 2, date: '2200-02-26T12:09:43Z'}]
 }
 
-// let movies = []
-//     for (let index = 2; index < 10; index++) {
-//         const newMovie = JSON.parse(JSON.stringify(movie));
-//         newMovie['id'] = index
-//         movies.push(newMovie)
-//     }
 describe('Schedule components tests', () => {
     
     describe('Schedule component', () => {
@@ -79,7 +73,7 @@ describe('Schedule components tests', () => {
             assert.lengthOf(wrapper.find(Screening), 1)
         })
         it('renders screening informations with 2 days', () => {
-            movie['screenings'] = ['2200-02-26T12:09:43Z', '2200-02-27T12:09:43Z']
+            movie['screenings'] = [{id: 1, date: '2200-02-26T12:09:43Z'}, {id: 2, date: '2200-02-27T12:09:43Z'}]
             const wrapper = mount(<MemoryRouter><Movie movie={movie} /></MemoryRouter>)
             assert.lengthOf(wrapper.find(Screening), 2)
         })
@@ -89,7 +83,7 @@ describe('Schedule components tests', () => {
         before(() => {
             global.day ={
                 date: '01.01.2200',
-                screenings: ['9:10', '10:15', '16:30']
+                screenings: [{id: 1, hour: '9:10'}, {id: 2, hour: '10:15'}, {id: 3, hour: '16:30'}]
             }
             global.wrapper = shallow(<Screening day={global.day} />)
         })

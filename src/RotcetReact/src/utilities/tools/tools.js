@@ -11,9 +11,21 @@ export const toCompactDate = date => {
     return `${day}.${month}.${year}`
 }
 
+export const toCompactHour = date => {
+    const hour = addZeroForBelowTen(date.getHours())
+    const minutes = addZeroForBelowTen(date.getMinutes())
+
+    return `${hour}:${minutes}`
+}
+
 export const fromCompactDateToJSObject = date => {
     date = date.split('.')
     date = new Date(date[2], parseInt(date[1]) - 1, date[0])
 
     return date
+}
+
+export const convertDateToUTC = date => {
+    return new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(),
+    date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds())
 }

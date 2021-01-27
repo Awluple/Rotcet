@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import {Link} from 'react-router-dom'
+
 const Screenings = props => {
     const fillScreenings = (screenings) => {
         // makes 6 spaces for hour of screenings. I should used table...
@@ -19,7 +21,10 @@ const Screenings = props => {
     return (
         <ul className='tickets__hours'>
             {filledScreenings.map((screening, index) => {
-                return <li className={screening === '' ? 'tickets__hours--blank' : ''} key={index}>{screening}</li>
+                return <li className={screening === '' ? 'tickets__hours--blank' : ''} key={index}>
+                        <Link to={screening.id !== undefined ? `/tickets/${screening.id}` : '#'}>
+                            {screening.hour}</Link>
+                    </li>
             })}
         </ul>
     )

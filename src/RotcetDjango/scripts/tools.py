@@ -20,7 +20,10 @@ def handle_test_file(path, filename):
         return path
 
 def string_list_to_python(string_list):
-    if string_list:
+    if string_list == '':
+        return []
+
+    if string_list is not None:
         as_list = string_list.split(',')
     else:
         return []
@@ -79,3 +82,8 @@ def get_youtube_thubnail(youtube_id, filename):
     temp.write(image.read())
     return InMemoryUploadedFile(temp,'ImageField', f'{filename}.jpg', f'image/JPEG', image.headers['content-length'], None)
 
+def xstr(s):
+    """ Converts None to an empty string """
+    if s is None:
+        return ''
+    return str(s)

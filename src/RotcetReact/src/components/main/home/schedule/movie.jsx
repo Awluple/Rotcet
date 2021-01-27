@@ -12,7 +12,7 @@ const Movie = props => {
 
     useEffect(() => {
         let screenings = toDateObjects(props.movie.screenings)
-        screenings = organizeScreenings(screenings)
+        screenings = organizeScreenings(screenings, 30)
         let date = screenings['days'][0]
             const day1 = {
                 date: date,
@@ -30,7 +30,7 @@ const Movie = props => {
             setScreeningsDates({day1: day1})
         }
     }, [])
-    // to={`/movie/${props.movie.name}-${props.movie.id}#tickets`}
+
     if (screeningsDates){
         return (
             <li className='movies__movie'>

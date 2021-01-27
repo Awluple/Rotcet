@@ -51,7 +51,7 @@ class MovieSerializer(DynamicFieldsModelSerializer):
             return []
             
         shows = obj.show.screenings.all()
-        screenings = [screening.date for screening in shows]
+        screenings = [{'id': screening.id, 'date': screening.date} for screening in shows]
         return screenings
 
 class MarathonSerializer(DynamicFieldsModelSerializer):

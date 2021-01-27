@@ -1,6 +1,10 @@
 from django.urls import reverse
 from rest_framework import serializers
 
+from scripts.tools import string_list_to_python
+
+from user_components.models import Ticket
+
 from .models import Screening, Room
 
 class DynamicFieldsModelSerializer(serializers.ModelSerializer):
@@ -25,10 +29,18 @@ class ScreeningSerializer(DynamicFieldsModelSerializer):
     url = serializers.SerializerMethodField()
     image = serializers.SerializerMethodField()
     show_id = serializers.SerializerMethodField()
+    member_tickets_left = serializers.SerializerMethodField()
 
     class Meta:
         model = Screening
         fields = '__all__'
+
+    def to_representation(self, instances):
+        """Convert `occupied_seats` saved as string to array."""
+        ret = super().to_representation(instances)
+        if 'occupied_seats' in ret:
+            ret['occupied_seats'] = string_list_to_python(ret['occupied_seats'])
+        return ret
 
     def get_url(self,obj):
         request = self.context['request']
@@ -43,6 +55,14 @@ class ScreeningSerializer(DynamicFieldsModelSerializer):
 
     def get_room(self, obj):
         return obj.room.number
+
+    def get_member_tickets_left(self,obj):
+        user = self.context['request'].user
+
+        if not user.is_authenticated or not user.membership.is_active:
+            return 0
+        
+        return user.membership.type - Ticket.objects.filter(screening=obj, type=2).count()
 
     def get_image(self, obj):
         if obj.show.type == 'MV':
@@ -74,4 +94,4 @@ class RoomSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Room
-        fields = ['pk', 'number', 'seats', 'room_scheme']
+        fields = ['pk', 'number', 'seats']

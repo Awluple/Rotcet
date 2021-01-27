@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef, useCallback} from 'react'
+import React, {useState, useEffect, useRef} from 'react'
 import axios from 'axios'
 
 import {toDateObjects, organizeScreenings} from 'utilities/screenings/scripts.js'
@@ -25,11 +25,11 @@ const Movie = (props) => {
             // get screenings dates if the movie has any
             if(movie.screenings.length > 0 && movie.tickets_sale_date){
                 let dates = toDateObjects(movie.screenings)
-                dates = organizeScreenings(dates)
+                dates = organizeScreenings(dates, 30)
                 setDates(dates)
             }
         }).catch(err => {
-            console.log(err)
+            console.error(err)
             if(err.response.status == 404){
                 props.history.push('/errors/404')
             }
