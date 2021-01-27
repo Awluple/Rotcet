@@ -1,8 +1,12 @@
 import { assert } from 'chai';
+import sinon from 'sinon'
 
 import {toDateObjects, checkIfOutdated, organizeScreenings} from './scripts.js'
 
 describe('Utilities screenings scripts tests', () => {
+    before(() => {
+        sinon.restore()
+    })
     describe('toDateObjects tests', () => {
         it('converts dates', () => {
             const datesAsString = [{id: 1, date: "2020-02-26T12:09:43Z"}, {id: 2, date: "2020-02-26T14:31:38Z"}]

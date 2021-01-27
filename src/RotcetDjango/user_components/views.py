@@ -12,7 +12,7 @@ from scripts.tools import string_list_to_python
 from screenings.models import Screening
 
 from .forms import UserRegistrationForm
-from .models import Membership, Ticket
+from .models import Membership, Ticket, CustomDetails, UserDetails
 
 def login(request):
     if request.user.is_authenticated:
@@ -80,7 +80,21 @@ def is_logged(request):
     if request.user.is_authenticated:
         membership = request.user.membership.is_active
         membership_type = request.user.membership.type
-        return Response({"logged": True, "membership": membership, "membership_type": membership_type})
+        
+        try:
+            user_details = User.objects.get(id=request.user.id).details
+            user_details = {
+            'name': user_details.name,
+            'surname': user_details.surname,
+            'address': user_details.address,
+            'postcode': user_details.postcode
+            }
+            
+        except User.details.RelatedObjectDoesNotExist :
+            user_details = None
+        
+        return Response({"logged": True, "membership": membership, "membership_type": membership_type,
+        "user_details": user_details})
     else:
         return Response({"logged": False})
 
@@ -93,6 +107,7 @@ def multiple_tickets_creation(request):
     user =  request.user
     types = string_list_to_python(request.data['types'])
     seats = string_list_to_python(request.data['seats'])
+    user_custom_details = request.data['details']
     screening = request.data['screening']
 
     screening = Screening.objects.get(pk=screening)
@@ -100,6 +115,11 @@ def multiple_tickets_creation(request):
     occupied_seats = string_list_to_python(screening.occupied_seats)
     member_tickets = Ticket.objects.filter(screening=screening, type=2).count()
 
+    try:
+        user_details = user.details
+    except User.details.RelatedObjectDoesNotExist:
+        user_details = None
+    custom_details = True if user_custom_details != user_details else False
 
     # VALIDATION
     if not user.is_authenticated:
@@ -132,7 +152,16 @@ def multiple_tickets_creation(request):
 
     # SAVING TICKETS
     for index, seat in enumerate(seats):
-        Ticket.objects.create(user=user, type=types[index], seat=seat, screening=screening, bulk_create=True)
+        ticket = Ticket.objects.create(user=user, type=types[index], seat=seat, screening=screening, bulk_create=True)
+        
+        if custom_details:
+            CustomDetails.objects.create(ticket=ticket, name=user_custom_details['name'], surname=user_custom_details['surname'],
+            address=user_custom_details['address'], postcode=user_custom_details['postcode'])
+
+            # create user details object if does not exist
+            if user_details is None:
+                UserDetails.objects.create(user=user, name=user_custom_details['name'], surname=user_custom_details['surname'],
+                address=user_custom_details['address'], postcode=user_custom_details['postcode'])
 
     # adds new seats to the screening's occupied seats
     new_seats = occupied_seats + seats

@@ -20,6 +20,12 @@ class Ticket(models.Model):
     def __str__(self):
         return f'{self.user} - Seat {self.seat} - {self.screening.show} - {self.screening.date}'
 
+    def get_user_details(self):
+        if self.custom_details:
+            return self.custom_details
+        else:
+            return self.user.details
+
     def clean(self, *args, **kwargs):
         old_instance = Ticket.objects.filter(pk=self.pk).first()
 
@@ -99,3 +105,25 @@ class Membership(models.Model):
 
     def __str__(self):
         return f'{self.user} {self.is_active}'
+
+
+class Details(models.Model):
+    name = models.CharField(max_length=100)
+    surname = models.CharField(max_length=100)
+    address = models.CharField(max_length=250)
+    postcode = models.CharField(max_length=8)
+
+    class Meta:
+        abstract = True
+
+class UserDetails(Details):
+    user = models.OneToOneField(User, related_name='details', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.user.email
+
+class CustomDetails(Details):
+    ticket = models.OneToOneField(Ticket, related_name='custom_details', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.ticket.user.email

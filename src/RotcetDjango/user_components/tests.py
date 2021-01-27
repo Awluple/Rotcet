@@ -14,7 +14,7 @@ from shows.models import Movie
 from screenings.models import Room, Screening, Show
 
 from .forms import UserRegistrationForm
-from .models import Membership, Ticket
+from .models import Membership, Ticket, UserDetails, CustomDetails
 
 class LoginTestCase(TestCase):
 
@@ -280,7 +280,8 @@ class TicketApiTestCase(APITestCase):
         response = self.client.post(self.url, {
             "type": 0,
             "seat": 3,
-            "screening": 1
+            "screening": 1,
+            "details": None
         })
 
         self.assertEqual(response.status_code, HTTPStatus.BAD_REQUEST)
@@ -292,7 +293,8 @@ class TicketApiTestCase(APITestCase):
         response = self.client.post(self.url, {
             "type": 0,
             "seat": 3,
-            "screening": 1
+            "screening": 1,
+            "details": None
         })
         self.assertEqual(response.status_code, HTTPStatus.CREATED)
     
@@ -302,7 +304,8 @@ class TicketApiTestCase(APITestCase):
         response = self.client.post(self.url, {
             "type": 3,
             "seat": 3,
-            "screening": 1
+            "screening": 1,
+            "details": None
         })
         self.assertEqual(response.status_code, HTTPStatus.BAD_REQUEST)
         self.assertEqual(response.data['details'], 'Incorrect ticket type')
@@ -313,7 +316,8 @@ class TicketApiTestCase(APITestCase):
         response = self.client.post(self.url, {
             "type": 0,
             "seat": 1,
-            "screening": 1
+            "screening": 1,
+            "details": None
         })
         self.assertEqual(response.status_code, HTTPStatus.BAD_REQUEST)
         self.assertEqual(response.data['details'], 'Seat already booked')
@@ -324,7 +328,8 @@ class TicketApiTestCase(APITestCase):
         response = self.client.post(self.url, {
             "type": 2,
             "seat": 3,
-            "screening": 1
+            "screening": 1,
+            "details": None
         })
         self.assertEqual(response.status_code, HTTPStatus.BAD_REQUEST)
         self.assertEqual(response.data['details'], 'Requested member ticket for non member user')
@@ -339,7 +344,8 @@ class TicketApiTestCase(APITestCase):
         response = self.client.post(self.url, {
             "type": 2,
             "seat": 3,
-            "screening": 1
+            "screening": 1,
+            "details": None
         })
         self.assertEqual(response.status_code, HTTPStatus.CREATED)
     
@@ -356,7 +362,8 @@ class TicketApiTestCase(APITestCase):
         response = self.client.post(self.url, {
             "type": 2,
             "seat": 5,
-            "screening": 1
+            "screening": 1,
+            "details": None
         })
         self.assertEqual(response.status_code, HTTPStatus.BAD_REQUEST)
         self.assertEqual(response.data['details'], 'User has already used all member tickets for this show')
@@ -367,7 +374,8 @@ class TicketApiTestCase(APITestCase):
         response = self.client.post(self.url, {
             "type": 0,
             "seat": 9999,
-            "screening": 1
+            "screening": 1,
+            "details": None
         })
         self.assertEqual(response.status_code, HTTPStatus.BAD_REQUEST)
         self.assertEqual(response.data['details'], 'There is no seat with that number')
@@ -377,7 +385,8 @@ class TicketApiTestCase(APITestCase):
         response = self.client.post(self.bulk_url, {
             "types": '0,0,1',
             "seats": '3,4,5',
-            "screening": 1
+            "screening": 1,
+            "details": None
         })
 
         tickets = len(Ticket.objects.filter(user=1))
@@ -392,7 +401,8 @@ class TicketApiTestCase(APITestCase):
         response = self.client.post(self.bulk_url, {
             "types": '3,1',
             "seats": '3,1',
-            "screening": 1
+            "screening": 1,
+            "details": None
         })
 
         self.assertEqual(response.status_code, HTTPStatus.BAD_REQUEST)
@@ -403,7 +413,8 @@ class TicketApiTestCase(APITestCase):
         response = self.client.post(self.bulk_url, {
             "types": '0,2',
             "seats": '1,2',
-            "screening": 1
+            "screening": 1,
+            "details": None
         })
         
         self.assertEqual(response.status_code, HTTPStatus.BAD_REQUEST)
@@ -414,7 +425,8 @@ class TicketApiTestCase(APITestCase):
         response = self.client.post(self.bulk_url, {
             "types": '0,2',
             "seats": '1,2,1',
-            "screening": 1
+            "screening": 1,
+            "details": None
         })
         
         self.assertEqual(response.status_code, HTTPStatus.BAD_REQUEST)
@@ -432,7 +444,8 @@ class TicketApiTestCase(APITestCase):
         response = self.client.post(self.bulk_url, {
             "types": '2',
             "seats": '5',
-            "screening": 1
+            "screening": 1,
+            "details": None
         })
         
         self.assertEqual(response.status_code, HTTPStatus.CREATED)
@@ -449,7 +462,8 @@ class TicketApiTestCase(APITestCase):
         response = self.client.post(self.bulk_url, {
             "types": '2',
             "seats": '5',
-            "screening": 1
+            "screening": 1,
+            "details": None
         })
         
         self.assertEqual(response.status_code, HTTPStatus.BAD_REQUEST)
@@ -460,7 +474,8 @@ class TicketApiTestCase(APITestCase):
         response = self.client.post(self.bulk_url, {
             "types": '0',
             "seats": '500',
-            "screening": 1
+            "screening": 1,
+            "details": None
         })
         
         self.assertEqual(response.status_code, HTTPStatus.BAD_REQUEST)
@@ -471,8 +486,45 @@ class TicketApiTestCase(APITestCase):
         response = self.client.post(self.bulk_url, {
             "types": '2',
             "seats": '5',
-            "screening": 1
+            "screening": 1,
+            "details": None
         })
         
         self.assertEqual(response.status_code, HTTPStatus.BAD_REQUEST)
         self.assertEqual(response.data['details'], 'Requested member ticket for non member user')
+
+    def test_creates_details(self):
+        self.client.login(email='test@email.com', password='testpassword123')
+        response = self.client.post(self.bulk_url, {
+            "types": '0',
+            "seats": '5',
+            "screening": 1,
+            "details": {
+                "name": 'Test name',
+                "surname": 'Test surname',
+                "address": 'Test address',
+                "postcode": 'Test postcode'
+            }
+        })
+        
+        self.assertEqual(response.status_code, HTTPStatus.CREATED)
+        self.assertEqual(len(UserDetails.objects.all()), 1)
+
+    def test_creates_custom_details(self):
+        user = User.objects.create_user(username='test2@email.com', email='test2@email.com', password='testpassword123')
+        UserDetails.objects.create(user=user, name='Test name', surname='Test surname', address='Test address', postcode='Test postcode')
+        self.client.login(email='test2@email.com', password='testpassword123')
+        response = self.client.post(self.bulk_url, {
+            "types": '0',
+            "seats": '5',
+            "screening": 1,
+            "details": {
+                "name": 'Test custom name',
+                "surname": 'Test custom surname',
+                "address": 'Test custom addres',
+                "postcode": 'Test custom postcode'
+            }
+        })
+        
+        self.assertEqual(response.status_code, HTTPStatus.CREATED)
+        self.assertEqual(len(CustomDetails.objects.all()), 1)

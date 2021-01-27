@@ -5,17 +5,27 @@ import axios from 'axios'
 
 import { useLocation, useParams, useHistory, Link } from 'react-router-dom'
 
+import LoadingGif from 'media/gifs/loading.jsx'
+
 import Tickets from './tickets.jsx'
 import Info from './info.jsx'
-
+import UserDetails from './userDetails.jsx'
 
 const OrderConfirmation = props => {
 
     const [tickets, setTickets] = useState([])
 
+    const [error, setError] = useState(false)
+
+    const [waitingForResponce, setWaitingForResponce] = useState(false)
+
     const location = useLocation()
     const params = useParams()
     const history = useHistory()
+
+    const errors = {
+        'details': 'An error accured during your details validation, please try again'
+    }
 
     useEffect(() => {
         // parse tickets from url
@@ -33,6 +43,7 @@ const OrderConfirmation = props => {
         setTickets(tickets)
     }, [])
     
+
     const simulatePayment = () => {
         // fake payment process, opens paypal window and redirects to the accepted page
         setTickets([])
@@ -43,6 +54,10 @@ const OrderConfirmation = props => {
     }
 
     const proceed = () => {
+        if (props.blockPost) {
+            return
+        }
+
         const seats = tickets.map(ticket => {
             return ticket[0]
         })
@@ -50,10 +65,12 @@ const OrderConfirmation = props => {
             return ticket[1]
         })
 
+        setWaitingForResponce(true)
         axios.post('/api/tickets-multiple-creation', {
             screening: params.screeningId,
             seats: seats.join(),
-            types: types.join()
+            types: types.join(),
+            details: props.userDetails
         }).then(res => {
             if(res.status === 201) {
                 simulatePayment()
@@ -75,24 +92,41 @@ const OrderConfirmation = props => {
                 case 3: //seat out of range
                     history.push(`/tickets/${params.screeningId}/?error=seat`)
                 break;
+                case 4: // problem with address
+                    setError('details')
+                    window.scrollTo(0,0)
+                break;
                 default:
                     history.push('/errors/400')
                 break;
               }
+              setWaitingForResponce(false)
         })
+    }
+
+    if(waitingForResponce) {
+        return (
+            <div className='ticket'>
+            <h1 className='ticket__header'>Summary</h1>
+            <LoadingGif />
+        </div>
+        )
     }
 
     return (
         <div className='ticket'>
             <h1 className='ticket__header'>Summary</h1>
+            {error ? <p className='tickets__error'>{errors[error]}</p> : ''}
             <div className='ticket__info'>
                 {props.screening !== null && <Info screening={props.screening} />}
                 <Tickets tickets={tickets} />
             </div>
+            <UserDetails updateDetails={props.updateDetails} userDetails={props.userDetails} />
             <h3>Is that correct?</h3>
             <div className='ticket__options'>
                 <Link className='ticket__back' to={`/tickets/${params.screeningId}`}>No, back</Link>
-                <button className='ticket__continue' onClick={proceed}>Yes, proceed to payment</button>
+                <button className={props.blockPost ? 'ticket__disabled' : 'ticket__continue'}
+                onClick={proceed}>Yes, proceed to payment</button>
             </div>
         </div>
     )
@@ -101,7 +135,10 @@ const OrderConfirmation = props => {
 OrderConfirmation.propTypes = {
     screening: PropTypes.object,
     membership: PropTypes.object.isRequired,
-    reloadData: PropTypes.func.isRequired
+    reloadData: PropTypes.func.isRequired,
+    userDetails: PropTypes.object.isRequired,
+    updateDetails: PropTypes.func.isRequired,
+    blockPost: PropTypes.bool.isRequired
 }
 
 export default OrderConfirmation
