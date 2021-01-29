@@ -22,7 +22,7 @@ const Tickets = () => {
             {tickets !== null ? 
                 <Switch>
                 <Route exact path='/account/tickets' render={() => <TicketsList tickets={tickets} />} />
-                <Route exact path='/account/tickets/:ticketID' render={() => <TicketDetails />} />
+                <Route exact path='/account/tickets/:screeningID' render={() => <TicketDetails tickets={tickets} />} />
                 </Switch>
             :
                 <LoadingGif />
