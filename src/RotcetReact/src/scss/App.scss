@@ -15,6 +15,12 @@ a {
     text-decoration: none
 }
 
+.App {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
 .header {
     font-family: $headers-font;
     font-weight: 400;
@@ -49,6 +55,15 @@ a {
         background: $darker-red;
     }
 }
+
+.loading_gif {
+    max-width: 600px;
+
+    @media(min-width: 600px) {
+        max-width: 80%;
+    }
+}
+
 .shadow {
     &-big {
         box-shadow: 0px 14px 10px 0px rgba(0,0,0,0.5);

@@ -17,7 +17,7 @@ class TicketsViewSet(viewsets.ModelViewSet):
         if not request.user.is_authenticated:
             return Response({'details': 'User not authenticated'}, status=status.HTTP_403_FORBIDDEN)
         
-        queryset = Ticket.objects.filter(user=request.user)
+        queryset = Ticket.objects.filter(user=request.user).order_by('-screening__date')
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
     

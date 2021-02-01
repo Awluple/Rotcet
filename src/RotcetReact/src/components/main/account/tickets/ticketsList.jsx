@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import {Link} from 'react-router-dom'
 
@@ -6,45 +6,30 @@ import {toCompactDate, toCompactHour, convertDateToUTC} from 'utilities/tools/to
 
 const TicketsList = props => {
 
-    const [tickets, setTickets] = useState({})
-    const [screenings, setScreenings] = useState([])
-
-    useEffect(() => {
-        // goes through tickets and sort them by screening
-        let sortedTickets = {}
-        let screeningsWithTickets = [] // list with sortedTickets keys
-        props.tickets.map(ticket => {
-            if (ticket.screening in sortedTickets) {
-                // add to existing sortedTickets key
-                sortedTickets[ticket.screening].push(ticket)
-            } else {
-                // create new key in sortedTickets
-                screeningsWithTickets.push(ticket.screening)
-                sortedTickets[ticket.screening] = [ticket]
-            }
-        })
-        setTickets(sortedTickets)
-        setScreenings(screeningsWithTickets)
-    }, [])
+    const { tickets, screenings } = props
 
     return (
         <div className='user_tickets'>
+            <Link className='account__back shadow-tiny' to='/account'>Back to 'My account'</Link>
             <h1>My tickets</h1>
             <ul>
                 {screenings.map(screening => {
-                    let screeningDate = new Date(tickets[screening][0].screening_details.date)
+                    let screeningDate = new Date(tickets[screening.id][0].screening_details.date)
                     screeningDate = convertDateToUTC(screeningDate)
                     const date = toCompactDate(screeningDate)
                     const hour = toCompactHour(screeningDate)
                     return (
-                        <li key={screening}>
-                            <Link to={`/account/tickets/${screening}`}>
+                        <li key={screening.id}>
+                            <Link to={`/account/tickets/${screening.id}`}>
                             <div className='user_tickets__ticket_details'>
                                 <p>{hour}</p>
                                 <p>{date}</p>
                             </div>
-                            <p className='user_tickets__ticket_screening_name'>{tickets[screening][0].screening_details.name}</p>
-                            <p className='user_tickets__ticket_amount'>x{tickets[screening].length}</p>
+                            <p className={'user_tickets__ticket_screening_name'
+                            + (screening.outdated ? ' user_tickets__ticket_screening_name--outdated' : '')}
+                            >{tickets[screening.id][0].screening_details.name}</p>
+                            <p className={'user_tickets__ticket_amount' + (screening.outdated ? ' user_tickets__ticket_amount--outdated' : '')}>
+                            x{tickets[screening.id].length}</p>
                             </Link>
                         </li>
                     )
@@ -55,7 +40,8 @@ const TicketsList = props => {
 }
 
 TicketsList.propTypes = {
-    tickets: PropTypes.array.isRequired
+    tickets: PropTypes.object.isRequired,
+    screenings: PropTypes.array.isRequired
 }
 
 export default TicketsList

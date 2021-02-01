@@ -106,13 +106,18 @@
         justify-content: space-between;
         align-items: flex-start;
         width: 60%;
+        background: #28333c;
+        padding: 40px;
         max-width: 750px;
+        box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.5);
 
         @media (max-width: $tablet) {
             width: 80%;
         }
         @media (max-width: 800px) {
-            width: 90%;
+            padding: 40px 20px;
+            box-sizing: border-box;
+            width: 100%;
         }
         @media (max-width: $phone) {
             @include flex-center(column);
