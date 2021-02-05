@@ -16,7 +16,7 @@ const TicketsManager = () => {
     const userMembershipContext = useContext(MembershipContext)
     const userDetailsContext = useContext(DetailsContext)
 
-    const [userLogged, setUserLogged] = useState(false)
+    const [userLogged, setUserLogged] = useState('awaitingResponse')
     const [userMembership, setUserMembership] = useState({membership: false, type: 0, defaultType: 0})
     const [userDetails, setUserDetails] = useState({
         name: '',
@@ -88,15 +88,28 @@ const TicketsManager = () => {
                 }
             })
         } else {
-            setUserLogged(true)
+            setUserLogged(userLoggedContext)
             setUserDetails(userDetailsContext)
             getScreening(userMembershipContext.membership, userMembershipContext.type)
         }
     }
 
     useEffect(() => {
-        getUser()
-    }, [])
+        if(userLoggedContext === true) {  
+            setUserLogged(userLoggedContext)
+            setUserDetails(userDetailsContext)
+            getScreening(userMembershipContext.membership, userMembershipContext.type)
+
+            const details = Object.values(userDetailsContext).map(value => {return value.trim()}) // check for strings with only whitespaces
+            if(details.includes('')) {
+                setBlockPost(true)
+            }
+
+        } else if (userLoggedContext === false) {
+            window.location.href = `/login?next=/tickets/${params.screeningId}&login_required=true`
+        }
+
+    }, [userLoggedContext])
 
     return (
         <div>

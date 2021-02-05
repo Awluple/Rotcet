@@ -13,7 +13,7 @@ import Footer from './components/footer/footer.jsx'
 function App() {
     window.YoutubeApi = new YoutubeApi()
 
-    const [userLogged, setUserLogged] = useState(false)
+    const [userLogged, setUserLogged] = useState('awaitingResponse')
     const [userMembership, setUserMembership] = useState({membership: false, type: 0})
     const [userDetails, setUserDetails] = useState({
         name: '',
@@ -25,7 +25,6 @@ function App() {
     useEffect(() => {
         axios.defaults.xsrfHeaderName = "X-CSRFToken";
         axios.get('/api/session').then(res => {
-            setUserLogged(res.data.logged)
             if(res.data.logged) {
                 setUserMembership({
                     membership: res.data.membership,
@@ -34,8 +33,8 @@ function App() {
                 if (res.data.user_details !== null) {
                     setUserDetails(res.data.user_details)
                 }
-                
             }
+            setUserLogged(res.data.logged)
         })
     }, [])
 

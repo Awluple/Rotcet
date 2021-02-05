@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 const UserDetails = props => {
 
     return (
-        <div className='ticket__details'>
+        <div className='user_details'>
             <h3>Your details</h3>
             <label>Name:</label>
             <input onChange={(e) => {props.updateDetails('name', e.target.value)}}

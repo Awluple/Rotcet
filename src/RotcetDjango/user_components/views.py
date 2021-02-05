@@ -1,15 +1,16 @@
-import collections
-
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login as user_login, logout as user_logout
 from django.contrib.auth.models import User
 from django.contrib import messages
+from django.db import IntegrityError
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 from scripts.tools import string_list_to_python
 from screenings.models import Screening
+
+from .validators import multiple_tickets_creation_validation
 
 from .forms import UserRegistrationForm
 from .models import Membership, Ticket, CustomDetails, UserDetails
@@ -100,9 +101,6 @@ def is_logged(request):
 
 @api_view(['POST'])
 def multiple_tickets_creation(request):
-    """ 
-    Errors codes: 1: error with ticket type, 2: seat already occupied, 3: error with seat number
-    """
 
     user =  request.user
     types = string_list_to_python(request.data['types'])
@@ -115,40 +113,20 @@ def multiple_tickets_creation(request):
     occupied_seats = string_list_to_python(screening.occupied_seats)
     member_tickets = Ticket.objects.filter(screening=screening, type=2).count()
 
+    # check if a user has details
     try:
         user_details = user.details
     except User.details.RelatedObjectDoesNotExist:
         user_details = None
-    custom_details = True if user_custom_details != user_details else False
+    custom_details = True if user_custom_details != user_details else False 
 
-    # VALIDATION
     if not user.is_authenticated:
         raise serializers.ValidationError({'details': 'User not authenticated'})
 
-    if len(types) != len(seats):
-        return Response({'code': 3,'details': 'Lenght of types and seats is not equal'}, status=400)
-
-    types_valid = map(lambda type: type in [0,1,2], types)
-
-    if False in types_valid:
-        return Response({'code': 1,'details': 'Incorrect ticket type'}, status=400)
-
-    # check if all seats are free
-    if len(set(seats + occupied_seats)) < (len(seats) + len(occupied_seats)):
-        return Response({'code': 2,'details': f'Seats already booked', 'seats': set(occupied_seats).intersection(seats)}, status=400)
-
-    if 2 in types and not user.membership.is_active:
-        return Response({'code': 1,'details': 'Requested member ticket for non member user'}, status=400)
-    
-    types_number = collections.Counter(types)
-    # check if a member still has free member tickets for this screening
-    if 2 in types and not member_tickets + types_number[2] <= user.membership.type:
-        return Response({'code': 1,'details': 'User has already used member tickets for this show', 'left': member_tickets - user.membership.type}, status=400)        
-
-    in_range = map(lambda seat: seat in range(1, screening.room.seats + 1), seats)
-
-    if False in in_range:
-        return Response({'code': 3,'details': 'There is no seat with one of given numbers'}, status=400)
+    #VALIDATION
+    error = multiple_tickets_creation_validation(user, screening, types, member_tickets, seats, occupied_seats)
+    if error is not None:
+        return Response(error['details'], status=error['status'])
 
     # SAVING TICKETS
     for index, seat in enumerate(seats):
@@ -169,3 +147,24 @@ def multiple_tickets_creation(request):
     screening.save()
 
     return Response({'details': 'Successfully created'}, status=201)
+
+@api_view(['POST'])
+def update_details(request):
+
+    user =  request.user
+    user_details = request.data['details']
+
+    if not user.is_authenticated:
+        raise serializers.ValidationError({'details': 'User not authenticated'})
+
+    
+    try:
+        UserDetails.objects.create(user=user, name=user_details['name'], surname=user_details['surname'],
+        address=user_details['address'], postcode=user_details['postcode'])
+    except IntegrityError: 
+        UserDetails.objects.filter(user=user).update(name=user_details['name'], surname=user_details['surname'],
+        address=user_details['address'], postcode=user_details['postcode'])
+    except:
+        return Response({'details': 'An error accured during details update'}, status=500)
+
+    return Response({'details': 'Details updated successfully'}, status=201)

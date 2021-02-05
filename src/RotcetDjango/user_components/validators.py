@@ -1,3 +1,5 @@
+import collections
+
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext as _
 
@@ -23,3 +25,36 @@ def validate_seat_avaliable(seat, occupied_seats):
     occupied_seats = string_list_to_python(occupied_seats)
     if seat in occupied_seats:
         raise ValidationError(_("Seat %(seat)s already booked"), params={'seat': seat}, code='full') 
+
+def multiple_tickets_creation_validation(user, screening, types, member_tickets, seats, occupied_seats):
+    """
+    Returns None if no error accured
+    Errors codes: 1: error with ticket type, 2: seat already occupied, 3: error with seat number
+    """
+
+    if len(types) != len(seats):
+        return {'details': {'code': 3, 'details': 'Lenght of types and seats is not equal'}, 'status': 400}
+
+    types_valid = map(lambda type: type in [0,1,2], types)
+
+    if False in types_valid:
+        return {'details': {'code': 1,'details': 'Incorrect ticket type'}, 'status': 400}
+
+    # check if all seats are free
+    if len(set(seats + occupied_seats)) < (len(seats) + len(occupied_seats)):
+        return {'details': {'code': 2,'details': f'Seats already booked', 'seats': set(occupied_seats).intersection(seats)}, 'status': 400}
+
+    if 2 in types and not user.membership.is_active:
+        return {'details': {'code': 1,'details': 'Requested member ticket for non member user'}, 'status': 400}
+    
+    types_number = collections.Counter(types)
+    # check if a member still has free member tickets for this screening
+    if 2 in types and not member_tickets + types_number[2] <= user.membership.type:
+        return {'details': {'code': 1,'details': 'User has already used member tickets for this show', 'left': member_tickets - user.membership.type}, 'status': 400}        
+
+    in_range = map(lambda seat: seat in range(1, screening.room.seats + 1), seats)
+
+    if False in in_range:
+        return {'details': {'code': 3,'details': 'There is no seat with one of given numbers'}, 'status': 400}
+    
+    return None
