@@ -1,13 +1,13 @@
 from django.shortcuts import get_object_or_404
 
-from rest_framework import viewsets,status
+from rest_framework import viewsets, status, mixins, status
 from rest_framework.response import Response
 
 from scripts.tools import string_list_to_python
 from screenings.models import Screening
 
-from .models import Ticket
-from .serializers import TicketSerializer
+from .models import Ticket, Membership
+from .serializers import TicketSerializer, MembershipSerializer
 
 class TicketsViewSet(viewsets.ModelViewSet):
     queryset = Ticket.objects.all()
@@ -37,3 +37,15 @@ class TicketsViewSet(viewsets.ModelViewSet):
 
         self.perform_destroy(ticket)
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+class MembershipViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
+
+    def list(self, request, pk=None):
+        if not request.user.is_authenticated:
+            return Response({'details': 'User is not authenticated'}, status=status.HTTP_403_FORBIDDEN)
+        queryset = Membership.objects.all()
+        membership = queryset.get(user=request.user)
+
+        serializer = MembershipSerializer(membership)
+
+        return Response(serializer.data)

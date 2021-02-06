@@ -6,6 +6,7 @@ import LoadingGif from 'media/gifs/loading.jsx'
 
 import Tickets from './tickets/tickets.jsx'
 import AccountManager from './accountManager/accountManager.jsx'
+import PassowrdReset from './accountManager/passwordReset.jsx'
 import Membership from './membership/membership.jsx'
 import MainPage from './mainPage.jsx'
 
@@ -40,8 +41,9 @@ const Account = () => {
             :
             <Switch>
                 <Route path='/account/tickets' component={Tickets} />
-                <Route path='/account/account-manager' render={() => <AccountManager details={user.user_details} />} />
-                <Route path='/account/membership' component={Membership} />
+                <Route exact path='/account/account-manager' render={() => <AccountManager details={user.user_details} />} />
+                <Route path='/account/account-manager/password-reset' component={PassowrdReset} />
+                <Route path='/account/membership' render={() => <Membership membership={user.membership} />} />
                 <Route exact path='/account' component={MainPage} />
             </Switch>
         }

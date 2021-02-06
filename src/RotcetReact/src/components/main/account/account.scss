@@ -78,6 +78,31 @@
         }
     }
 }
+.account__manager {
+    @include flex-center(column);
+
+    .user_details {
+        input {
+            width: 85%;
+            padding: 5px 20px;
+        }
+
+        h3 {
+            margin-top: 50px;
+        }
+
+        &__postcode {
+            width: 50% !important;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        &__password {
+            margin-top: 100px
+        }
+    }
+}
+
 
 .user_tickets {
     @include flex-center(column);
@@ -145,5 +170,46 @@
             background: #565656;
             color: $silver
         }
+    }
+}
+
+.account__membership {
+    @include flex-center(column);
+    h2 {
+        font-size: 2.2em;
+        font-weight: 400;
+        color: $silver;
+        font-family: $headers-font;
+        margin-bottom: 20px;
+    }
+    p {
+        font-family: $content-font;
+        color: $silver;
+
+        &:last-of-type {
+            margin-bottom: 30px;
+        }
+    }
+
+    .button {
+        margin-top: 20px;
+    }
+
+}
+
+.membership {
+    &__inactive, &__active {
+        width: 60%;
+        background: #28333c;
+        padding: 25px;
+    }
+
+    &__inactive { 
+        p {
+            font-size: 1.6em;
+        }
+    }
+    &__active p {
+        font-size: 2.2em;
     }
 }

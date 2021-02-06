@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import PropTypes from 'prop-types'
 import axios from 'axios'
+import {useHistory, Link} from 'react-router-dom'
 
 import LoadingGif from 'media/gifs/loading.jsx'
 
@@ -11,6 +12,7 @@ const AccountManager = props => {
     const [awaitingResponse, setAwaitingResponse] = useState(false)
     const [notification, setNotification] = useState(null)
 
+    const history = useHistory()
 
     const [userDetails, setUserDetails] = useState({
         name: '',
@@ -54,6 +56,10 @@ const AccountManager = props => {
         })
     }
 
+    const passwordChange = () => {
+        history.push('/account/account-manager/password-reset')
+    }
+
     useEffect(() => {
         if(props.details !== null) {
             setUserDetails(props.details)
@@ -62,6 +68,10 @@ const AccountManager = props => {
 
     return (
         <div className='account__manager'>
+            <Link className='account__back shadow-tiny' to='/account'>Back to 'My account'</Link>
+
+            <h1>Account managment</h1>
+
             <div className='user_details'>
                 <h3>Your details</h3>
 
@@ -89,15 +99,15 @@ const AccountManager = props => {
                     value={userDetails.address} type="text"/>
 
                 <label>Postcode:</label>
-                <input maxLength='8' onChange={(e) => {updateDetails('postcode', e.target.value)}}
+                <input className='user_details__postcode' maxLength='8' onChange={(e) => {updateDetails('postcode', e.target.value)}}
                     value={userDetails.postcode} type="text"/>
 
-                <button className={blockSave ? 'inactive' : ''} onClick={postDetails}>Save</button>
+                <button className={(blockSave ? 'button inactive' : 'button') + ' shadow-tiny'} onClick={postDetails}>Save</button>
             </div>
 
 
             <div className='user_details__password'>
-                <button>Request password reset</button>
+                <button className='button shadow-tiny' onClick={passwordChange}>Request password reset</button>
             </div>
 
 
