@@ -68,7 +68,10 @@ const AccountManager = props => {
 
     return (
         <div className='account__manager'>
-            <Link className='account__back shadow-tiny' to='/account'>Back to 'My account'</Link>
+            
+            <div className='account__navigation shadow-tiny'>
+                <Link to='/account'>My account</Link><Link to='#'>/Account managment</Link>
+            </div>
 
             <h1>Account managment</h1>
 

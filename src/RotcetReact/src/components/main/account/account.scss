@@ -1,11 +1,7 @@
 .account {
-    margin-top: 60px;
-    margin-bottom: 300px;
+    margin-top: 30px;
+    margin-bottom: 50px;
     text-align: center;
-
-    @media(min-width: 1081px) {
-        margin-bottom: 500px;
-    }
 
     h1 {
         font-family: $headers-font;
@@ -16,16 +12,20 @@
         text-align: center;
 
         @media (max-width: $phone-small) {
-            font-size: 2.8em;
+            font-size: 2.4em;
+            margin-bottom: 35px;
         }
     }
-
 
     .loading_gif {
         width: 400px;
     }
 
     &__main_page {
+        @include flex-center(column);
+    }
+
+    &__links {
         @include flex-center(column);
 
         a {
@@ -38,24 +38,51 @@
             font-family: $content-font;
             font-size: 1.9em;
             color: $silver;
+
+            @media(max-width: $phone-small) {
+                max-width: 200px;
+                font-size: 1.7em;
+            }
         }
     }
-    &__back {
+
+    &__navigation {
         background: $darker-red;
-        color: $silver;
-        position: fixed;
-        left: 0;
-        top: 20%;
+        display: flex;
+        align-self: flex-start;
         padding: 10px 30px;
+        margin-bottom: 20px;
         border-top-right-radius: 40px;
         border-bottom-right-radius: 40px;
         font-size: 1.6em;
         font-family: $content-font;
+
+        a {
+            color: $silver;
+
+            &:hover {
+                text-decoration: underline;
+            }
+
+            &:last-of-type {
+                text-decoration: underline;
+                cursor: default;
+            }
+        }
+
+        @media(max-width: $phone) {
+            padding: 10px 15px;
+            font-size: 1.2em;
+        }
+
+        @media(max-width: $phone-small) {
+            padding: 10px 10px;
+            font-size: 1em;
+        }
     }
 
     .ticket {
-        margin-top: 50px;
-        margin-bottom: 400px;
+        margin-top: 0px !important;
     }
 
     .ticket__info {
@@ -126,6 +153,17 @@
     a {
         @include flex-center(row);
         align-items: unset;
+
+        @media(max-width: $phone-small) {
+            flex-direction: column;
+            align-items: center;
+        }
+    }
+
+    @media(max-width: $phone-small) {
+        ul {
+            width: 100%
+        }
     }
 
     &__ticket_details {
@@ -143,6 +181,27 @@
                 margin-bottom: -5px;
             }
         }
+
+        @media(max-width: $tablet) {
+            width: 105px;
+
+            p {
+                font-size: 1.2em;
+            }
+        }
+
+        @media(max-width: $phone) {
+            width: 80px;
+            p {
+                font-size: 0.9em;
+            }
+        }
+        @media(max-width: $phone-small) {
+            border-top-right-radius: 20px;
+            border-bottom-left-radius: 0px;
+            font-size: 1.3em;
+            width: 90%;
+        }
     }
 
     &__ticket_screening_name {
@@ -157,6 +216,21 @@
             background: #565656;
             color: $silver
         }
+
+        @media(max-width: $tablet) {
+            width: 400px;
+            font-size: 1.55em;
+        }
+
+        @media(max-width: $phone) {
+            width: 235px;
+            font-size: 1.3em;
+        }
+
+        @media(max-width: $phone-small) {
+            width: 90%;
+            padding-bottom: 4px;
+        }
     }
 
     &__ticket_amount {
@@ -169,6 +243,23 @@
         &--outdated {
             background: #565656;
             color: $silver
+        }
+
+        @media(max-width: $tablet) {
+            width: 45px;
+            font-size: 1.8em;
+        }
+
+        @media(max-width: $phone) {
+            width: 30px;
+            font-size: 1.4em;
+            padding-right: 6px;
+        }
+        @media(max-width: $phone-small) {
+            width: 90%;
+            padding: 0px 5px;
+            border-bottom-left-radius: 20px;
+            border-bottom-right-radius: 20px;
         }
     }
 }
@@ -202,14 +293,32 @@
         width: 60%;
         background: #28333c;
         padding: 25px;
+
+        @media(max-width: $phone) {
+            width: 75%;
+        }
     }
 
     &__inactive { 
         p {
             font-size: 1.6em;
+
+            @media(max-width: $phone) {
+                font-size: 1.4em;
+            }
+            @media(max-width: $phone-small) {
+                font-size: 1.2em;
+            }
         }
     }
     &__active p {
         font-size: 2.2em;
+
+        @media(max-width: $phone) {
+            font-size: 1.6em;
+        }
+        @media(max-width: $phone-small) {
+            font-size: 1.2em;
+        }
     }
 }

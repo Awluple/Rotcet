@@ -10,7 +10,9 @@ const TicketsList = props => {
 
     return (
         <div className='user_tickets'>
-            <Link className='account__back shadow-tiny' to='/account'>Back to 'My account'</Link>
+            <div className='account__navigation shadow-tiny'>
+                <Link to='/account'>My account</Link><Link to='#'>/Tickets</Link>
+            </div>
             <h1>My tickets</h1>
             <ul>
                 {screenings.map(screening => {

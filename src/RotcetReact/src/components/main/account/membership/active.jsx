@@ -33,7 +33,7 @@ const Active = () => {
             <React.Fragment>
                 <p>Membership status: {membership.type === 1 ? 'Single' : 'Double'}</p>
                 <p>Renewal: {membership.is_continued ? 'Yes' : 'No'}</p>
-                <p>Next payment {payment}</p>
+                <p>Next payment: {payment}</p>
              
         
             { membership.is_continued ? 

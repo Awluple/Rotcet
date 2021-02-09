@@ -11,7 +11,9 @@ const Membership = props => {
 
     return (
         <div className='account__membership'>
-            <Link className='account__back shadow-tiny' to='/account'>Back to 'My account'</Link>
+            <div className='account__navigation shadow-tiny'>
+                <Link to='/account'>My account</Link><Link to='#'>/Membership</Link>
+            </div>
             <h1>Membership</h1>
                 {props.membership ?
                     <Active />
