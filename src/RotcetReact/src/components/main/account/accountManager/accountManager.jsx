@@ -75,10 +75,7 @@ const AccountManager = props => {
 
             <h1>Account managment</h1>
 
-            <div className='user_details'>
-                <h3>Your details</h3>
-
-                <div className='user_details__info'>
+            <div className='user_details__info'>
                 { awaitingResponse && 
                     <LoadingGif />
                 }
@@ -87,7 +84,10 @@ const AccountManager = props => {
                     <p>Details updated successfully</p> : notification === 'error'
                     ? <p>An error accured during details update process</p> : ''   
                  }
-                </div>
+            </div>
+
+            <div className='user_details'>
+                <h3>Your details</h3>
 
                 <label>Name:</label>
                 <input onChange={(e) => {updateDetails('name', e.target.value)}}

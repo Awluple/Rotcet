@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react'
 import axios from 'axios'
-import {Link} from 'react-router-dom'
 
 import LoadingGif from 'media/gifs/loading.jsx'
 
@@ -37,9 +36,9 @@ const Active = () => {
              
         
             { membership.is_continued ? 
-                <Link className='button shadow-tiny' to='#'>Cancel</Link>
+                <a className='button shadow-tiny' href='#'>Cancel</a>
             :
-                <Link className='button shadow-tiny' to='#'>Extend</Link>
+                <a className='button shadow-tiny' href='#'>Extend</a>
             }
             </React.Fragment>   
     }

@@ -20,6 +20,7 @@ const Account = () => {
 
 
     useEffect(() => {
+
         if(userLoggedContext === true) {
             setUser({
                 logged: userLoggedContext,
@@ -30,9 +31,9 @@ const Account = () => {
         } else if (userLoggedContext === false) {
             window.location.href = `/login?next=/account&login_required=true`
         }
-
         
     }, [userLoggedContext])
+
 
     return (
         <div className='account'>

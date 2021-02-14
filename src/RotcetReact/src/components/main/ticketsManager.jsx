@@ -70,31 +70,8 @@ const TicketsManager = () => {
         }
     }
 
-    const getUser = () => {
-        if(!userLoggedContext){
-            // check if user is logged after redirection from login page
-            // when userLoggedContext is false by default
-            axios.get('/api/session').then(res => {
-                if(res.data.logged){
-                    setUserLogged(res.data.logged)
-                    if (res.data.user_details !== null) {
-                        setUserDetails(res.data.user_details)
-                    } else {
-                        setBlockPost(true)
-                    }
-                    getScreening(res.data.membership, res.data.membership_type)
-                } else {
-                    window.location.href = `/login?next=/tickets/${params.screeningId}&login_required=true`
-                }
-            })
-        } else {
-            setUserLogged(userLoggedContext)
-            setUserDetails(userDetailsContext)
-            getScreening(userMembershipContext.membership, userMembershipContext.type)
-        }
-    }
-
     useEffect(() => {
+
         if(userLoggedContext === true) {  
             setUserLogged(userLoggedContext)
             setUserDetails(userDetailsContext)

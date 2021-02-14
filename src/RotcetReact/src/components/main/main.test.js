@@ -7,6 +7,8 @@ import sinon from 'sinon'
 import { MemoryRouter, Route } from 'react-router-dom'
 import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
+import { UserContext, MembershipContext, DetailsContext } from 'utilities/contexts.js'
+
 
 import TicketsManager from './ticketsManager.jsx'
 
@@ -42,16 +44,22 @@ describe('Main directory tests', () => {
         before(() => {
             const mock = new MockAdapter(axios)
             mock.onGet('/api/screenings/1').reply(200, screening)
-            mock.onGet('/api/session').reply(200, session)
             global.getSpy = sinon.spy(axios, 'get')
 
-            global.wrapper = mount(<MemoryRouter initialEntries={['/tickets/1/']}>
-                <Route path='/tickets/:screeningId' render={() => <TicketsManager />} />
-            </MemoryRouter>)
-
+            global.wrapper = mount(
+                <UserContext.Provider value={true}>
+                    <MembershipContext.Provider value={{membership: false, type: 0, defaultType: 0}}>
+                        <DetailsContext.Provider value={{name: '', surname: '', address: '', postcode: ''}}>
+                            <MemoryRouter initialEntries={['/tickets/1/']}>
+                                <Route path='/tickets/:screeningId' render={() => <TicketsManager />} />
+                            </MemoryRouter>
+                        </DetailsContext.Provider> 
+                    </MembershipContext.Provider>
+                </UserContext.Provider>
+            )
         })
         it('gets user and screening', () => {
-            assert.isTrue(getSpy.calledTwice)
+            assert.isTrue(getSpy.calledOnce)
         });
     });
 });

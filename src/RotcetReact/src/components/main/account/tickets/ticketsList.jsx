@@ -16,6 +16,7 @@ const TicketsList = props => {
             <h1>My tickets</h1>
             <ul>
                 {screenings.map(screening => {
+
                     let screeningDate = new Date(tickets[screening.id][0].screening_details.date)
                     screeningDate = convertDateToUTC(screeningDate)
                     const date = toCompactDate(screeningDate)

@@ -3,9 +3,10 @@ from django.test import TestCase
 from django.contrib.auth.models import User
 from django.urls import reverse
 from django.core.exceptions import ValidationError
+from django.db import IntegrityError, transaction
 
 from rest_framework import status
-from rest_framework.test import APITestCase
+from rest_framework.test import APITestCase, APITransactionTestCase
 
 from shows.models_values import movie_values
 from screenings.models_values import room_values, screening_values
@@ -528,3 +529,57 @@ class TicketApiTestCase(APITestCase):
         
         self.assertEqual(response.status_code, HTTPStatus.CREATED)
         self.assertEqual(len(CustomDetails.objects.all()), 1)
+
+
+class DetailsApiTestCase(APITestCase):
+
+    def setUp(self):
+        self.url = reverse('user:update_details')
+
+        User.objects.create_user(username='test@email.com', email='test@email.com', password='testpassword123')
+        self.user = User.objects.get(pk=1)
+
+    def test_block_authenticated(self):
+        response = self.client.post(self.url, {
+            "details": {
+                "name": 'Test custom name',
+                "surname": 'Test custom surname',
+                "address": 'Test custom addres',
+                "postcode": 'Test custom postcode'
+            }
+        })
+
+        self.assertEqual(response.status_code, HTTPStatus.FORBIDDEN)
+    
+    def test_creates_details(self):
+        self.client.login(email='test@email.com', password='testpassword123')
+        response = self.client.post(self.url, {
+            "details": {
+                "name": 'Test name',
+                "surname": 'Test surname',
+                "address": 'Test addres',
+                "postcode": 'Test postcode'
+            }
+        })
+
+        self.assertEqual(len(UserDetails.objects.all()), 1)
+        self.assertEqual(response.status_code, HTTPStatus.CREATED)
+
+    def test_updates_details(self):
+        self.client.login(email='test@email.com', password='testpassword123')
+
+        UserDetails.objects.create(user=self.user, name='Test name', surname='Test surname', address='Test address', postcode='Test postcode')
+
+        response = self.client.post(self.url, {
+        "details": {
+            "name": 'Test custom name',
+            "surname": 'Test custom surname',
+            "address": 'Test custom addres',
+            "postcode": 'Test custom postcode'
+        }
+        })
+
+        details = UserDetails.objects.get(pk=1)
+
+        self.assertEqual(response.status_code, HTTPStatus.CREATED)
+        self.assertEqual(details.name, 'Test custom name')

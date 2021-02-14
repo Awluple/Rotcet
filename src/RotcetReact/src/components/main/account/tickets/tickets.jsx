@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react'
 import axios from 'axios'
 import {Switch, Route} from 'react-router-dom'
 
-import {convertDateToUTC} from 'utilities/tools/tools.js'
 import {checkIfOutdated} from '/utilities/screenings/scripts.js'
 
 import LoadingGif from 'media/gifs/loading.jsx'
@@ -18,6 +17,8 @@ const Tickets = () => {
         axios.get('/api/tickets')
         .then((res) => {
             sortTickets(res.data)
+        }).catch(error => {
+            console.error(error)
         })
     }, [])
 

@@ -2,7 +2,6 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login as user_login, logout as user_logout
 from django.contrib.auth.models import User
 from django.contrib import messages
-from django.db import IntegrityError
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -121,7 +120,7 @@ def multiple_tickets_creation(request):
     custom_details = True if user_custom_details != user_details else False 
 
     if not user.is_authenticated:
-        raise serializers.ValidationError({'details': 'User not authenticated'})
+        return Response({'details': 'User not authenticated'}, status=403)
 
     #VALIDATION
     error = multiple_tickets_creation_validation(user, screening, types, member_tickets, seats, occupied_seats)
@@ -155,15 +154,17 @@ def update_details(request):
     user_details = request.data['details']
 
     if not user.is_authenticated:
-        raise serializers.ValidationError({'details': 'User not authenticated'})
+        return Response({'details': 'User not authenticated'}, status=403)
 
-    
+    # update details if user has them, if not - create a new one
     try:
-        UserDetails.objects.create(user=user, name=user_details['name'], surname=user_details['surname'],
-        address=user_details['address'], postcode=user_details['postcode'])
-    except IntegrityError: 
-        UserDetails.objects.filter(user=user).update(name=user_details['name'], surname=user_details['surname'],
-        address=user_details['address'], postcode=user_details['postcode'])
+        details_exists = UserDetails.objects.filter(user=user)
+        if not details_exists:
+            UserDetails.objects.create(user=user, name=user_details['name'], surname=user_details['surname'],
+            address=user_details['address'], postcode=user_details['postcode'])
+        else:
+            UserDetails.objects.filter(user=user).update(name=user_details['name'], surname=user_details['surname'],
+            address=user_details['address'], postcode=user_details['postcode'])
     except:
         return Response({'details': 'An error accured during details update'}, status=500)
 
