@@ -3,7 +3,7 @@ from rest_framework import serializers
 
 from scripts.tools import string_list_to_python
 
-from .models import Ticket
+from .models import Ticket, Membership
 from screenings.models import Screening
 
 class TicketSerializer(serializers.ModelSerializer):
@@ -59,3 +59,9 @@ class TicketSerializer(serializers.ModelSerializer):
         request = self.context['request']
         path = reverse('api:ticket-detail',kwargs={'pk':obj.pk})
         return request.build_absolute_uri(path)
+
+class MembershipSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Membership
+        fields = '__all__'

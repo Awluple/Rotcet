@@ -4,6 +4,7 @@
     justify-content: space-around;
     padding: 50px 0px;
     background: #2C1111;
+    margin-top: auto;
     ul {
         @include flex-center(column, true);
         align-items: flex-start;

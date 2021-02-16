@@ -43,7 +43,7 @@ const Seats = props => {
 
     return (
         <div className='tickets__canvas'>
-            { props.error !== null ? <p>{errors[props.error.name]}</p> : ''}
+            { props.error !== null ? <p className='tickets__error'>{errors[props.error.name]}</p> : ''}
             { !smallDevice && <h2>1. Select seats</h2>}
             <canvas ref={canvasRef} />
             {smallDevice && 

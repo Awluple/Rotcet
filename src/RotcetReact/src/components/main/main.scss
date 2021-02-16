@@ -2,6 +2,7 @@
 @import './calendar/calendar.scss';
 @import './movie/movie.scss';
 @import './tickets/tickets.scss';
+@import './account/account.scss';
 
 .main_section_header {
     background: $darker-red;
@@ -65,10 +66,25 @@
         font-weight: 100;
         padding: 10px 35px;
         margin-top: 90px;
+
+        @media (max-width: $phone-small) {
+            padding: 10px 8px;
+        }
+        
     }
 
     p {
         font-family: $content-font;
+    }
+
+    .loading_gif {
+        max-width: 400px;
+        margin-bottom: 300px;
+    }
+
+    .tickets__error {
+        text-align: center;
+        margin-bottom: 40px;
     }
 
     &__description {
@@ -90,13 +106,18 @@
         justify-content: space-between;
         align-items: flex-start;
         width: 60%;
+        background: #28333c;
+        padding: 40px;
         max-width: 750px;
+        box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.5);
 
         @media (max-width: $tablet) {
             width: 80%;
         }
         @media (max-width: 800px) {
-            width: 90%;
+            padding: 40px 20px;
+            box-sizing: border-box;
+            width: 100%;
         }
         @media (max-width: $phone) {
             @include flex-center(column);
@@ -172,7 +193,7 @@
         }
     }
 
-    &__back, &__continue {
+    &__back, &__continue, &__disabled {
         @include flex-center(row);
         @include delete-border;
         font-family: $content-font;
@@ -209,6 +230,57 @@
 
         &:hover {
             background: #137028;
+        }
+    }
+
+    &__disabled {
+        background: #535353;
+    }
+}
+
+.user_details {
+    @include flex-center(column);
+    h3 {
+        font-family: "Lato", sans-serif;
+        color: #CDCDCD;
+        background: #942121;
+        font-size: 1.7em;
+        font-weight: 100;
+        padding: 10px 35px;
+        margin-top: 90px;
+        margin-bottom: 20px;
+
+
+        @media (max-width: $phone-small) {
+            padding: 10px 25px;
+        }
+    }
+
+    label {
+        color: $silver;
+        font-family: $content-font;
+        font-size: 1.8em;
+        @media (max-width: $phone) {
+            font-size: 1.4em;
+        }
+    }
+
+    input {
+        @include delete-border;
+        background: #ececec;
+        font-size: 1.6em;
+        width: 75%;
+        padding: 5px;
+
+        &:last-child {
+            width: 45% !important;
+            text-align: center;
+        }
+        @media (max-width: $phone) {
+            font-size: 1.3em;
+        }
+        @media (max-width: $phone-small) {
+            font-size: 1.2em;
         }
     }
 }

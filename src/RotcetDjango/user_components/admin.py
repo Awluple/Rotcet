@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Ticket, Membership
+from .models import Ticket, Membership, UserDetails, CustomDetails
 
 class TicketAdmin(admin.ModelAdmin):
     actions=['really_delete_selected']
@@ -10,6 +10,7 @@ class TicketAdmin(admin.ModelAdmin):
         return actions
 
     def really_delete_selected(self, request, queryset):
+        # delete ticket from a screening's occupied_seats
         for obj in queryset:
             obj.delete()
 
@@ -23,3 +24,5 @@ class TicketAdmin(admin.ModelAdmin):
 
 admin.site.register(Ticket, TicketAdmin)
 admin.site.register(Membership)
+admin.site.register(UserDetails)
+admin.site.register(CustomDetails)
