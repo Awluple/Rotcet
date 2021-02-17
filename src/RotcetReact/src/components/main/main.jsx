@@ -6,6 +6,7 @@ import Calendar from './calendar/calendar.jsx'
 import Movie from './movie/movie.jsx'
 import Account from './account/account.jsx'
 import News from './news/news.jsx'
+import FullArticle from './news/fullArticle/fullArticle.jsx'
 
 import TicketsManager from './ticketsManager.jsx'
 import Accepted from './orderConfirmation/accepted.jsx';
@@ -25,7 +26,8 @@ const Main = () => {
                 <Route path='/tickets/:screeningId' component={TicketsManager} />
                 <Route path='/calendar' component={Calendar} />
                 <Route path='/account' component={Account} />
-                <Route path='/news' component={News} />
+                <Route exact path='/news' component={News} />
+                <Route path='/news/:articleId' component={FullArticle} />
                 <Route exact path='/' component={Home} />
                 <Route >
                     <h1>No mach</h1>

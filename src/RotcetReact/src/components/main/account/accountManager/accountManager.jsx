@@ -69,7 +69,7 @@ const AccountManager = props => {
     return (
         <div className='account__manager'>
             
-            <div className='account__navigation shadow-tiny'>
+            <div className='side_navigation shadow-tiny'>
                 <Link to='/account'>My account</Link><Link to='#'>/Account managment</Link>
             </div>
 

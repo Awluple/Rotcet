@@ -39,7 +39,7 @@ const News = () => {
                 :
                 <LoadingGif />
             }
-            <Link className='button shadow-tiny' to='/'>Archive</Link>
+            <Link className='button shadow-tiny' to='/news'>Archive</Link>
         </div>
     )
 }

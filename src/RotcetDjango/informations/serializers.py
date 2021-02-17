@@ -1,3 +1,4 @@
+from django.urls import reverse
 from rest_framework import serializers
 from .models import News, FAQs
 
@@ -17,10 +18,17 @@ class DynamicFieldsModelSerializer(serializers.ModelSerializer):
                     self.fields.pop(field_name)
 
 class NewsSerializer(DynamicFieldsModelSerializer):
+    url = serializers.SerializerMethodField()
 
     class Meta:
         model = News
         fields = '__all__'
+
+    
+    def get_url(self,obj):
+        request = self.context['request']
+        path = reverse('api:news-detail',kwargs={'pk':obj.pk})
+        return request.build_absolute_uri(path)
 
 class FAQsSerializer(serializers.ModelSerializer):
 

@@ -41,17 +41,17 @@ class NewsApiTests(APITestCase):
 
         data = response.data['results']
         keys = data[0].keys()
-        self.assertEqual(len(keys), 3)
+        self.assertEqual(len(keys), 4)
     
     def test_dynamic_fields(self):
         url = reverse('api:news-list')
-        response = self.client.get(url, {'fields': 'id,description_html,title,image'})
+        response = self.client.get(url, {'fields': 'id,full_description,title,image'})
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
         data = response.data['results']
         keys = data[0].keys()
         self.assertEqual(len(keys), 4)
-        self.assertListEqual(['id', 'image', 'title', 'description_html'], list(keys))
+        self.assertListEqual(['id', 'image', 'title', 'full_description'], list(keys))
 
 class NewsTests(TestCase):
     @classmethod
@@ -60,10 +60,6 @@ class NewsTests(TestCase):
 
     def setUp(self):
         news1 = News.objects.create(**news_values)
-    
-    def test_has_corrent_default_image(self):
-        article = News.objects.get(pk=1)
-        self.assertEqual(article.image.url, '/media/assets/placeholders/logo.png')
 
 class FAQsTests(APITestCase):
 

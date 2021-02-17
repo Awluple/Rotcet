@@ -41,6 +41,68 @@ a {
         font-size: 2.3em;
     }
 }
+
+.simple_header {
+    font-family: $headers-font;
+    color: $silver;
+    font-size: 3.7em;
+    font-weight: 100;
+    margin-top: 30px;
+    margin-bottom: 45px;
+    text-align: center;
+    background-color: $main-red;
+    width: 60%;
+    align-self: center;
+
+    @media (max-width: $phone) {
+        font-size: 3em;
+        width: 70%;
+    }
+
+    @media (max-width: $phone-small) {
+        font-size: 2.4em;
+        margin-bottom: 35px;
+        width: 80%;
+    }
+}
+
+
+.side_navigation {
+    background: $darker-red;
+    display: flex;
+    align-self: flex-start;
+    padding: 10px 30px;
+    margin-bottom: 20px;
+    border-top-right-radius: 40px;
+    border-bottom-right-radius: 40px;
+    font-size: 1.6em;
+    font-family: $content-font;
+
+    a {
+        color: $silver;
+
+        &:hover {
+            text-decoration: underline;
+        }
+
+        &:last-of-type {
+            text-decoration: underline;
+            cursor: default;
+        }
+
+    }
+
+    @media(max-width: $phone) {
+        padding: 10px 15px;
+        font-size: 1.2em;
+    }
+
+    @media(max-width: $phone-small) {
+        padding: 10px 10px;
+        font-size: 1em;
+    }
+}
+
 .button {
     @include delete-border;
     padding: 0px 50px;

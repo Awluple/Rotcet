@@ -11,20 +11,15 @@ const Article = props => {
         <li className='news__article'>
             { !smallDevice &&
                 <div className='article__image'>
-                    { props.article.thumbnail ?
-                        <img src={props.article.thumbnail} alt="article image"/>
-                        : <img src='/static/images/logo.png' alt="article image"/>
-                    }
+                    <Link to={`/news/${props.article.id}`}><img src={props.article.thumbnail ? props.article.thumbnail : '/static/images/logo.png' } alt='Article image' /></Link>
+
                 </div>
             }
             <div className='article__content'>
-                <Link to='/'><h4>{props.article.title}</h4></Link>
+                <Link to={`/news/${props.article.id}`}><h4>{props.article.title}</h4></Link>
                 { smallDevice &&
                     <div className='article__image'>
-                        { props.article.thumbnail ?
-                            <img src={props.article.thumbnail} alt="article image"/>
-                            : <img src='/static/images/logo.png' alt="article image"/>
-                        }
+                        <Link to={`/news/${props.article.id}`}><img src={props.article.thumbnail ? props.article.thumbnail : '/static/images/logo.png' } alt='Article image' /></Link>
                     </div>
                 }
                 <h6>{props.article.day_posted}</h6>

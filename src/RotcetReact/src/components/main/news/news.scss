@@ -7,28 +7,6 @@
         align-items: center;
     }
 
-    h1 {
-        font-family: $headers-font;
-        color: $silver;
-        font-size: 3.7em;
-        font-weight: 100;
-        margin-top: 30px;
-        margin-bottom: 55px;
-        text-align: center;
-        background-color: $main-red;
-        width: 60%;
-        align-self: center;
-
-        @media (max-width: $phone) {
-            font-size: 3em;
-        }
-
-        @media (max-width: $phone-small) {
-            font-size: 2.5em;
-            margin-bottom: 35px;
-        }
-    }
-
     ul {
         @media (max-width: $phone) {
             padding: 0px;
@@ -64,5 +42,123 @@
     .button {
         align-self: center;
         margin-top: 30px;
+    }
+}
+
+.full_article {
+    @include flex-center(column);
+    margin-bottom: 100px;
+    
+    .full_article__side_navigation {
+        background: $darker-red;
+        display: flex;
+        align-self: flex-start;
+        padding: 10px 30px;
+        margin-bottom: 30px;
+        border-top-right-radius: 40px;
+        border-bottom-right-radius: 40px;
+        font-size: 1.6em;
+        font-family: $content-font;
+    
+        a {
+            color: $silver;
+    
+            &:hover {
+                text-decoration: underline;
+            }
+    
+        }
+    
+        @media(max-width: $phone) {
+            padding: 10px 15px;
+            font-size: 1.2em;
+        }
+    
+        @media(max-width: $phone-small) {
+            padding: 10px 10px;
+            font-size: 1em;
+        }
+    }
+
+    a {
+        align-self: flex-start;
+    }
+
+    h2 {
+        font-family: $content-font;
+        color: $silver;
+        font-size: 2.6em;
+        font-weight: 500;
+        text-align: center;
+        max-width: 80%;
+
+        @media(max-width: $phone) {
+            font-size: 1.9em;
+        }
+        @media(max-width: $phone-small) {
+            font-size: 1.5em;
+        }
+    }
+
+    h6 {
+        font-size: 1.2em;
+        font-family: $content-font;
+        color: $darker-silver;
+        margin: auto;
+        margin-top: 10px !important;
+        font-weight: 400; 
+
+        @media(max-width: $phone) {
+            font-size: 1em;
+            width: 90%;
+        }
+    }
+
+    p {
+        font-family: $content-font;
+        font-size: 1.7em;
+        color: $silver;
+        width: 60%;
+
+        @media(max-width: $tablet) {
+            font-size: 1.5em;
+            width: 80%;
+        }
+        @media(max-width: $phone) {
+            font-size: 1.2em;
+            width: 90%;
+        }
+        @media(max-width: $phone-small) {
+            font-size: 1em;
+        }
+    }
+
+    &__image {
+        width: 100%;
+        text-align: center;
+        margin: 25px 0px;
+        img {
+            width: 40%;
+
+            @media(max-width: $tablet) {
+                width: 50%;
+            }
+            @media(max-width: $phone) {
+                width: 70%;
+            }
+        }
+
+        &--logo {
+            img {
+                width: 30%;
+
+                @media(max-width: $tablet) {
+                    width: 40%;
+                }
+                @media(max-width: $phone) {
+                    width: 60%;
+                }
+            }
+        }
     }
 }
