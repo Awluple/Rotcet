@@ -28,6 +28,7 @@ body {
 }
 .user_logo {
     margin-top: 100px;
+    width: 400px;
 }
 .user_form {
     display: flex;

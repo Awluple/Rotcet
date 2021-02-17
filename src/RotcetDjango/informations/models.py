@@ -19,7 +19,7 @@ class News(models.Model):
     thumbnail = models.FileField(upload_to=news_thumbnail_directory_path, blank=True, null=True)
     title = models.CharField(max_length=120)
     short_description = models.CharField(max_length=250)
-    description_html = models.FileField(upload_to=news_directory_path, blank=True, null=True, validators=[FileExtensionValidator(['html'])])
+    full_description = models.CharField(max_length=2500, blank=True, null=True)
 
     def save(self, *args, **kwargs):
         old_instance = News.objects.filter(pk=self.pk).first()

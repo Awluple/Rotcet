@@ -54,6 +54,11 @@ a {
     &:hover {
         background: $darker-red;
     }
+
+    &--inactive {
+        color: $darker-silver;
+        color: black;
+    }
 }
 
 .loading_gif {

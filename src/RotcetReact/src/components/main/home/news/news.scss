@@ -1,62 +1,63 @@
 .home__news {
     display: inline-flex;
     flex-direction: column;
-    width: 69%; 
-    .article__content {
-        a {
-            align-self: center;
-            margin-top: 50px;
-            padding: 0px 100px;
-        }
-    }
-    .news__article {
-        margin-left: 40px;
-        margin-top: 40px;
-        display: flex;
-
-        a {
-            text-decoration: none;
-        }
-        p, h4, h6 {
-            font-family: $content-font;
-            font-weight: 100;
-            color: white;
-        }
-        h4 {
-            font-weight: 400;
-            font-size: 1.8em;
-        }
-        h6 {
-            font-size: 1em;
-        }
-        p {
-            font-size: 1.3em;
-        }
-
-        .article__image {
-            text-align: center;
-            flex: 0 0 25%;
-            img {
-                width: 100%;
-                object-fit: contain;
-            }
-            a {
-                display: block;
-            }
-        }
-
-        .article__content {
-            margin-left: 50px;
-            a {
-                display: inline-block;
-                padding: 0px;
-                margin: 0px;
-            }
-        }
-    }
+    width: 69%;
     .button {
         align-self: center;
         margin-top: 30px;
+    }
+}
+
+.article__content {
+    a {
+        align-self: center;
+        margin-top: 50px;
+        padding: 0px 100px;
+    }
+}
+.news__article {
+    margin-left: 40px;
+    margin-top: 40px;
+    display: flex;
+
+    a {
+        text-decoration: none;
+    }
+    p, h4, h6 {
+        font-family: $content-font;
+        font-weight: 100;
+        color: white;
+    }
+    h4 {
+        font-weight: 400;
+        font-size: 1.8em;
+    }
+    h6 {
+        font-size: 1em;
+    }
+    p {
+        font-size: 1.3em;
+    }
+
+    .article__image {
+        text-align: center;
+        flex: 0 0 25%;
+        img {
+            width: 100%;
+            object-fit: contain;
+        }
+        a {
+            display: block;
+        }
+    }
+
+    .article__content {
+        margin-left: 50px;
+        a {
+            display: inline-block;
+            padding: 0px;
+            margin: 0px;
+        }
     }
 }
 
@@ -67,18 +68,16 @@
 }
 
 @media only screen and (max-width: 1500px) {
-    .home__news {
-        .article__image {
-            align-self: center;
+    .article__image {
+        align-self: center;
+    }
+    .news__article {
+        margin-left: 10px;
+        p {
+            font-size: 1.1em;
         }
-        .news__article {
-            margin-left: 10px;
-            p {
-                font-size: 1.1em;
-            }
-            h4 {
-                font-size: 1.5em;
-            }
+        h4 {
+            font-size: 1.5em;
         }
     }
 }
@@ -89,41 +88,39 @@
     }
 }
 @media only screen and (max-width: 600px) {
-    .home__news {
-        .news__article {
-            border-bottom: 5px solid #942121;
-            padding-bottom: 30px;
-            margin: 30px 10px 0px;
-            p {
-                font-size: 1.1em;
-            }
-            h4 {
-                font-size: 1.5em;
-                text-align: center;
-                border-left: 20px solid #942121;
-                border-right: 20px solid #942121;
-                padding: 0px 10px;
-            }
-            &:nth-child(4) {
-                border-bottom: 0px !important;
-            }
+    .news__article {
+        border-bottom: 5px solid #942121;
+        padding-bottom: 30px;
+        margin: 30px 10px 0px;
+        p {
+            font-size: 1.1em;
         }
-        .article__content {
-            margin: 0px 15px !important;
-            a {
-                width: 100%
-            }
+        h4 {
+            font-size: 1.5em;
+            text-align: center;
+            border-left: 20px solid #942121;
+            border-right: 20px solid #942121;
+            padding: 0px 10px;
         }
-        .article__image {
-            margin: 10px 0px;
-            a {
-                padding: 0px;
-                margin: 15px 0px;
-            }
-            img {
-                max-width: 250px;
-                max-height: 250px;
-            }
+        &:nth-child(4) {
+            border-bottom: 0px !important;
+        }
+    }
+    .article__content {
+        margin: 0px 15px !important;
+        a {
+            width: 100%
+        }
+    }
+    .article__image {
+        margin: 15px 0px;
+        a {
+            padding: 0px;
+            margin: 15px 0px;
+        }
+        img {
+            max-width: 250px;
+            max-height: 250px;
         }
     }
 }
