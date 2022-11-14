@@ -9,10 +9,10 @@ const Nav = () => {
     return (
         <div className='nav shadow-tiny'>
             <ul>
-                <li><NavLink activeClassName="selected" exact to="/">Home</NavLink></li>
-                <li><NavLink activeClassName="selected" to="/calendar">Programme</NavLink></li>
-                <li><NavLink activeClassName="selected" to="/membership">Membership</NavLink></li>
-                <li><NavLink activeClassName="selected" to="/news">News</NavLink></li>
+                <li><NavLink className={isActive => (isActive ? "selected" : "")}  to="/">Home</NavLink></li>
+                <li><NavLink className={isActive => (isActive ? "selected" : "")}  to="/calendar">Programme</NavLink></li>
+                <li><NavLink className={isActive => (isActive ? "selected" : "")}  to="/membership">Membership</NavLink></li>
+                <li><NavLink className={isActive => (isActive ? "selected" : "")}  to="/news">News</NavLink></li>
             </ul>
             <div className='user-menu'>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -20,7 +20,7 @@ const Nav = () => {
             </svg>
                 { userLogged === true ? 
                     <ul>
-                        <li><NavLink exact to="/account">My account</NavLink></li>
+                        <li><NavLink to="/account">My account</NavLink></li>
                         <li><a href="/logout">Logout</a></li>
                     </ul>
                 :  
@@ -33,5 +33,4 @@ const Nav = () => {
         </div>
     )
 }
-
 export default Nav;

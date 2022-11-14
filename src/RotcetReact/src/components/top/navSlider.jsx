@@ -18,10 +18,10 @@ const NavSlider = () => {
             {clicked && 
                 <MenuSlider close={setClicked}>
                     <ul className='menu-slider__ul'>
-                        <li><NavLink exact activeClassName="selected" to="/">Home</NavLink></li>
-                        <li><NavLink activeClassName="selected" to="/calendar">Programme</NavLink></li>
-                        <li><NavLink activeClassName="selected" to="/membershio">Membership</NavLink></li>
-                        <li><NavLink activeClassName="selected" to="/news">News</NavLink></li>
+                        <li><NavLink className={isActive => (isActive ? "selected" : "")} to="/">Home</NavLink></li>
+                        <li><NavLink className={isActive => (isActive ? "selected" : "")} to="/calendar">Programme</NavLink></li>
+                        <li><NavLink className={isActive => (isActive ? "selected" : "")} to="/membershio">Membership</NavLink></li>
+                        <li><NavLink className={isActive => (isActive ? "selected" : "")} to="/news">News</NavLink></li>
                     </ul>
                 </MenuSlider>
             }

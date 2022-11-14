@@ -4,7 +4,7 @@ import { assert } from 'chai';
 import Adapter from 'enzyme-adapter-react-16'
 import sinon from 'sinon'
 
-import { MemoryRouter, Route } from 'react-router-dom'
+import { createMemoryRouter, RouterProvider } from 'react-router-dom'
 import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
 import { UserContext, MembershipContext, DetailsContext } from 'utilities/contexts.js'
@@ -46,13 +46,26 @@ describe('Main directory tests', () => {
             mock.onGet('/api/screenings/1').reply(200, screening)
             global.getSpy = sinon.spy(axios, 'get')
 
+            global.router = createMemoryRouter(
+                [
+                  {
+                    path: '/tickets/:screeningId',
+                    element: <TicketsManager />
+                  }
+                ],
+                {
+                  // Set for where you want to start in the routes. Remember, KISS (Keep it simple, stupid) the routes.
+                  initialEntries: ['/tickets/1/'],
+                  // We don't need to explicitly set this, but it's nice to have.
+                  initialIndex: 0,
+                }
+              )
+
             global.wrapper = mount(
                 <UserContext.Provider value={true}>
                     <MembershipContext.Provider value={{membership: false, type: 0, defaultType: 0}}>
                         <DetailsContext.Provider value={{name: '', surname: '', address: '', postcode: ''}}>
-                            <MemoryRouter initialEntries={['/tickets/1/']}>
-                                <Route path='/tickets/:screeningId' render={() => <TicketsManager />} />
-                            </MemoryRouter>
+                            <RouterProvider router={router} />
                         </DetailsContext.Provider> 
                     </MembershipContext.Provider>
                 </UserContext.Provider>

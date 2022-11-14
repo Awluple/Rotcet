@@ -21,8 +21,8 @@ const UserSlider = () => {
                 <MenuSlider from='right' close={setClicked}>
                 { userLogged ? 
                     <ul className='menu-slider__ul'>
-                        <li><NavLink exact to="/account">My account</NavLink></li>
-                        <li><NavLink exact to="/account/tickets">My tickets</NavLink></li>
+                        <li><NavLink to="/account">My account</NavLink></li>
+                        <li><NavLink to="/account/tickets">My tickets</NavLink></li>
                         <li><a href="/logout">Logout</a></li>
                     </ul>
                 :  

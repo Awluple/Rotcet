@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react'
-import { Route, Switch, useLocation } from "react-router-dom";
+import { Route, Routes, useLocation, Outlet } from "react-router-dom";
 
 import Home from './home/home.jsx'
 import Calendar from './calendar/calendar.jsx'
@@ -18,17 +18,17 @@ const Main = () => {
 
     return (
         <div className='main'>
-            <Switch>
-                <Route path='/movie/:name-:id' component={Movie} />
-                <Route path='/tickets/accepted' component={Accepted} />
-                <Route path='/tickets/:screeningId' component={TicketsManager} />
-                <Route path='/calendar' component={Calendar} />
-                <Route path='/account' component={Account} />
-                <Route exact path='/' component={Home} />
-                <Route >
+            <Routes>
+                <Route path='/movie/:name-:id/*' element={<Movie />} />
+                <Route path='/tickets/accepted' element={<Accepted />} />
+                <Route path='/tickets/:screeningId' element={<TicketsManager />} />
+                <Route path='/calendar' element={<Calendar />} />
+                <Route path='/account/*' element={<Account />} />
+                <Route path='/' element={<Home />} />
+                {/* <Route >
                     <h1>No mach</h1>
-                </Route>
-            </Switch>
+                </Route> */}
+            </Routes>
         </div>
     )
 }

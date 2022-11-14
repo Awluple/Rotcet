@@ -1,5 +1,5 @@
 import React, {useEffect, useState, useContext} from 'react'
-import {Switch, Route} from 'react-router-dom'
+import {Routes, Route} from 'react-router-dom'
 
 import { UserContext, MembershipContext, DetailsContext } from 'utilities/contexts.js'
 import LoadingGif from 'media/gifs/loading.jsx'
@@ -40,13 +40,15 @@ const Account = () => {
             {user === 'awaitingResponse' ? 
                 <LoadingGif />
             :
-            <Switch>
-                <Route path='/account/tickets' component={Tickets} />
-                <Route exact path='/account/account-manager' render={() => <AccountManager details={user.user_details} />} />
-                <Route path='/account/account-manager/password-reset' component={PassowrdReset} />
-                <Route path='/account/membership' render={() => <Membership membership={user.membership} />} />
-                <Route exact path='/account' component={MainPage} />
-            </Switch>
+            <Routes>
+                <Route >
+                    <Route index element={<MainPage />} />
+                    <Route path='tickets/*' element={<Tickets />} />
+                    <Route path='account-manager' element={<AccountManager details={user.user_details} />} />
+                    <Route path='account-manager/password-reset' element={<PassowrdReset />} />
+                    <Route path='membership' element={<Membership membership={user.membership} />} />
+                </Route>
+            </Routes>
         }
         </div>
     )

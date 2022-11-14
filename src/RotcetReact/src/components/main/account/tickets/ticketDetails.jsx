@@ -1,20 +1,20 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {Link, useParams, useHistory} from 'react-router-dom'
+import {Link, useParams, useNavigate} from 'react-router-dom'
 
 import {toCompactDate, toCompactHour, convertDateToUTC} from 'utilities/tools/tools.js'
 
 const TicketDetails = props => {
 
     const params = useParams()
-    const history = useHistory()
+    const navigate = useNavigate()
 
 
     const tickets = props.tickets[params.screeningID]
 
 
     if(tickets === undefined) {
-        history.push('/errors/404')
+        navigate('/errors/404')
         return null
     }
 

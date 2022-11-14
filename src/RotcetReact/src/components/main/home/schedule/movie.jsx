@@ -56,7 +56,7 @@ const Movie = props => {
                 <div className='movies__all_times'>
                     <Link className='shadow-small'
                     to={{
-                        pathname: `/movie/${props.movie.name}-${props.movie.id}`,
+                        pathname: `/movie/${props.movie.name.replace(" ", "-")}-${props.movie.id}`,
                         hash: "#tickets",
                       }} >
                         All times

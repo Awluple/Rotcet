@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import PropTypes from 'prop-types'
 import axios from 'axios'
-import {useHistory, Link} from 'react-router-dom'
+import {useNavigate, Link} from 'react-router-dom'
 
 import LoadingGif from 'media/gifs/loading.jsx'
 
@@ -12,7 +12,7 @@ const AccountManager = props => {
     const [awaitingResponse, setAwaitingResponse] = useState(false)
     const [notification, setNotification] = useState(null)
 
-    const history = useHistory()
+    const navigate = useNavigate()
 
     const [userDetails, setUserDetails] = useState({
         name: '',
@@ -57,7 +57,7 @@ const AccountManager = props => {
     }
 
     const passwordChange = () => {
-        history.push('/account/account-manager/password-reset')
+        navigate('/account/account-manager/password-reset')
     }
 
     useEffect(() => {

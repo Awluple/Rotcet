@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import qs from 'qs'
 import axios from 'axios'
 
-import { useLocation, useParams, useHistory, Link } from 'react-router-dom'
+import { useLocation, useParams, useNavigate, Link } from 'react-router-dom'
 
 import LoadingGif from 'media/gifs/loading.jsx'
 
@@ -21,7 +21,7 @@ const OrderConfirmation = props => {
 
     const location = useLocation()
     const params = useParams()
-    const history = useHistory()
+    const navigate = useNavigate()
 
     const errors = {
         'details': 'An error accured during your details validation, please try again'
@@ -49,7 +49,7 @@ const OrderConfirmation = props => {
         setTickets([])
         window.open('https://www.sandbox.paypal.com/checkoutnow', 'payment', "height=600,width=600")
         setTimeout(() => {
-            history.push('/tickets/accepted')
+            navigate('/tickets/accepted')
         }, 1500);
     }
 
@@ -80,24 +80,24 @@ const OrderConfirmation = props => {
             if(error.response.status === 400){
                 props.reloadData(props.membership.membership, props.membership.defaultType)
             } else {
-                history.push(`/errors/${error.response.status}`)
+                navigate(`/errors/${error.response.status}`)
             }
             switch(error.response.data.code) {
                 case 1: // problem with ticket type
-                    history.push(`/tickets/${params.screeningId}/?error=type`)
+                    navigate(`/tickets/${params.screeningId}/?error=type`)
                 break;
                 case 2: // seat occupied
-                    history.push(`/tickets/${params.screeningId}/?error=occupied&occupied=${error.response.data.seats.join()}`)
+                    navigate(`/tickets/${params.screeningId}/?error=occupied&occupied=${error.response.data.seats.join()}`)
                 break;
                 case 3: //seat out of range
-                    history.push(`/tickets/${params.screeningId}/?error=seat`)
+                    navigate(`/tickets/${params.screeningId}/?error=seat`)
                 break;
                 case 4: // problem with address
                     setError('details')
                     window.scrollTo(0,0)
                 break;
                 default:
-                    history.push('/errors/400')
+                    navigate('/errors/400')
                 break;
               }
               setWaitingForResponce(false)
