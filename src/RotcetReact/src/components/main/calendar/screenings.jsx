@@ -15,12 +15,10 @@ const Screenings = props => {
                     return (
                         <div key={screening.id} className='calendar__screening'>
                             <h4>{`${hour}:${minute}`}</h4>
-                            {screening.image ? 
-                                <Link className='calendar__screening__img' to=''><img src={screening.image} alt="show image"/></Link>
-                            :
-                                <Link className='calendar__screening__img' to=''><img src="/static/images/logo.png" alt="logo"/></Link>
-                            }
-                            <Link className='calendar__screening__name' to={`/movie/${screening.name}-${screening.show_id}`}><h3>{screening.name}</h3></Link>
+                            <Link className='calendar__screening__img' to={`/movie/${screening.name.replace(" ", "-")}-${screening.show_id}`}>
+                                <img src={screening.image ? screening.image : "/static/images/logo.png"} alt="show image"/>
+                            </Link>
+                            <Link className='calendar__screening__name' to={`/movie/${screening.name.replace(" ", "-")}-${screening.show_id}`}><h3>{screening.name}</h3></Link>
                         </div>
                     )
                 })

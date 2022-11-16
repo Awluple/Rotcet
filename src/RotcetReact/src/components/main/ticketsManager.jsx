@@ -91,9 +91,9 @@ const TicketsManager = () => {
     return (
         <div>
             <Routes>
-                <Route path='/tickets/:screeningId/order' element={<OrderConfirmation screening={screening} userDetails={userDetails}
+                <Route path='/order' element={<OrderConfirmation screening={screening} userDetails={userDetails}
                 updateDetails={updateDetails} membership={userMembership} reloadData={getScreening} blockPost={blockPost} />} />
-                <Route path='/tickets/:screeningId' element={<Tickets reloadData={getScreening} screening={screening} membership={userMembership} />} />
+                <Route index element={<Tickets reloadData={getScreening} screening={screening} membership={userMembership} />} />
             </Routes>
         </div>
     )

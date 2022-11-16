@@ -34,13 +34,13 @@ const Movie = props => {
     if (screeningsDates){
         return (
             <li className='movies__movie'>
-                <Link to={`/movie/${props.movie.name}-${props.movie.id}`}>
+                <Link to={`/movie/${props.movie.name.replace(" ", "-")}-${props.movie.id}`}>
                     <h3>{props.movie.name}</h3>
                 </Link>
                 <div className='movies__details'>
 
                     <div className='movies__image'>
-                        <Link to={`/movie/${props.movie.name}-${props.movie.id}`}>
+                        <Link to={`/movie/${props.movie.name.replace(" ", "-")}-${props.movie.id}`}>
                             <img src={props.movie.thumbnail} alt="movie image"/>
                         </Link>
                     </div>

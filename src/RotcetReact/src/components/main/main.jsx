@@ -21,7 +21,7 @@ const Main = () => {
             <Routes>
                 <Route path='/movie/:name-:id/*' element={<Movie />} />
                 <Route path='/tickets/accepted' element={<Accepted />} />
-                <Route path='/tickets/:screeningId' element={<TicketsManager />} />
+                <Route path='/tickets/:screeningId/*' element={<TicketsManager />} />
                 <Route path='/calendar' element={<Calendar />} />
                 <Route path='/account/*' element={<Account />} />
                 <Route path='/' element={<Home />} />

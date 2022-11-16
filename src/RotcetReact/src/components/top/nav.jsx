@@ -9,10 +9,10 @@ const Nav = () => {
     return (
         <div className='nav shadow-tiny'>
             <ul>
-                <li><NavLink className={isActive => (isActive ? "selected" : "")}  to="/">Home</NavLink></li>
-                <li><NavLink className={isActive => (isActive ? "selected" : "")}  to="/calendar">Programme</NavLink></li>
-                <li><NavLink className={isActive => (isActive ? "selected" : "")}  to="/membership">Membership</NavLink></li>
-                <li><NavLink className={isActive => (isActive ? "selected" : "")}  to="/news">News</NavLink></li>
+                <li><NavLink className={({ isActive }) => isActive ? 'selected' : ''} to="/">Home</NavLink></li>
+                <li><NavLink className={({ isActive }) => isActive ? 'selected' : ''}  to="/calendar">Programme</NavLink></li>
+                <li><NavLink className={({ isActive }) => isActive ? 'selected' : ''}  to="/membership">Membership</NavLink></li>
+                <li><NavLink className={({ isActive }) => isActive ? 'selected' : ''}  to="/news">News</NavLink></li>
             </ul>
             <div className='user-menu'>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
