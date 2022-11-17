@@ -13,8 +13,22 @@
         flex-wrap: wrap;
         list-style-type: none;
     }
+
+    li {
+        @media(max-width: $phone-small) {
+            text-align: center;
+        }
+    }
+
     img {
-        height: 150px;
+        height: 90px;
+        margin-top: 10px;
+
+        @media(max-width: $phone-small) {
+            width: 50vw;
+            height: auto;
+            margin-top: 25px;
+        }
     }
     a {
         color: white;

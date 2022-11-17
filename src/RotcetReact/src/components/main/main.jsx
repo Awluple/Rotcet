@@ -5,6 +5,8 @@ import Home from './home/home.jsx'
 import Calendar from './calendar/calendar.jsx'
 import Movie from './movie/movie.jsx'
 import Account from './account/account.jsx'
+import News from './news/news.jsx'
+import FullArticle from './news/fullArticle/fullArticle.jsx'
 
 import TicketsManager from './ticketsManager.jsx'
 import Accepted from './orderConfirmation/accepted.jsx';
@@ -24,6 +26,8 @@ const Main = () => {
                 <Route path='/tickets/:screeningId/*' element={<TicketsManager />} />
                 <Route path='/calendar' element={<Calendar />} />
                 <Route path='/account/*' element={<Account />} />
+                <Route exact path='/news' element={<News />} />
+                <Route path='/news/:articleId' element={<FullArticle />} />
                 <Route path='/' element={<Home />} />
                 {/* <Route >
                     <h1>No mach</h1>

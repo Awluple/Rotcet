@@ -6,11 +6,13 @@ import {useScreenWidth} from 'utilities/hooks/hooks.js'
 
 const Article = props => {
     const smallDevice = useScreenWidth(600)
+
     return (
-        <div className='news__article'>
+        <li className='news__article'>
             { !smallDevice &&
                 <div className='article__image'>
                     <Link to={`/news/${props.article.id}`}><img src={props.article.thumbnail ? props.article.thumbnail : '/static/images/logo.png' } alt='Article image' /></Link>
+
                 </div>
             }
             <div className='article__content'>
@@ -23,7 +25,7 @@ const Article = props => {
                 <h6>{props.article.day_posted}</h6>
                 <p>{props.article.short_description}</p>
             </div>
-        </div>
+        </li>
     )
 }
 

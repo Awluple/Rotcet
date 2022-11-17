@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react'
+import {Link} from 'react-router-dom'
 
 import Nav from './nav.jsx'
 import NavSlider from './navSlider.jsx'
@@ -30,8 +31,9 @@ const Top = () => {
         return (
             <div className='top'>
                 <div className='logo'>
-                    <img src="" alt=""/>
-                    <img src="/static/images/logo.png" alt="Logo"/>
+                <Link to='/'>
+                        <img src="/static/images/logo.png" alt="Logo"/>
+                    </Link>
                 </div>
                 <Nav />
             </div>
@@ -41,7 +43,9 @@ const Top = () => {
             <div className='top'>
                 <NavSlider />
                 <div className='logo'>
-                    <img src="/static/images/logo.png" alt="Logo"/>
+                    <Link to='/'>
+                        <img src="/static/images/logo.png" alt="Logo"/>
+                    </Link>
                 </div>
                 <UserSlider />
             </div>

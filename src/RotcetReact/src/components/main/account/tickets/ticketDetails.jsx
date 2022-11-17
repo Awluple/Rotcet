@@ -26,7 +26,7 @@ const TicketDetails = props => {
 
     return (
         <div className='ticket'>
-            <div className='account__navigation shadow-tiny'>
+            <div className='side_navigation shadow-tiny'>
                 <Link to='/account'>My account</Link><Link to='/account/tickets'>/Tickets</Link>
                 <Link to='#'>/{tickets[0].screening_details.name}</Link>
             </div>

@@ -16,8 +16,8 @@ const Footer = () => {
             </ul>
             <ul>
                 <li><Link to=''>Terms and Conditions</Link></li>
+                <li><Link to='/'><img src="/static/images/logo.png" alt="logo"/></Link></li>
             </ul>
-            <img src="/static/images/logo.png" alt="logo"/>
         </div>
     )
 }
