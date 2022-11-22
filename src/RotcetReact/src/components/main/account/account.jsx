@@ -29,7 +29,7 @@ const Account = () => {
                 user_details: userDetailsContext
             })
         } else if (userLoggedContext === false) {
-            window.location.href = `/login?next=/account&login_required=true`
+            window.location.href = (`/login?next=/account&login_required=true`);
         }
         
     }, [userLoggedContext])

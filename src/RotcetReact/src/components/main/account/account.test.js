@@ -7,7 +7,7 @@ import sinon from 'sinon'
 import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
 
-import { MemoryRouter, Link, Route, Routes, createMemoryRouter, RouterProvider } from 'react-router-dom'
+import { MemoryRouter, Link, Routes, createMemoryRouter, RouterProvider } from 'react-router-dom'
 
 import { UserContext } from 'utilities/contexts.js'
 import LoadingGif from 'media/gifs/loading.jsx'
@@ -52,9 +52,7 @@ describe('Account tests', () => {
                   }
                 ],
                 {
-                  // Set for where you want to start in the routes. Remember, KISS (Keep it simple, stupid) the routes.
                   initialEntries: ['/account/tickets/1'],
-                  // We don't need to explicitly set this, but it's nice to have.
                   initialIndex: 0,
                 }
               )
@@ -74,8 +72,7 @@ describe('Account tests', () => {
                 wrappingComponentProps: {
                   value: false,
                 },})
-
-            assert.equal('/login?next=/account&login_required=true', window.location.href)
+            assert.equal(window.location.href, "/login?next=/account&login_required=true");
         });
         it('renders Routes', () => {
             const wrapper = mount(<MemoryRouter><Account /></MemoryRouter>, {

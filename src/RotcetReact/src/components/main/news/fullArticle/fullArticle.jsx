@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import {useParams, useHistory, Link} from 'react-router-dom'
+import {useParams, useNavigate, Link} from 'react-router-dom'
 import axios from 'axios'
 
 import LoadingGif from 'media/gifs/loading.jsx'
@@ -9,7 +9,7 @@ const FullArticle = () => {
     const [article, setArticle] = useState(null)
 
     const params = useParams()
-    const history = useHistory()
+    const navigate = useNavigate()
 
 
     useEffect(() => {
@@ -20,10 +20,10 @@ const FullArticle = () => {
             console.error(error)
             switch (error.response.status) {
                 case 404:
-                    history.push('/errors/404')
+                    navigate('/errors/404')
                     break;
                 case 500:
-                    history.push('/errors/500')
+                    navigate('/errors/500')
                     break;
             }
         })

@@ -49,14 +49,12 @@ describe('Main directory tests', () => {
             global.router = createMemoryRouter(
                 [
                   {
-                    path: '/tickets/:screeningId',
+                    path: '/tickets/:screeningId/*',
                     element: <TicketsManager />
                   }
                 ],
                 {
-                  // Set for where you want to start in the routes. Remember, KISS (Keep it simple, stupid) the routes.
                   initialEntries: ['/tickets/1/'],
-                  // We don't need to explicitly set this, but it's nice to have.
                   initialIndex: 0,
                 }
               )

@@ -34,7 +34,7 @@ const News = () => {
             <ul>
                 {news.map(article => {
                     return (
-                        <Article article={article} />
+                        <Article article={article} key={article.id} />
                     )
                 })}
             </ul>

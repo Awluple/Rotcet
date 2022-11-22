@@ -30,7 +30,7 @@ const article2 = {
     short_description: 'Test desc 2'
 }
 
-describe('News components tests', () => {
+describe('Homepage News components tests', () => {
     describe('News component', () => {
         before(() => {
             let mock = new MockAdapter(axios)
@@ -66,13 +66,13 @@ describe('News components tests', () => {
             global.wrapper2 = shallow(<Article article={article2} />)
         })
         it('displays all data', () => {
-            assert.equal(wrapper.find('img').prop('src'), '/test/test.jpg')
+            assert.equal(wrapper.find('img').prop('src'), '/static/images/logo.png')
             assert.equal(wrapper.find('h4').text(), 'Test 1')
             assert.equal(wrapper.find('h6').text(), '2200-01-02')
             assert.equal(wrapper.find('p').text(), 'Test desc 1')
         })
         it('displays appropriate image', () => {
-            assert.equal(wrapper.find('img').prop('src'), '/test/test.jpg')
+            assert.equal(wrapper.find('img').prop('src'), '/static/images/logo.png')
             assert.equal(wrapper2.find('img').prop('src'), '/test/thumbnail_test.jpg')
         })
     })
