@@ -7,6 +7,7 @@ import Movie from './movie/movie.jsx'
 import Account from './account/account.jsx'
 import News from './news/news.jsx'
 import FullArticle from './news/fullArticle/fullArticle.jsx'
+import Membership from './membership/membership.jsx';
 
 import TicketsManager from './ticketsManager.jsx'
 import Accepted from './orderConfirmation/accepted.jsx';
@@ -21,14 +22,17 @@ const Main = () => {
     return (
         <div className='main'>
             <Routes>
+                <Route path='/' element={<Home />} />
                 <Route path='/movie/:name-:id/*' element={<Movie />} />
                 <Route path='/tickets/accepted' element={<Accepted />} />
                 <Route path='/tickets/:screeningId/*' element={<TicketsManager />} />
                 <Route path='/calendar' element={<Calendar />} />
                 <Route path='/account/*' element={<Account />} />
-                <Route exact path='/news' element={<News />} />
-                <Route path='/news/:articleId' element={<FullArticle />} />
-                <Route path='/' element={<Home />} />
+                <Route path='/news' >
+                    <Route index element={<News />} />
+                    <Route path=':articleId' element={<FullArticle />} />
+                </Route>
+                <Route path='/membership' element={<Membership />} />
                 {/* <Route >
                     <h1>No mach</h1>
                 </Route> */}

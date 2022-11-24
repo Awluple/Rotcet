@@ -1,0 +1,61 @@
+.membership {
+    margin:  80px 0px 100px 0px;
+    color: $silver;
+    @include flex-center(column);
+    font-family: $headers-font;
+    p {
+        font-family: $content-font;
+    }
+    a {
+        font-size: 2em;
+    }
+    &__header {
+        @include flex-center(column);
+        margin-bottom: 100px;
+        h1 {
+            font-family: $headers-font;
+            font-weight: 100;
+            font-size: 4.7em;
+        }
+        img {
+            width: 420px;
+        }
+    }
+    &__explanation {
+        @include flex-center(column);
+        margin-bottom: 120px;
+        h2 {
+            width: 50%;
+            font-size: 3.2em;
+            background-color: $main-red;
+            border-radius: 25px;
+            padding: 0px 20px;
+            font-weight: 100;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 2.2em;
+            width: 60%;
+            text-align: center;
+        }
+    }
+    &__options {
+        @include flex-center(row);
+        margin-left: 12%;
+        margin-bottom: 80px;
+        h3 {
+            font-size: 2.7em;
+            background-color: $main-red;
+            border-radius: 25px;
+            width: 50%;
+            padding: 0px 10px;
+            text-align: center;
+        }
+        p {
+            align-self: flex-start;
+            font-size: 1.8em;
+            max-width: 80%;
+        }
+    }
+}
