@@ -7,23 +7,46 @@
         font-family: $content-font;
     }
     a {
-        font-size: 2em;
+        font-size: 2.5em;
+        @media(max-width: $phone) {
+            text-align: center;
+            font-size: 1.7em !important;
+        }
+        @media(max-width: $phone-small) {
+            font-size: 1.5em !important;
+        }
     }
     &__header {
         @include flex-center(column);
         margin-bottom: 100px;
+        @media(max-width: $phone-small) {
+            margin-bottom: 70px;
+        }
         h1 {
             font-family: $headers-font;
             font-weight: 100;
             font-size: 4.7em;
+            @media(max-width: $phone) {
+                font-size: 3.6em;
+            }
+            @media(max-width: $phone-small) {
+                font-size: 3em;
+            }
         }
         img {
             width: 420px;
+
+            @media(max-width: $phone) {
+                width: 70%;
+            }
         }
     }
     &__explanation {
         @include flex-center(column);
         margin-bottom: 120px;
+        @media(max-width: $phone-small) {
+            margin-bottom: 80px;
+        }
         h2 {
             width: 50%;
             font-size: 3.2em;
@@ -33,17 +56,44 @@
             font-weight: 100;
             text-align: center;
             margin-bottom: 20px;
+
+            @media(max-width: $tablet) {
+                width: 90%;
+                font-size: 3em;
+            }
+            @media(max-width: $phone-small) {
+                font-size: 2em;
+                padding: 0 5%;
+            }
         }
         p {
             font-size: 2.2em;
             width: 60%;
             text-align: center;
+            @media(max-width: $tablet) {
+                width: 80%;
+                font-size: 1.8em;
+            }
         }
     }
     &__options {
         @include flex-center(row);
         margin-left: 12%;
         margin-bottom: 80px;
+
+        @media(max-width: $tablet) {
+            margin: 0 10% 80px;
+        }
+        @media(max-width: $phone) {
+            @include flex-center(column);
+        }
+
+        div {
+            @media(max-width: $phone) {
+                margin-bottom: 40px;
+            }
+        }
+
         h3 {
             font-size: 2.7em;
             background-color: $main-red;
@@ -51,11 +101,29 @@
             width: 50%;
             padding: 0px 10px;
             text-align: center;
+            @media(max-width: $tablet) {
+                font-size: 2.3em;
+                width: 60%;
+            }
+            @media(max-width: $phone) {
+                font-size: 2.2em;
+                width: 100%;
+                margin: auto;
+            }
+            @media(max-width: $phone-small) {
+                font-size: 1.9em;
+                width: 100%;
+                margin: auto;
+            }
         }
         p {
             align-self: flex-start;
             font-size: 1.8em;
             max-width: 80%;
+            @media(max-width: $tablet) {
+                font-size: 1.5em;
+                max-width: 90%;
+            }
         }
     }
 }
