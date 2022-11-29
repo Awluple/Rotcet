@@ -44,7 +44,6 @@ const Movie = (props) => {
 
     const scrollToTickets = () => {
         document.documentElement.style.scrollBehavior = 'smooth'
-        console.log(tickets);
         window.scrollTo(0, tickets.current.offsetTop)
         document.documentElement.style.scrollBehavior = 'auto'
     }

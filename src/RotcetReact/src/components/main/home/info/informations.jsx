@@ -27,9 +27,9 @@ const Informations = () => {
                 <Link className='informations__link informations__link--big' to=''><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d={svgs.map} /></svg>Location</Link>
             </div>
             <div className='informations__buttons-small'>
-                <Link className='informations__link' to=''>About us</Link>
+                <Link className='informations__link' to='/about/#about'>About us</Link>
                 <Link className='informations__link' to=''>FAQs</Link>
-                <Link className='informations__link' to=''>Contact</Link>
+                <Link className='informations__link' to='/about/#contact'>Contact</Link>
             </div>
             
         </div>

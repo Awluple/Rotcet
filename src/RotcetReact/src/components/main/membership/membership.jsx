@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 const Membership = () => {
   return (
     <div className='membership'>
-        <div className='membership__header'>
+        <div className='misc-header'>
             <img src="/static/images/logo.png" alt="Logo"/>
             <h1>Membership</h1>
         </div>

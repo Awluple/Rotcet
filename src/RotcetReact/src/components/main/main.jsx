@@ -8,15 +8,18 @@ import Account from './account/account.jsx'
 import News from './news/news.jsx'
 import FullArticle from './news/fullArticle/fullArticle.jsx'
 import Membership from './membership/membership.jsx';
+import About from './about/about.jsx';
 
 import TicketsManager from './ticketsManager.jsx'
 import Accepted from './orderConfirmation/accepted.jsx';
 
 const Main = () => {
-    const { pathname } = useLocation()
+    const { pathname, hash } = useLocation()
 
     useEffect(() => {
-        window.scrollTo(0,0)
+        if(hash === '') {
+            window.scrollTo(0,0)
+        }     
     }, [pathname])
 
     return (
@@ -33,6 +36,7 @@ const Main = () => {
                     <Route path=':articleId' element={<FullArticle />} />
                 </Route>
                 <Route path='/membership' element={<Membership />} />
+                <Route path='/about' element={<About />} />
                 {/* <Route >
                     <h1>No mach</h1>
                 </Route> */}
