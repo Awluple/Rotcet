@@ -21,14 +21,14 @@ const UserSlider = () => {
                 <MenuSlider from='right' close={setClicked}>
                 { userLogged ? 
                     <ul className='menu-slider__ul'>
-                        <li><NavLink to="/account">My account</NavLink></li>
-                        <li><NavLink to="/account/tickets">My tickets</NavLink></li>
-                        <li><a href="/logout">Logout</a></li>
+                        <li className='shadow-tiny'><NavLink to="/account">My account</NavLink></li>
+                        <li className='shadow-tiny'><NavLink to="/account/tickets">My tickets</NavLink></li>
+                        <li className='shadow-tiny'><a href="/logout">Logout</a></li>
                     </ul>
                 :  
                     <ul className='menu-slider__ul'>
-                        <li><a href="/login">Login</a></li>
-                        <li><a href="/register">Register</a></li>
+                        <li className='shadow-tiny'><a href="/login">Login</a></li>
+                        <li className='shadow-tiny'><a href="/register">Register</a></li>
                     </ul>
                 }
                 </MenuSlider>

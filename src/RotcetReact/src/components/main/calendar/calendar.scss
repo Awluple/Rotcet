@@ -75,21 +75,22 @@
         border-top-left-radius: 50px;
         border-top-right-radius: 50px;
     }
-}
-.calendar__screening__name {
+    &__name {
     margin-top: 10px;
-    h3 {
-        font-family: $content-font;
-        font-size: 1.7em;
-        font-weight: 100;
-        color: $silver;
+        h3 {
+            font-family: $content-font;
+            font-size: 1.7em;
+            font-weight: 400;
+            color: $silver;
+        }
     }
-}
-.calendar__screening__img {
+
+    &__img {
     margin-bottom: auto;
     img {
         width: 300px;
         max-height: 400px;
+    }
     }
 }
 @media only screen and (max-width: 1024px) {
