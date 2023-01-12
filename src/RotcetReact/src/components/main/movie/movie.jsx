@@ -1,5 +1,6 @@
 import React, {useState, useEffect, useRef} from 'react'
 import axios from 'axios'
+import { useParams, useNavigate } from "react-router-dom";
 
 import {toDateObjects, organizeScreenings} from 'utilities/screenings/scripts.js'
 import LoadingGif from 'media/gifs/loading.jsx'
@@ -9,15 +10,22 @@ import Images from './images/images.jsx'
 import Trailers from './trailers.jsx'
 import Tickets from './tickets.jsx'
 
+
+import Gallery from './images/gallery.jsx'
+import { Route, Routes, Outlet  } from "react-router-dom";
+
 const Movie = (props) => {
     const [movie, setMovie] = useState(null)
     const [dates, setDates] = useState(null)
     const [trailers, setTrailers] = useState(null)
 
+    const navigate = useNavigate();
+
     const tickets = useRef(null)
+    const { id } = useParams();
 
     useEffect(() => {
-        axios.get(`/api/movies/${props.match.params.id}`)
+        axios.get(`/api/movies/${id}`)
         .then(res => {
             const movie = res.data
             setMovie(movie)
@@ -29,9 +37,8 @@ const Movie = (props) => {
                 setDates(dates)
             }
         }).catch(err => {
-            console.error(err)
             if(err.response.status == 404){
-                props.history.push('/errors/404')
+                navigate('/errors/404')
             }
         })
     }, [])
@@ -62,6 +69,11 @@ const Movie = (props) => {
     if(movie){
         return (
             <div className='movie'>
+                <Routes>
+                    <Route path="*" element={<Outlet />}>
+                        <Route path="images-:imageId" element={<Gallery images={movie.images} />} />
+                    </Route>
+                </Routes> */
                 <Details scrollToTickets={scrollToTickets} name={movie.name} description={movie.description} shortDescription={movie.short_description}
                 image={movie.main_image} tickets={movie.tickets_sale_date} />
                 { movie.images.length > 0 &&

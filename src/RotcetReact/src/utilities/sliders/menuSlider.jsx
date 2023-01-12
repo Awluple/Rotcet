@@ -1,11 +1,20 @@
 import React, {useState, useEffect} from 'react'
 import PropTypes from 'prop-types'
-import { useHistory } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+
+const usePreviousValue = value => {
+    const ref = React.useRef();
+    useEffect(() => {
+      ref.current = value;
+    });
+    return ref.current;
+  };
 
 const MenuSlider = props => {
 
     const [position, setPosition] = useState(null)
-    let history = useHistory();
+    let location = useLocation();
+    const prevCount = usePreviousValue(location['pathname']);
 
     const hide = () => {
         if (props.from === 'left'){
@@ -26,15 +35,10 @@ const MenuSlider = props => {
 
     useEffect(() => {
         // hide slider after path changes
-        const unlisten = history.listen((location, action) => {
-            if (action === 'PUSH'){
-                hide()
-            }
-        });
-        return () => {
-            unlisten()
+        if(prevCount !== undefined && prevCount !== location['pathname']) {
+            hide()
         }
-    }, [])
+    }, [location])
 
     return (
         <div className={'menu-slider ' + (props.from === 'left' ? 'menu-slider--left' : 'menu-slider--right') } style={{left: position + '%'}}>

@@ -20,6 +20,11 @@
         fill: $silver;
         width: 75px;
         margin: 20px;
+
+        &:hover {
+            fill: #ababab;
+            cursor: pointer;
+        } 
     }
 }
 
@@ -28,10 +33,13 @@
     list-style: none;
     @include flex-center(column);
     li {
-        width: 65%;
-        border-bottom: 5px solid $darker-red;
-        &:first-child {
-            border-top: 5px solid $darker-red;
+        width: 55%;
+        background-color: $darker-red;
+        border-radius: 25px;
+        margin-bottom: 25px;
+
+        &:hover {
+            background-color: #601d1d;
         }
     }
     a {
@@ -41,7 +49,15 @@
         text-decoration: none;
         padding: 0.2em;
         display: block;
-        
+
+        @media (max-width: $phone-small) {
+            font-size: 2em;
+        }
+    }
+
+    .selected {
+        background-color: #151d23;
+        border-radius: 25px;
     }
 }
 

@@ -102,8 +102,8 @@ describe('Highlight components tests', () => {
             assert.isTrue(wrapper.find(YouTube).exists())
         })
         it('displays correct link to movie', () => {
-            assert.equal(wrapper.find(Link).last().props().to, '/movie/Test 1-1#tickets')
-            assert.equal(wrapper2.find(Link).last().props().to, '/movie/Test 2-2')
+            assert.equal(wrapper.find(Link).last().props().to, '/movie/Test-1-1#tickets')
+            assert.equal(wrapper2.find(Link).last().props().to, '/movie/Test-2-2')
         })
     })
 });

@@ -4,7 +4,7 @@ import { assert } from 'chai';
 import Adapter from 'enzyme-adapter-react-16'
 
 import sinon from 'sinon'
-import { MemoryRouter, Route, Link } from 'react-router-dom'
+import { createMemoryRouter, RouterProvider, Link } from 'react-router-dom'
 
 import LoadingGif from 'media/gifs/loading.jsx'
 
@@ -79,11 +79,32 @@ describe('Tickets tests', () => {
                     fill: function(){}}
                 )
             }
-            global.wrapper = mount(<MemoryRouter initialEntries={['/tickets/1?error=occupied&occupied=1,2']}>
-                <Route path='/tickets/:screeningId' render={() => <Tickets screening={screening} membership={session} />} />
-            </MemoryRouter>)
 
-            global.wrapper2 = mount(<MemoryRouter><Tickets screening={null} membership={session} /></MemoryRouter>)
+            const router1 = createMemoryRouter(
+                [
+                  {
+                    path: '/tickets/:screeningId',
+                    element: <Tickets screening={screening} membership={session} />
+                  }
+                ],
+                {
+                  initialEntries: ['/tickets/1?error=occupied&occupied=1,2'],
+                }
+              )
+            
+            const router2 = createMemoryRouter(
+                [
+                  {
+                    path: '/tickets/:screeningId',
+                    element: <Tickets screening={null} membership={session} />
+                  }
+                ],
+                {
+                  initialEntries: ['/tickets/1?error=occupied&occupied=1,2'],
+                }
+              )
+            global.wrapper = mount(<RouterProvider router={router1} />)
+            global.wrapper2 = mount(<RouterProvider router={router2} />)
         })
         after(() => {
             wrapper.unmount()

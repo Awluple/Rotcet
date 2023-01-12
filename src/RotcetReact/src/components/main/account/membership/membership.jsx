@@ -11,7 +11,7 @@ const Membership = props => {
 
     return (
         <div className='account__membership'>
-            <div className='account__navigation shadow-tiny'>
+            <div className='side_navigation shadow-tiny'>
                 <Link to='/account'>My account</Link><Link to='#'>/Membership</Link>
             </div>
             <h1>Membership</h1>

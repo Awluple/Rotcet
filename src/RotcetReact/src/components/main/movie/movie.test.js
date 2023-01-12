@@ -6,7 +6,7 @@ import Adapter from 'enzyme-adapter-react-16'
 import sinon from 'sinon'
 import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
-import { MemoryRouter, Route, Link } from 'react-router-dom'
+import { MemoryRouter, createMemoryRouter, RouterProvider, Link } from 'react-router-dom'
 import LoadingGif from 'media/gifs/loading.jsx'
 import YouTube from 'utilities/youtube/youtube.jsx'
 
@@ -120,8 +120,33 @@ describe('Movie page', () => {
             mock.onGet('/api/movies/2').reply(200, {
                 ...movie2
             })
-            global.wrapper = mount(<MemoryRouter ><Movie match={{params:{id:1}}} /></MemoryRouter>)
-            global.wrapper2 = mount(<MemoryRouter ><Movie match={{params:{id:2}}} /></MemoryRouter>)
+
+            const router1 = createMemoryRouter(
+                [
+                  {
+                    path: '/movie/:name-:id/*',
+                    element: <Movie match={{params:{id:1}}} />
+                  }
+                ],
+                {
+                  initialEntries: ['/movie/test-1/'],
+                }
+              )
+
+            const router2 = createMemoryRouter(
+                [
+                  {
+                    path: '/movie/:name-:id/*',
+                    element: <Movie match={{params:{id:2}}} />
+                  }
+                ],
+                {
+                  initialEntries: ['/movie/test-2/'],
+                }
+              )
+
+            global.wrapper = mount(<RouterProvider router={router1} />)
+            global.wrapper2 = mount(<RouterProvider router={router2} />)
          })
         it('renders LoadingGif', () => {
             assert.lengthOf(wrapper.find(LoadingGif), 1)
@@ -241,9 +266,18 @@ describe('Movie page', () => {
     });
     describe('Gallery component', () => {
         before(() => {
-            global.wrapper = mount(<MemoryRouter initialEntries={['/galleryTest-1']}>
-                                        <Route path={`/galleryTest-:imageId`} render={ () => <Gallery images={images} url='/' />} />
-                                    </MemoryRouter>)
+            const router = createMemoryRouter(
+                [
+                  {
+                    path: '/galleryTest-:imageId',
+                    element: <Gallery images={images} />
+                  }
+                ],
+                {
+                  initialEntries: ['/galleryTest-1'],
+                }
+              )
+            global.wrapper = mount(<RouterProvider router={router} />)
          })
         it('shows main image', () => {
             assert.equal(wrapper.find('.gallery__main-image').find('img').prop('src'), '/test/img1.jpg')

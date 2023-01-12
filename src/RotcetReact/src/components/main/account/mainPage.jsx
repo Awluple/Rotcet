@@ -5,7 +5,7 @@ import {Link} from 'react-router-dom'
 const MainPage = () => {
     return (
         <div className='account__main_page'>
-            <div className='account__navigation shadow-tiny'>
+            <div className='side_navigation shadow-tiny'>
                 <Link to='#'>My account</Link>
             </div>
             <h1>My account</h1>

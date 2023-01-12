@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import './scss/App.scss';
 
-import {BrowserRouter} from 'react-router-dom'
+import {BrowserRouter, Routes, Route} from 'react-router-dom'
 import YoutubeApi from 'utilities/youtube/youtube_api.js'
 import { UserContext, MembershipContext, DetailsContext } from 'utilities/contexts.js'
 import axios from 'axios'

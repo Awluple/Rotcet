@@ -11,7 +11,7 @@ class NewsViewSet(viewsets.ReadOnlyModelViewSet):
 
     def list(self, request):
         if request.query_params.get('fields') is None:
-            fields = ['id', 'day_posted', 'title']
+            fields = ['id', 'url', 'day_posted', 'title']
         else:
             fields = request.query_params.get('fields').split(',')
         queryset = self.paginate_queryset(self.get_queryset())

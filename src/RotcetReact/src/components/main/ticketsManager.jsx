@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react'
-import { Route, Switch } from "react-router-dom";
-import {useParams, useHistory} from 'react-router-dom'
+import { Route, Routes } from "react-router-dom";
+import {useParams, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
 import { UserContext, MembershipContext, DetailsContext } from 'utilities/contexts.js'
@@ -30,7 +30,7 @@ const TicketsManager = () => {
     const [screening, setScreening] = useState(null)
 
     const params = useParams()
-    const history = useHistory()
+    const navigate = useNavigate ()
 
     const getScreening = (membership_active, defaultType) => {
         axios.get(`/api/screenings/${params.screeningId}`).then(res => {
@@ -39,7 +39,7 @@ const TicketsManager = () => {
             now.setMinutes(now.getMinutes() + 30)
             const screeningDate = new Date(res.data.date.replace('Z', ''))
             if (screeningDate < now){
-                history.push('/errors/outdated')
+                navigate('/errors/outdated')
             } else {
                 document.title = `${res.data.name} - Booking`
                 setScreening(res.data)
@@ -52,7 +52,7 @@ const TicketsManager = () => {
         }).catch(err => {
             console.error(err)
             if(err.response.status == 404){
-                history.push('/errors/404')
+                navigate('/errors/404')
             }
         })
     }
@@ -90,11 +90,11 @@ const TicketsManager = () => {
 
     return (
         <div>
-            <Switch>
-                <Route path='/tickets/:screeningId/order' render={() => <OrderConfirmation screening={screening} userDetails={userDetails}
+            <Routes>
+                <Route path='/order' element={<OrderConfirmation screening={screening} userDetails={userDetails}
                 updateDetails={updateDetails} membership={userMembership} reloadData={getScreening} blockPost={blockPost} />} />
-                <Route exact path='/tickets/:screeningId' render={() => <Tickets reloadData={getScreening} screening={screening} membership={userMembership} />} />
-            </Switch>
+                <Route index element={<Tickets reloadData={getScreening} screening={screening} membership={userMembership} />} />
+            </Routes>
         </div>
     )
 }

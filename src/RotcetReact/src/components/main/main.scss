@@ -3,6 +3,11 @@
 @import './movie/movie.scss';
 @import './tickets/tickets.scss';
 @import './account/account.scss';
+@import './news/news.scss';
+@import './membership/membership.scss';
+@import './about/about.scss';
+@import './faqs/faqs.scss';
+
 
 .main_section_header {
     background: $darker-red;
@@ -283,6 +288,34 @@
             font-size: 1.2em;
         }
     }
+}
+
+.misc-header {
+    @include flex-center(column);
+        margin-bottom: 100px;
+        @media(max-width: $phone-small) {
+            margin-bottom: 70px;
+        }
+        h1 {
+            font-family: $headers-font;
+            color: $silver;
+            font-weight: 100;
+            font-size: 4.7em;
+            margin-top: 30px;
+            @media(max-width: $phone) {
+                font-size: 3.6em;
+            }
+            @media(max-width: $phone-small) {
+                font-size: 3em;
+            }
+        }
+        img {
+            width: 420px;
+
+            @media(max-width: $phone) {
+                width: 70%;
+            }
+        }
 }
 
 @media only screen and (max-width: 600px) {

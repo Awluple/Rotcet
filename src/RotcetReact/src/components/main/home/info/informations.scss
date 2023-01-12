@@ -8,10 +8,13 @@
         width: 65px;
         margin: 5px;
     }
-
 }
 .informations__social_media {
     display: flex;
+
+    svg:hover {
+        fill: #424242;
+    }
 }
 .informations__buttons {
     &-big {

@@ -5,7 +5,7 @@ news_values = {
     'day_posted': datetime.date.today(),
     'title': 'Test title',
     'short_description': 'Test short description',
-    'description_html': SimpleUploadedFile(name='test_html.html', content="", content_type='text/html')
+    'full_description': 'Test full description'
 }
 
 faqs_values = {

@@ -142,6 +142,11 @@
         
         svg {
             fill: white;
+
+            &:hover {
+                fill: $darker-silver;
+                cursor: pointer;
+            }
         }
     }
 

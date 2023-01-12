@@ -7,7 +7,7 @@ import sinon from 'sinon'
 import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
 
-import { MemoryRouter, Switch, Link, Route } from 'react-router-dom'
+import { MemoryRouter, Link, Routes, createMemoryRouter, RouterProvider } from 'react-router-dom'
 
 import { UserContext } from 'utilities/contexts.js'
 import LoadingGif from 'media/gifs/loading.jsx'
@@ -32,6 +32,30 @@ describe('Account tests', () => {
                   href: ''
                 }
               });
+
+              global.router = createMemoryRouter(
+                [
+                  {
+                    path: '/account/tickets/:screeningID',
+                    element: 
+                        <TicketDetails screenings={[{id: 1, outdated: false}]} tickets={
+                            {1: [{
+                                id: 1,
+                                seat: 1,
+                                type: 0,
+                                screening_details: {
+                                    name: 'Test',
+                                    date: '2200-01-01T12:00:00Z'
+                                }
+                            }]}
+                        } />
+                  }
+                ],
+                {
+                  initialEntries: ['/account/tickets/1'],
+                  initialIndex: 0,
+                }
+              )
         })
         it('waits for user context', () => {
             const wrapper = mount(<MemoryRouter><Account /></MemoryRouter>, {
@@ -48,17 +72,16 @@ describe('Account tests', () => {
                 wrappingComponentProps: {
                   value: false,
                 },})
-
-            assert.equal('/login?next=/account&login_required=true', window.location.href)
+            assert.equal(window.location.href, "/login?next=/account&login_required=true");
         });
-        it('renders Switch', () => {
+        it('renders Routes', () => {
             const wrapper = mount(<MemoryRouter><Account /></MemoryRouter>, {
                 wrappingComponent: UserContext.Provider,
                 wrappingComponentProps: {
                   value: true,
                 },})
 
-            assert.lengthOf(wrapper.find(Switch), 1)
+            assert.lengthOf(wrapper.find(Routes), 1)
         });
     });
 
@@ -79,9 +102,9 @@ describe('Account tests', () => {
             it('waits for screenings', () => {
                 assert.lengthOf(wrapper.find(LoadingGif), 1)
             })
-            it('shows Switch when tickets state in not null', () => {
+            it('shows Routes when tickets state in not null', () => {
                 wrapper.update()
-                assert.lengthOf(wrapper.find(Switch), 1)
+                assert.lengthOf(wrapper.find(Routes), 1)
             })
         })
         
@@ -107,22 +130,7 @@ describe('Account tests', () => {
         })
         describe('TicketDetails', () => {
             before(() => {
-                global.wrapper = mount(
-                <MemoryRouter initialEntries={['/account/tickets/1']}>
-                    <Route path='/account/tickets/:screeningID' render={() => 
-                        <TicketDetails screenings={[{id: 1, outdated: false}]} tickets={
-                            {1: [{
-                                id: 1,
-                                seat: 1,
-                                type: 0,
-                                screening_details: {
-                                    name: 'Test',
-                                    date: '2200-01-01T12:00:00Z'
-                                }
-                            }]}
-                        } />
-                    } />
-                </MemoryRouter>)
+                global.wrapper = mount(<RouterProvider router={router} />)
             })
             it('displays correct info', () => {
                 assert.equal(wrapper.find('.ticket__show').find('p').at(0).text(), 'Test')

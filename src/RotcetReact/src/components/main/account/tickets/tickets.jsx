@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import axios from 'axios'
-import {Switch, Route} from 'react-router-dom'
+import {Routes, Route} from 'react-router-dom'
 
 import {checkIfOutdated} from '/utilities/screenings/scripts.js'
 
@@ -46,10 +46,10 @@ const Tickets = () => {
     return (
         <div className='account__tickets'>
             {tickets !== null ? 
-                <Switch>
-                <Route exact path='/account/tickets' render={() => <TicketsList tickets={tickets} screenings={screenings} />} />
-                <Route exact path='/account/tickets/:screeningID' render={() => <TicketDetails tickets={tickets} screenings={screenings} />} />
-                </Switch>
+                <Routes>
+                    <Route path='' element={<TicketsList tickets={tickets} screenings={screenings} />} />
+                    <Route path=':screeningID' element={<TicketDetails tickets={tickets} screenings={screenings} />} />
+                </Routes>
             :
                 <LoadingGif />
             }
