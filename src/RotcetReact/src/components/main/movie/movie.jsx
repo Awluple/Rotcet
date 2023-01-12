@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useRef} from 'react'
 import axios from 'axios'
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 import {toDateObjects, organizeScreenings} from 'utilities/screenings/scripts.js'
 import LoadingGif from 'media/gifs/loading.jsx'
@@ -19,6 +19,8 @@ const Movie = (props) => {
     const [dates, setDates] = useState(null)
     const [trailers, setTrailers] = useState(null)
 
+    const navigate = useNavigate();
+
     const tickets = useRef(null)
     const { id } = useParams();
 
@@ -35,9 +37,8 @@ const Movie = (props) => {
                 setDates(dates)
             }
         }).catch(err => {
-            console.error(err)
             if(err.response.status == 404){
-                props.navigate('/errors/404')
+                navigate('/errors/404')
             }
         })
     }, [])
