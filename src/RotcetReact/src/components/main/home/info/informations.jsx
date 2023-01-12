@@ -24,11 +24,11 @@ const Informations = () => {
                     <a rel="noopener" target='blank' href="https://www.instagram.com"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                         <path d={svgs.instagram} /></svg></a>
                 </div>
-                <Link className='informations__link informations__link--big' to=''><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d={svgs.map} /></svg>Location</Link>
+                <a className='informations__link informations__link--big' target='_blank' href='https://www.google.com/maps/search/?api=1&query=51.5088389,-0.0738984'><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d={svgs.map} /></svg>Location</a>
             </div>
             <div className='informations__buttons-small'>
                 <Link className='informations__link' to='/about/#about'>About us</Link>
-                <Link className='informations__link' to=''>FAQs</Link>
+                <Link className='informations__link' to='/faqs'>FAQs</Link>
                 <Link className='informations__link' to='/about/#contact'>Contact</Link>
             </div>
             

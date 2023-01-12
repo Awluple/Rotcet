@@ -22,7 +22,7 @@ const About = () => {
     <div className='information'>
         <div className='misc-header'>
             <img src="/static/images/logo.png" alt="Logo"/>
-            <h1 onClick={() => {window.scrollTo(0, 1480)}}>Information</h1>
+            <h1>Information</h1>
         </div>
         <div ref={refs['about']} className='information__section information__about'>
             <h2>About Us</h2>

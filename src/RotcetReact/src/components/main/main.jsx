@@ -9,6 +9,7 @@ import News from './news/news.jsx'
 import FullArticle from './news/fullArticle/fullArticle.jsx'
 import Membership from './membership/membership.jsx';
 import About from './about/about.jsx';
+import Faqs from './faqs/faqs.jsx';
 
 import TicketsManager from './ticketsManager.jsx'
 import Accepted from './orderConfirmation/accepted.jsx';
@@ -37,6 +38,7 @@ const Main = () => {
                 </Route>
                 <Route path='/membership' element={<Membership />} />
                 <Route path='/about' element={<About />} />
+                <Route path='/faqs' element={<Faqs />} />
                 {/* <Route >
                     <h1>No mach</h1>
                 </Route> */}
