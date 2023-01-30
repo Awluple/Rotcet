@@ -30,7 +30,6 @@ const Movie = props => {
             setScreeningsDates({day1: day1})
         }
     }, [])
-    console.log(props.show);
     if (screeningsDates){
         return (
             <li className='movies__movie'>
