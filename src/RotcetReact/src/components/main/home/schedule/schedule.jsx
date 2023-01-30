@@ -4,23 +4,14 @@ import axios from 'axios'
 
 import {addZeroForBelowTen} from 'utilities/tools/tools.js'
 
-import Movie from './movie.jsx'
+import Show from './show.jsx'
 import Slider from 'utilities/sliders/slider.jsx'
 import LoadingGif from 'media/gifs/loading.jsx'
 
 class Schedule extends Component {
 
     state = {
-        movies: null
-    }
-
-    getMovies = (query) => {
-        return axios.get(`/api/movies`,
-        {params: query
-        })
-         .then(
-            res => { return res.data.results }
-        )
+        shows: null
     }
 
     componentDidMount() {
@@ -35,30 +26,39 @@ class Schedule extends Component {
         const seconds = addZeroForBelowTen(time.getUTCSeconds())
 
         const query = {
-            'fields': 'id,name,has_3D,screenings,thumbnail',
+            'fields': 'id,name,type,has_3D,screenings,thumbnail',
             'screenings_min': `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`,
             'page_size': 100
         }
-        this.getMovies(query).then(data => {
-            this.setState({
-                movies: data
+        axios.all([
+            axios.get(`/api/movies`,
+            {params: query
+            }),
+            axios.get(`/api/marathons`,
+            {params: query
             })
-        })
+          ])
+          .then(axios.spread((data1, data2) => {
+            this.setState({
+                shows: data1.data.results.concat(data2.data.results)
+            })
+          }));
+        
     }
 
     render() {
         return (
             <div className='schedule'>
             <h2 className='main_section_header'>SCHEDULE</h2>
-            <Slider elementsNumber={this.state.movies ? this.state.movies.length : 0}
-            listClassName={'schedule__movies' + (this.state.movies === null || (this.state.movies && this.state.movies.length === 0) ? ' schedule__movies--no_movies' : '')}
+            <Slider elementsNumber={this.state.shows ? this.state.shows.length : 0}
+            listClassName={'schedule__movies' + (this.state.shows === null || (this.state.shows && this.state.shows.length === 0) ? ' schedule__movies--no_movies' : '')}
             containerClassName='schedule__container shadow-small'
             sliderInfoClassName='schedule_slider_info'>
-                { this.state.movies !== null ? 
-                    this.state.movies.length > 0 ? 
-                        this.state.movies.map(movie => {
+                { this.state.shows !== null ? 
+                    this.state.shows.length > 0 ? 
+                        this.state.shows.map(show => {
                             return (
-                                <Movie key={movie.id} movie={movie} />
+                                <Show key={show.id} show={show} />
                             )
                         })
                     :  <h2>Sorry, there are no screenings for now</h2>

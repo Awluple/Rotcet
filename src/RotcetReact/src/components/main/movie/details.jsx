@@ -8,7 +8,7 @@ const Details = props => {
     return (
         <div className='movie__details'>
             {smallDevice && <h1>{props.name}</h1>}
-            <img src={props.image} alt="main image"/>
+            <img src={props.image ? props.image : '/static/images/logo.png'} alt="main image"/>
             <div className='movie__description'>
                 <div className='description__info'>
                     {!smallDevice && <h1>{props.name}</h1>}
@@ -34,7 +34,7 @@ Details.propTypes = {
     name: PropTypes.string.isRequired,
     description: PropTypes.string,
     shortDescription: PropTypes.string.isRequired,
-    image: PropTypes.string.isRequired,
+    image: PropTypes.string,
     tickets: PropTypes.string,
     scrollToTickets: PropTypes.func.isRequired
 }

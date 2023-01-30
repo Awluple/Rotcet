@@ -11,7 +11,7 @@ const Movie = props => {
     const [screeningsDates, setScreeningsDates] = useState(null); 
 
     useEffect(() => {
-        let screenings = toDateObjects(props.movie.screenings)
+        let screenings = toDateObjects(props.show.screenings)
         screenings = organizeScreenings(screenings, 30)
         let date = screenings['days'][0]
             const day1 = {
@@ -30,23 +30,23 @@ const Movie = props => {
             setScreeningsDates({day1: day1})
         }
     }, [])
-
+    console.log(props.show);
     if (screeningsDates){
         return (
             <li className='movies__movie'>
-                <Link to={`/movie/${props.movie.name.replace(" ", "-")}-${props.movie.id}`}>
-                    <h3>{props.movie.name}</h3>
+                <Link to={`/movie/${props.show.name.replace(" ", "-")}-${props.show.type}-${props.show.id}`}>
+                    <h3>{props.show.name}</h3>
                 </Link>
                 <div className='movies__details'>
 
                     <div className='movies__image'>
-                        <Link to={`/movie/${props.movie.name.replace(" ", "-")}-${props.movie.id}`}>
-                            <img src={props.movie.thumbnail} alt="movie image"/>
+                        <Link to={`/movie/${props.show.name.replace(" ", "-")}-${props.show.type}-${props.show.id}`}>
+                            <img src={props.show.thumbnail ? props.show.thumbnail : "/static/images/logo.png"} alt="movie image"/>
                         </Link>
                     </div>
 
                     <div className='movies__screenings'>
-                        <p>{props.movie.has_3D ? '2D/3D' : '2D'}</p>
+                        <p>{props.show.has_3D == null ? "" : props.show.has_3D ? '2D/3D' : '2D'}</p>
                         <Screenings day={screeningsDates.day1} />
                         {'day2' in screeningsDates &&
                             <Screenings day={screeningsDates.day2} />
@@ -56,7 +56,7 @@ const Movie = props => {
                 <div className='movies__all_times'>
                     <Link className='shadow-small'
                     to={{
-                        pathname: `/movie/${props.movie.name.replace(" ", "-")}-${props.movie.id}`,
+                        pathname: `/movie/${props.show.name.replace(" ", "-")}-${props.show.type}-${props.show.id}`,
                         hash: "#tickets",
                       }} >
                         All times
@@ -70,7 +70,7 @@ const Movie = props => {
 }
 
 Movie.propTypes = {
-    movie: PropTypes.object.isRequired
+    show: PropTypes.object.isRequired
 }
 
 export default Movie

@@ -134,7 +134,7 @@ class MarathonAPITestCase(APITestCase):
         Marathon.objects.create(**values)
 
         values['tickets_sale_date'] = values['tickets_sale_date'] - timedelta(2)
-        values['title'] = 'Test_2'
+        values['name'] = 'Test_2'
         Marathon.objects.create(**values)
 
     
@@ -145,16 +145,16 @@ class MarathonAPITestCase(APITestCase):
         data = response.data['results']
         keys = data[0].keys()
         self.assertEqual(3, len(keys))
-        self.assertListEqual(['id', 'url', 'title'], list(keys))
+        self.assertListEqual(['id', 'url', 'name'], list(keys))
 
     def test_dynamic_fields(self):
-        response = self.client.get(self.url, {'fields':'id,title,tickets_sale_date,main_image'})
+        response = self.client.get(self.url, {'fields':'id,name,tickets_sale_date,main_image'})
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
         data = response.data['results']
         keys = data[0].keys()
         self.assertEqual(4, len(keys))
-        self.assertListEqual(['id', 'title', 'main_image', 'tickets_sale_date'], list(keys))
+        self.assertListEqual(['id', 'name', 'main_image', 'tickets_sale_date'], list(keys))
 
     def test_ordering(self):
         response = self.client.get(self.url, {'fields':'id,tickets_sale_date'})
@@ -165,9 +165,9 @@ class MarathonAPITestCase(APITestCase):
         self.assertGreater(data[0]['tickets_sale_date'], data[1]['tickets_sale_date'])
 
     def test_filtering(self):
-        response = self.client.get(self.url, {'title':'Test_2'})
+        response = self.client.get(self.url, {'name':'Test_2'})
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
         data = response.data['results']
         self.assertEqual(1, len(data))
-        self.assertEqual(data[0]['title'], 'Test_2')
+        self.assertEqual(data[0]['name'], 'Test_2')

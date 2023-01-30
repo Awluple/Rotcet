@@ -1,3 +1,5 @@
+import random, string
+
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login as user_login, logout as user_logout
 from django.contrib.auth.models import User
@@ -47,6 +49,26 @@ def login(request):
         messages.add_message(request, messages.INFO, 'You must be logged in to continue')
 
     return render(request, 'login.html', context=context)
+
+
+def guest_login(request):
+    if request.user.is_authenticated:
+        return redirect('/')
+    
+    email = f"guest{''.join(random.choices(string.ascii_uppercase + string.digits + string.ascii_lowercase, k=8))}@rotcet.com"
+    password = "guest"
+    User.objects.create_user(username=email, email=email, password=password)
+    user = authenticate(request, email=email, password=password)
+
+    user_login(request, user)
+    Membership.objects.create(user=request.user, type=1, is_active=True)
+
+    if 'next' in request.GET:
+        return redirect('/'+request.GET['next'])
+    elif 'next' in request.POST:
+        return redirect(request.POST['next'])
+    else:
+        return redirect('/')
 
 
 def register(request):

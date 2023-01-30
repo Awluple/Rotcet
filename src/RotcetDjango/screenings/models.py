@@ -31,7 +31,7 @@ class Show(models.Model):
         if self.movie:
             return self.movie.name
         elif self.marathon:
-            return self.marathon.title
+            return self.marathon.name
         return self.type
     
     def clean(self, *args, **kwargs):
@@ -41,7 +41,7 @@ class Show(models.Model):
         if self.movie:
             return self.movie.name
         elif self.marathon:
-            return self.marathon.title
+            return self.marathon.name
         return self.type
 
 class Screening(models.Model):

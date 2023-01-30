@@ -124,24 +124,24 @@ describe('Movie page', () => {
             const router1 = createMemoryRouter(
                 [
                   {
-                    path: '/movie/:name-:id/*',
+                    path: '/movie/:name-:type-:id/*',
                     element: <Movie match={{params:{id:1}}} />
                   }
                 ],
                 {
-                  initialEntries: ['/movie/test-1/'],
+                  initialEntries: ['/movie/test-MV-1/'],
                 }
               )
 
             const router2 = createMemoryRouter(
                 [
                   {
-                    path: '/movie/:name-:id/*',
+                    path: '/movie/:name-:type-:id/*',
                     element: <Movie match={{params:{id:2}}} />
                   }
                 ],
                 {
-                  initialEntries: ['/movie/test-2/'],
+                  initialEntries: ['/movie/test-MV-2/'],
                 }
               )
 

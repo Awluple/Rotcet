@@ -10,7 +10,7 @@ import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
 
 import Schedule from './schedule.jsx'
-import Movie from './movie.jsx'
+import Show from './show.jsx'
 import Screening from './screenings.jsx'
 
 
@@ -32,6 +32,12 @@ const movie2 = {
     'has_3D': true,
     'screenings': [{id: 2, date: '2200-02-26T12:09:43Z'}]
 }
+const marathon1 = {
+    'id': 2,
+    'name': 'Test Marathon',
+    'thumbnail': '/test.img',
+    'screenings': [{id: 2, date: '2200-02-26T12:09:43Z'}]
+}
 
 describe('Schedule components tests', () => {
     
@@ -43,6 +49,11 @@ describe('Schedule components tests', () => {
                 movie, movie2
             ]
            })
+           mock.onGet('/api/marathons').reply(200, {
+            results: [
+                marathon1
+            ]
+           })
            global.wrapper = mount(<MemoryRouter><Schedule /></MemoryRouter>).find(Schedule)
         })
         it('gets movies', () => {
@@ -51,9 +62,9 @@ describe('Schedule components tests', () => {
         
     })
 
-    describe('Movie component', () => {
+    describe('Show component', () => {
         before(() => {
-            global.wrapper = mount(<MemoryRouter><Movie movie={movie} /></MemoryRouter>)
+            global.wrapper = mount(<MemoryRouter><Show show={movie} /></MemoryRouter>)
         })
         it('renders name', () => {
             assert.isTrue(wrapper.find('h3').contains('Test'), true)
@@ -66,7 +77,7 @@ describe('Schedule components tests', () => {
         })
         it('renders good 2D/3D information with 2D only', () => {
             movie['has_3D'] = false
-            const wrapper = mount(<MemoryRouter><Movie movie={movie} /></MemoryRouter>)
+            const wrapper = mount(<MemoryRouter><Show show={movie} /></MemoryRouter>)
             assert.isTrue(wrapper.find('p').contains('2D'), true)
         })
         it('renders screening informations with 1 day', () => {
@@ -74,7 +85,7 @@ describe('Schedule components tests', () => {
         })
         it('renders screening informations with 2 days', () => {
             movie['screenings'] = [{id: 1, date: '2200-02-26T12:09:43Z'}, {id: 2, date: '2200-02-27T12:09:43Z'}]
-            const wrapper = mount(<MemoryRouter><Movie movie={movie} /></MemoryRouter>)
+            const wrapper = mount(<MemoryRouter><Show show={movie} /></MemoryRouter>)
             assert.lengthOf(wrapper.find(Screening), 2)
         })
     })
