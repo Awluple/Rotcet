@@ -11,5 +11,5 @@ news_values = {
 faqs_values = {
     'number': 1,
     'question': 'Test question',
-    'anwser': 'Test anwster'
+    'answer': 'Test anwster'
 }
