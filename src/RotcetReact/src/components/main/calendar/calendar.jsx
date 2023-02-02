@@ -16,7 +16,7 @@ const Calendar = () => {
     const makeRequest = (date) => {
         return axios.get('/api/screenings', {
             params: {
-                fields: 'id,name,show_id,show_type,image,date',
+                fields: 'id,name,show_id,type,show_type,image,date',
                 date: date,
                 ordering: 'date'
             }

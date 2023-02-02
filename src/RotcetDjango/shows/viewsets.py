@@ -41,7 +41,7 @@ class MarathonViewSet(viewsets.ReadOnlyModelViewSet):
 
     def list(self, request):
         if request.query_params.get('fields') is None:
-            fields = ['id', 'title', 'url']
+            fields = ['id', 'name', 'url']
         else:
             fields = request.query_params.get('fields').split(',')
         

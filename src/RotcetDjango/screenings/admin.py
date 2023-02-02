@@ -7,14 +7,14 @@ class ScreeningAdmin(admin.ModelAdmin):
     readonly_fields = ['occupied_seats']
     autocomplete_fields = ('show',)
     ordering = ['date']
-    search_fields = ['show__movie__name','show__marathon__title', 'date']
+    search_fields = ['show__movie__name','show__marathon__name', 'date']
 
 @admin.register(Show)
 class ShowAdmin(admin.ModelAdmin):
     list_display = ('__str__', 'type')
     list_filter = ('type',)
     autocomplete_fields = ('movie', 'marathon')
-    search_fields = ('movie__name', 'marathon__title')
+    search_fields = ('movie__name', 'marathon__name')
     
 
 admin.site.register(Room)

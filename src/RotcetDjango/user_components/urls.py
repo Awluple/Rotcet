@@ -5,6 +5,7 @@ app_name = 'react'
 
 urlpatterns = [
     path('login/', views.login, name='login'),
+    path('login-guest/', views.guest_login, name='guest'),
     path('register/', views.register, name='register'),
     path('logout/', views.logout, name='logout'),
     path('api/session/', views.is_logged, name='session'),

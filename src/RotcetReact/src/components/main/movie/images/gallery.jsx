@@ -69,7 +69,11 @@ const Gallery = props => {
 }
 
 Gallery.propTypes = {
-    images: PropTypes.array.isRequired,
+    images: PropTypes.array,
+}
+
+Gallery.defaultProps = {
+    images: []
 }
 
 export default Gallery

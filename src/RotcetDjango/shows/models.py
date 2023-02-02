@@ -23,6 +23,7 @@ def thumbnail_image_directory_path(instance, filename):
 
 class Movie(models.Model):
     name = models.CharField(max_length=400)
+    type = models.CharField(max_length=2, default="MV", editable=False)
     short_description = models.CharField(max_length=250)
     description = models.CharField(max_length=1000, blank=True, null=True)
     main_image = models.FileField(upload_to=main_image_directory_path, validators=[FileExtensionValidator(['jpg', 'png', 'jpeg'])])
@@ -114,24 +115,25 @@ class Trailer(models.Model):
 
 
 def marathon_image_directory_path(instance, filename):
-    path = f'marathon/{instance.tickets_sale_date}_{instance.title}/main_image/{filename}'
+    path = f'marathon/{instance.tickets_sale_date}_{instance.name}/main_image/{filename}'
     return handle_test_file(path, filename)
 
 def marathon_thumbnail_directory_path(instance, filename):
-    path = f'marathons/{instance.tickets_sale_date}_{instance.title}/main_image/thumbnail_{filename}'
+    path = f'marathons/{instance.tickets_sale_date}_{instance.name}/main_image/thumbnail_{filename}'
     return handle_test_file(path, filename)
 
 def marathon_description_directory_path(instance, filename):
-    path = f'marathons/{instance.tickets_sale_date}_{instance.title}/description/{filename}'
+    path = f'marathons/{instance.tickets_sale_date}_{instance.name}/description/{filename}'
     return handle_test_file(path, filename)
 
 
 class Marathon(models.Model):
-    title = models.CharField(max_length=200)
+    name = models.CharField(max_length=200)
+    type = models.CharField(max_length=2, default="MR", editable=False)
     main_image = models.FileField(upload_to=marathon_image_directory_path, blank=True, null=True, validators=[FileExtensionValidator(['jpg', 'png', 'jpeg'])])
     thumbnail = models.FileField(upload_to=marathon_thumbnail_directory_path, blank=True, null=True, editable=False)
     short_description = models.CharField(max_length=200)
-    description_html = models.FileField(upload_to=marathon_description_directory_path, blank=True, null=True, validators=[FileExtensionValidator(['html'])])
+    description = models.CharField(max_length=1000, blank=True, null=True)
     tickets_sale_date = models.DateField()
 
     def clean(self, *args, **kwargs):
@@ -150,4 +152,4 @@ class Marathon(models.Model):
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return self.title
+        return self.name

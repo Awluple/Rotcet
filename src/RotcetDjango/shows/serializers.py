@@ -56,6 +56,7 @@ class MovieSerializer(DynamicFieldsModelSerializer):
 
 class MarathonSerializer(DynamicFieldsModelSerializer):
     url = serializers.SerializerMethodField()
+    screenings = serializers.SerializerMethodField()
 
     class Meta:
         model = Marathon
@@ -65,3 +66,11 @@ class MarathonSerializer(DynamicFieldsModelSerializer):
         request = self.context['request']
         path = reverse('api:marathon-detail',kwargs={'pk':obj.pk})
         return request.build_absolute_uri(path)
+    
+    def get_screenings(self, obj):
+        if not hasattr(obj, 'show'):
+            return []
+            
+        shows = obj.show.screenings.all()
+        screenings = [{'id': screening.id, 'date': screening.date} for screening in shows]
+        return screenings

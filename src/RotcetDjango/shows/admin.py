@@ -21,7 +21,7 @@ class MovieAdmin(admin.ModelAdmin):
 class MarathonAdmin(admin.ModelAdmin):
     readonly_fields=('thumbnail',)
     list_display = ('__str__', 'tickets_sale_date')
-    search_fields = ('title', 'tickets_sale_date')
+    search_fields = ('name', 'tickets_sale_date')
 
 @admin.register(Image)
 class ImageAdmin(admin.ModelAdmin):

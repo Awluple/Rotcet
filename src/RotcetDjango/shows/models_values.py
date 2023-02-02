@@ -14,7 +14,7 @@ movie_values = {
 }
 
 marathon_values = {
-    'title': 'Test',
+    'name': 'name',
     'main_image': SimpleUploadedFile(name='test_image.jpg', content="", content_type='image/jpeg'),
     'short_description': 'test',
     'tickets_sale_date': datetime.date.today() + datetime.timedelta(2),

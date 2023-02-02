@@ -22,10 +22,15 @@ const Movie = (props) => {
     const navigate = useNavigate();
 
     const tickets = useRef(null)
-    const { id } = useParams();
+    const { id, type } = useParams();
 
     useEffect(() => {
-        axios.get(`/api/movies/${id}`)
+        const url = type == "MV" ? 'movies' : type == "MR" ? 'marathons' : '';
+        if(url == ""){
+            navigate('/errors/404')
+        }
+
+        axios.get(`/api/${url}/${id}`)
         .then(res => {
             const movie = res.data
             setMovie(movie)
@@ -76,10 +81,10 @@ const Movie = (props) => {
                 </Routes> */
                 <Details scrollToTickets={scrollToTickets} name={movie.name} description={movie.description} shortDescription={movie.short_description}
                 image={movie.main_image} tickets={movie.tickets_sale_date} />
-                { movie.images.length > 0 &&
+                { type == 'MV' && movie.images.length > 0 &&
                     <Images images={movie.images} />
                 }
-                { (movie.main_trailer || movie.trailers.length > 0) && trailers &&
+                { type == 'MV' && (movie.main_trailer || movie.trailers.length > 0) && trailers &&
                     <Trailers trailers={trailers} />
                 }
                 { dates &&
