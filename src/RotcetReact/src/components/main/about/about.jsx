@@ -16,6 +16,11 @@ const About = () => {
         if(Object.keys(refs).includes(hash.slice(1))) {
             refs[hash.slice(1)].current.scrollIntoView();
         }
+        document.title = "Information"
+
+        return () => {
+            document.title = "Rotcet Cinema"
+        }
       }, []);
 
   return (
