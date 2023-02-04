@@ -17,7 +17,7 @@ class Command(BaseCommand):
                 self.stdout.write(self.style.SUCCESS('Successfully added one day to "%s"' % screening.show))
         except Exception as ex:
             print(ex)
-            self.stdout.write(self.style.ERROR('Error when trying to add days to dates'))
+            self.stdout.write(self.style.ERROR('Error when trying to add days to screenings'))
         
         try:
             User.objects.filter(is_staff=False).delete()
