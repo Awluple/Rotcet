@@ -6,7 +6,7 @@ RotcetEnv
 src/RotcetReact/node_modules
 
 #Build output
-src/RotcetDjango/static/frontend/*
+#src/RotcetDjango/static/frontend/*
 
 #Output files from tests
 src/RotcetDjango/media/tests
