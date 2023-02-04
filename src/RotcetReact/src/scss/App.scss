@@ -131,6 +131,26 @@ a {
     }
 }
 
+.youtube-video {
+    .loading_gif {
+        max-height: 400px;
+    }
+    @media(max-width: $tablet) and (min-width: $phone) {
+        display: grid;
+        .loading_gif {
+            max-width: 50%;
+            justify-self: center;
+        }
+    }
+
+    @media(min-width: $tablet){
+        display: grid;
+        .loading_gif {
+            justify-self: center;
+        }
+    }
+}
+
 .shadow {
     &-big {
         box-shadow: 0px 14px 10px 0px rgba(0,0,0,0.5);
