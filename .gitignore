@@ -10,3 +10,5 @@ src/RotcetReact/node_modules
 
 #Output files from tests
 src/RotcetDjango/media/tests
+
+src/RotcetDjango/logs/*
