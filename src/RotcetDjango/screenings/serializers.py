@@ -62,7 +62,7 @@ class ScreeningSerializer(DynamicFieldsModelSerializer):
         if not user.is_authenticated or not user.membership.is_active:
             return 0
         
-        return user.membership.type - Ticket.objects.filter(screening=obj, type=2).count()
+        return user.membership.type - Ticket.objects.filter(screening=obj, user=user, type=2).count()
 
     def get_image(self, obj):
         if obj.show.type == 'MV':

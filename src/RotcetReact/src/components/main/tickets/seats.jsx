@@ -11,8 +11,8 @@ const Seats = props => {
 
     const errors = {
         'occupied': `You have selected seat which is already occupied: ${props.error !== null ? props.error.occupied : ''}`,
-        'type': `We are sorry, there was a problem with your tickets type, please select seats again`,
-        'seat': 'We are sorry, there was a problem with your seat number, please select seats again'
+        'type': `Unfortunately there was a problem with the selected tickets types, please select seats again`,
+        'seat': 'Unfortunately there was a problem with your seat number, please select seats again'
     }
 
     const canvasRef = useRef(null)

@@ -63,19 +63,16 @@ const TypeSelection = props => {
                 <div className='tickets__select'>
                         <input id={`ticket-${props.seat}-1`} name={`ticket-${props.seat}`}
                         value={1} type="radio" checked={type === 1}
-                        checked={type === 1}
                         onChange={() => {return}}/>
                         <label htmlFor={`ticket-${props.seat}-1`} onClick={() => {changeType(1)}}></label>
                         
                         <input id={`ticket-${props.seat}-2`} name={`ticket-${props.seat}`}
                         value={2} type="radio" checked={type === 2}
-                        checked={type === 2}
                         onChange={() => {return}}/>
                         <label htmlFor={`ticket-${props.seat}-2`} onClick={() => {changeType(2)}}></label>
 
                         <input id={`ticket-${props.seat}-3`} name={`ticket-${props.seat}`}
                         value={3} type="radio" checked={type === 3}
-                        checked={type === 3}
                         className={(props.member && ((props.memberTicketsChosen !== props.membershipType) || type === 3)) ? '' : 'disabled'}
                         onChange={() => {return}}/>
                         <label htmlFor={`ticket-${props.seat}-3`} onClick={() => {changeType(3)}}></label>

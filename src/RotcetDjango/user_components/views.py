@@ -132,7 +132,7 @@ def multiple_tickets_creation(request):
     screening = Screening.objects.get(pk=screening)
 
     occupied_seats = string_list_to_python(screening.occupied_seats)
-    member_tickets = Ticket.objects.filter(screening=screening, type=2).count()
+    member_tickets = Ticket.objects.filter(screening=screening, user=user, type=2).count()
 
     # check if a user has details
     try:
