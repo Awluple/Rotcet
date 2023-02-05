@@ -1,4 +1,5 @@
 import React, {useEffect, useState, useRef} from 'react'
+import ReactDOM from "react-dom"
 import PropTypes from 'prop-types'
 
 import LoadingGif from 'media/gifs/loading.jsx'
@@ -37,8 +38,12 @@ const Youtube = (props) => {
         }
     }
 
-    const loadIframe = () => {
+    const onReady = (event) => {
+        props.onPlayerReady(event)
         setLoaded(true)
+    }
+
+    const loadIframe = () => {
         const playerInfo = {
             id: youtubePlayer.current,
             height: props.height ? props.height : '340',
@@ -50,7 +55,7 @@ const Youtube = (props) => {
             width: playerInfo.width,
             videoId: playerInfo.videoId,
             events: {
-                'onReady': props.onPlayerReady,
+                'onReady': onReady,
                 'onStateChange': playerStateChange
 
               }
@@ -60,13 +65,14 @@ const Youtube = (props) => {
     useEffect(() => {
         window.YoutubeApi.registerIframe(loadIframe)
     }, [])
+
     return (
-        <div>
-            <div className='youtube-video' ref={youtubePlayer}>
-                { loaded &&
-                    <LoadingGif />
-                }
+        <div className='youtube-video'>
+            <div ref={youtubePlayer}>
             </div>
+            { !loaded &&
+                <LoadingGif />
+            }
         </div>
     )
 }

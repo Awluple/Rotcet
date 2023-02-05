@@ -132,21 +132,27 @@ a {
 }
 
 .youtube-video {
+    position: relative;
+    min-height: 150px;
+    display: grid;
     .loading_gif {
-        max-height: 400px;
+        max-height: 290px;
+        position: absolute;
+        align-self: center;
+        justify-self: center;
+        z-index: 1000;
+    }
+    iframe {
+        background-color: black;
     }
     @media(max-width: $tablet) and (min-width: $phone) {
-        display: grid;
         .loading_gif {
             max-width: 50%;
-            justify-self: center;
         }
     }
-
-    @media(min-width: $tablet){
-        display: grid;
+    @media(max-width: $phone){
         .loading_gif {
-            justify-self: center;
+            max-height: 150px;
         }
     }
 }
