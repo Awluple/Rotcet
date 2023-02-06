@@ -1,6 +1,6 @@
 .footer {
     @include flex-center(row);
-    margin-top: 25px;
+    margin-top: 50px;
     justify-content: space-around;
     padding: 50px 0px;
     background: #2C1111;
@@ -47,6 +47,7 @@
     .footer {
         flex-direction: column;
         padding-bottom: 25px;
+        margin-top: 50px;
         ul {
             height: auto;
             align-items: center;

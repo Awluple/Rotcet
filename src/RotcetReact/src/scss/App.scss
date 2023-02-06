@@ -133,7 +133,7 @@ a {
 
 .youtube-video {
     position: relative;
-    min-height: 150px;
+    min-height: 300px;
     display: grid;
     .loading_gif {
         max-height: 290px;
@@ -151,6 +151,7 @@ a {
         }
     }
     @media(max-width: $phone){
+        min-height: 150px;
         .loading_gif {
             max-height: 150px;
         }

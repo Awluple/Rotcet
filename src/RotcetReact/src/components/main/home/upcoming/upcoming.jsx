@@ -49,7 +49,6 @@ const Upcoming = () => {
                             return <Movie key={movie.id} movie={movie} />
                         })}
                     </div>
-                }
             </div>
         )
 }}
