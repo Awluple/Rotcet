@@ -12,9 +12,9 @@ class Trailersinline(admin.TabularInline):
 @admin.register(Movie)
 class MovieAdmin(admin.ModelAdmin):
     inlines = [Imagesinline, Trailersinline]
-    list_display = ('__str__', 'tickets_sale_date', 'relese_date')
+    list_display = ('__str__', 'tickets_sale_date', 'release_date')
     list_filter = ('highlight', 'has_3D')
-    search_fields = ('name', 'tickets_sale_date', 'relese_date')
+    search_fields = ('name', 'tickets_sale_date', 'release_date')
     readonly_fields=('thumbnail',)
 
 @admin.register(Marathon)

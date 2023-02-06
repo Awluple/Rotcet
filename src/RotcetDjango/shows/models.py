@@ -10,15 +10,15 @@ from scripts.tools import create_thumbnail, handle_test_file, get_youtube_thubna
 
 
 def main_trailer_directory_path(instance, filename):
-    path = f'movies/{instance.name}/{instance.relese_date}/trailers/{filename}'
+    path = f'movies/{instance.name}/{instance.release_date}/trailers/{filename}'
     return handle_test_file(path, filename)
 
 def main_image_directory_path(instance, filename):
-    path = f'movies/{instance.name}/{instance.relese_date}/main_image/{filename}'
+    path = f'movies/{instance.name}/{instance.release_date}/main_image/{filename}'
     return handle_test_file(path, filename)
 
 def thumbnail_image_directory_path(instance, filename):
-    path = f'movies/{instance.name}/{instance.relese_date}/main_image/thumbnail_{filename}'
+    path = f'movies/{instance.name}/{instance.release_date}/main_image/thumbnail_{filename}'
     return handle_test_file(path, filename)
 
 class Movie(models.Model):
@@ -30,7 +30,7 @@ class Movie(models.Model):
     main_trailer = models.CharField(max_length=1000, null=True, blank=True)
     trailer_thumbnail = models.FileField(upload_to=main_trailer_directory_path, blank=True, null=True)
     thumbnail = models.FileField(upload_to=thumbnail_image_directory_path, blank=True, null=True, editable=False)
-    relese_date = models.DateField()
+    release_date = models.DateField()
     tickets_sale_date = models.DateField(null=True, blank=True)
     highlight = models.BooleanField(default=False)
     has_3D = models.BooleanField()
@@ -68,11 +68,11 @@ class Movie(models.Model):
     
 
 def image_directory_path(instance, filename):
-    path = f'movies/{instance.movie.name}/{instance.movie.relese_date}/images/{filename}'
+    path = f'movies/{instance.movie.name}/{instance.movie.release_date}/images/{filename}'
     return handle_test_file(path, filename)
 
 def image_thumbnail_directory_path(instance, filename):
-    path = f'movies/{instance.movie.name}/{instance.movie.relese_date}/images/thumbnail_{filename}'
+    path = f'movies/{instance.movie.name}/{instance.movie.release_date}/images/thumbnail_{filename}'
     return handle_test_file(path, filename)
 
 class Image(models.Model):
@@ -92,7 +92,7 @@ class Image(models.Model):
         super().save(*args, **kwargs)
 
 def trailer_directory_path(instance, filename):
-    path = f'movies/{instance.movie.name}/{instance.movie.relese_date}/trailers/{filename}'
+    path = f'movies/{instance.movie.name}/{instance.movie.release_date}/trailers/{filename}'
     return handle_test_file(path, filename)
 
 class Trailer(models.Model):

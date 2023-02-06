@@ -59,7 +59,7 @@ const movie1 = {
     "main_trailer": "abcdtest",
     "trailer_thumbnail": '/test/trailer_thumb.jpg',
     "thumbnail": "/test/img_thumb.jpg",
-    "relese_date": "2000-04-28",
+    "release_date": "2000-04-28",
     "tickets_sale_date": "2200-07-23",
 }
 
@@ -75,7 +75,7 @@ const movie2 = {
     "main_trailer": null,
     "trailer_thumbnail": null,
     "thumbnail": "/test/img_thumb.jpg",
-    "relese_date": "2000-04-28",
+    "release_date": "2000-04-28",
     "tickets_sale_date": null,
 }
 

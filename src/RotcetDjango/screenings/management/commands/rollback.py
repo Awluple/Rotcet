@@ -1,5 +1,6 @@
-from django.core.management.base import BaseCommand, CommandError
+from django.core.management.base import BaseCommand
 from screenings.models import Screening
+from shows.models import Movie
 from user_components.models import Ticket, User, Membership, CustomDetails
 import datetime
 
@@ -15,10 +16,27 @@ class Command(BaseCommand):
                 screening.save()
 
                 self.stdout.write(self.style.SUCCESS('Successfully added one day to "%s"' % screening.show))
+            if screenings.count() == 0:
+                self.stdout.write(self.style.SUCCESS('No screenings to affect'))
         except Exception as ex:
             print(ex)
             self.stdout.write(self.style.ERROR('Error when trying to add days to screenings'))
         
+
+        try:
+            movies = Movie.objects.filter(tickets_sale_date__isnull=True);
+            for movie in movies:
+                movie.date = movie.release_date + datetime.timedelta(days=1)
+                movie.save()
+
+                self.stdout.write(self.style.SUCCESS('Successfully added one day to release date to "%s"' % movie.name))
+
+            if movies.count() == 0:
+                self.stdout.write(self.style.SUCCESS('No movies to push release date'))
+        except Exception as ex:
+            print(ex)
+            self.stdout.write(self.style.ERROR('Error when trying to add days to release dates'))
+
         try:
             User.objects.filter(is_staff=False).delete()
             self.stdout.write(self.style.SUCCESS('Successfully removed all users'))

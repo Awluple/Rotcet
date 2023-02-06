@@ -12,7 +12,7 @@ const Upcoming = () => {
         return axios.get('/api/movies', {
             params: {
                 has_tickets_sale_date: false,
-                relese_date__gt: `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`,
+                release_date__gt: `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`,
                 fields: 'id,name,thumbnail'
             }
         }).then(

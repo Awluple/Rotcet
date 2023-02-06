@@ -6,7 +6,7 @@ movie_values = {
     'name': 'Test',
     'short_description': 'test',
     'description': 'test',
-    'relese_date': timezone.now().date(),
+    'release_date': timezone.now().date(),
     'tickets_sale_date': timezone.now().date() + datetime.timedelta(2),
     'main_image': SimpleUploadedFile(name='test_image.jpg', content="", content_type='image/jpeg'),
     'highlight': False,
