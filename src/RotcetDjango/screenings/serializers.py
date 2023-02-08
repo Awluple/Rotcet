@@ -24,6 +24,7 @@ class DynamicFieldsModelSerializer(serializers.ModelSerializer):
 
 class ScreeningSerializer(DynamicFieldsModelSerializer):
     name = serializers.SerializerMethodField()
+    slug = serializers.SerializerMethodField()
     type = serializers.SerializerMethodField()
     room = serializers.SerializerMethodField()
     url = serializers.SerializerMethodField()
@@ -55,6 +56,9 @@ class ScreeningSerializer(DynamicFieldsModelSerializer):
 
     def get_room(self, obj):
         return obj.room.number
+
+    def get_slug(self, obj):
+        return obj.show.get_show_slug()
 
     def get_member_tickets_left(self,obj):
         user = self.context['request'].user

@@ -19,6 +19,7 @@ configure({ adapter: new Adapter() });
 const movie1 = {
     id: 1,
     name: 'Test 1',
+    slug: 'test-1',
     main_trailer: '748321',
     trailer_thumbnail: '/trailer_thumb',
     thumbnail: '/test1.jpg',
@@ -28,6 +29,7 @@ const movie1 = {
 const movie2 = {
     id: 2,
     name: 'Test 2',
+    slug: 'test-2',
     main_trailer: null,
     thumbnail: '/test2.jpg',
     short_description: 'Test desc 2',
@@ -102,8 +104,8 @@ describe('Highlight components tests', () => {
             assert.isTrue(wrapper.find(YouTube).exists())
         })
         it('displays correct link to movie', () => {
-            assert.equal(wrapper.find(Link).last().props().to, '/movie/Test-1-MV-1#tickets')
-            assert.equal(wrapper2.find(Link).last().props().to, '/movie/Test-2-MV-2')
+            assert.equal(wrapper.find(Link).last().props().to, '/movie/test-1-MV-1#tickets')
+            assert.equal(wrapper2.find(Link).last().props().to, '/movie/test-2-MV-2')
         })
     })
 });

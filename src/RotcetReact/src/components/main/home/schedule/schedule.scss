@@ -77,6 +77,10 @@
         font-size: 2em;
         color: black;
         background: $darker-silver;
+
+        &:hover {
+            background-color: #999999;
+        }
     }
 }
 .movies__details {
@@ -120,6 +124,10 @@
         width: 65px;
         background: $darker-silver;
         border-radius: 0.5em;
+
+        &:hover {
+            background-color: #999999;
+        }
     }
 
     a {

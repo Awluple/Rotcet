@@ -192,6 +192,10 @@
             margin: 10px;
             background: $darker-silver;
             font-size: 1.3em;
+
+            &:hover {
+                background-color: #919191;
+            }
         }
         a {
             @include flex-center(column);

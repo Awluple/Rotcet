@@ -13,7 +13,7 @@ const Upcoming = () => {
             params: {
                 has_tickets_sale_date: false,
                 release_date__gt: `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`,
-                fields: 'id,name,thumbnail'
+                fields: 'id,name,thumbnail,slug'
             }
         }).then(
             res => { return res.data.results }
