@@ -5,6 +5,16 @@
         max-height: 40vw;
         max-width: 400px;
     }
+
+    .slider {
+        position: static;
+
+        &__list img {
+                object-fit: cover;
+                max-height: 250px;
+                margin: 0px 15px;
+        }
+    }
 }
 .movie__details {
     display: flex;
@@ -35,10 +45,10 @@
             color: white;
 
             &--short {
-                font-size: 1.3em;
+                font-size: 1.4em;
             }
             &--long {
-                font-size: 1.1em;
+                font-size: 1.2em;
             }
         }
     }
@@ -60,6 +70,7 @@
     margin-top: 100px;
     background: $darker-red;
     padding: 20px 0px;
+    position: relative;
     img {
         cursor: pointer;
         object-fit: cover;
@@ -71,8 +82,8 @@
 .movie__slider {
     background: $darker-red;
     button {
-        background: $main-red;
-        opacity: 0.7;
+        height: 114%;
+        top: calc(10% - 51px);
     }
 }
 .movie__list {
@@ -233,6 +244,10 @@
     justify-content: space-between;
     align-items: unset;
     background: rgba($color: $main-red, $alpha: 0.85);
+
+    .slider {
+        position: relative;
+    }
 }
 .gallery__main-image {
     @include flex-center(column);
@@ -338,7 +353,7 @@
         }
     }
     .movie__trailers-list img {
-        width: 45vw;
+        width: 60vw;
     }
     .movie__primary_trailer {
         min-height: 60vw;

@@ -29,7 +29,7 @@ class Movie(models.Model):
     name = models.CharField(max_length=400)
     type = models.CharField(max_length=2, default="MV", editable=False)
     slug = models.SlugField(max_length=400, blank=True, null=True, editable=False)
-    short_description = models.CharField(max_length=250)
+    short_description = models.CharField(max_length=350)
     description = models.CharField(max_length=1000, blank=True, null=True)
     main_image = models.FileField(upload_to=main_image_directory_path, validators=[FileExtensionValidator(['jpg', 'png', 'jpeg', 'webp'])])
     main_trailer = models.CharField(max_length=1000, null=True, blank=True)
@@ -147,7 +147,7 @@ class Marathon(models.Model):
     slug = models.SlugField(max_length=400, blank=True, null=True, editable=False)
     main_image = models.FileField(upload_to=marathon_image_directory_path, blank=True, null=True, validators=[FileExtensionValidator(['jpg', 'png', 'jpeg'])])
     thumbnail = models.FileField(upload_to=marathon_thumbnail_directory_path, blank=True, null=True, editable=False)
-    short_description = models.CharField(max_length=200)
+    short_description = models.CharField(max_length=350)
     description = models.CharField(max_length=1000, blank=True, null=True)
     tickets_sale_date = models.DateField()
 
