@@ -52,8 +52,16 @@
             }
         }
     }
+}
+.description{
+    &__coming {
+        color: $silver;
+        font-family: $content-font;
+        font-weight: 500;
+        font-size: 2em;
+    }
 
-    .description__tickets {
+    &__tickets {
         margin-top: 60px;
         color: $silver;
         h3 {

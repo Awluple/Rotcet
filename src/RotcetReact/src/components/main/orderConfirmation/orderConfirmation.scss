@@ -1,1 +1,7 @@
-// The styles are in main.scss
+// The rest of styles are in main.scss
+
+.order-confirmation .ticket__info {
+    @media (max-width: $phone) {
+        align-items: flex-end !important;
+    }
+}
