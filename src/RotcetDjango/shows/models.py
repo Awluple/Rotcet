@@ -50,7 +50,7 @@ class Movie(models.Model):
             self.thumbnail = create_thumbnail(self.main_image, 450, 80)
 
         if (self.trailer_thumbnail is None and self.main_trailer is not None or 
-        old_instance is not None and old_instance.main_trailer != self.main_trailer and self.main_trailer is not None):
+        (old_instance is not None and old_instance.main_trailer != self.main_trailer and self.main_trailer is not None)):
             trailer_thumbnail = get_youtube_thubnail(self.main_trailer, 'main_trailer')
             if trailer_thumbnail:
                 self.trailer_thumbnail = create_thumbnail(trailer_thumbnail, 600, 75)
