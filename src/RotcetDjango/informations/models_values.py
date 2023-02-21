@@ -1,9 +1,9 @@
 import datetime
-from django.core.files.uploadedfile import SimpleUploadedFile
 
 news_values = {
     'day_posted': datetime.date.today(),
     'title': 'Test title',
+    'thumbnail': None,
     'short_description': 'Test short description',
     'full_description': 'Test full description'
 }

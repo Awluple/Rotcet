@@ -18,8 +18,10 @@ from django.urls import path, re_path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from .api_urls import urlpatterns as api_urls
+from .views import robots_txt
 
 urlpatterns = [
+    path("robots.txt", robots_txt),
     path('api/', include((api_urls, 'api'), namespace='api')),
     path('admin/', admin.site.urls),
     path('', include('user_components.urls', namespace = 'user')),

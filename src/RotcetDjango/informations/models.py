@@ -14,7 +14,7 @@ def news_thumbnail_directory_path(instance, filename):
 
 class News(models.Model):
     day_posted = models.DateField(null=True, blank=True)
-    image = models.FileField(upload_to=news_directory_path, blank=True, null=True, validators=[FileExtensionValidator(['jpg', 'png', 'jpeg'])])
+    image = models.FileField(upload_to=news_directory_path, blank=True, null=True, validators=[FileExtensionValidator(['jpg', 'png', 'jpeg', 'webp'])])
     thumbnail = models.FileField(upload_to=news_thumbnail_directory_path, blank=True, null=True)
     title = models.CharField(max_length=120)
     short_description = models.CharField(max_length=250)
@@ -22,9 +22,9 @@ class News(models.Model):
 
     def save(self, *args, **kwargs):
         old_instance = News.objects.filter(pk=self.pk).first()
-        if self.image is not None and self.thumbnail is None:
+        if self.image is not None and bool(self.image.name) and self.thumbnail is None and not bool(self.thumbnail.name):
             self.thumbnail = create_thumbnail(self.image, 325, 70)
-        elif self.thumbnail is not None and old_instance is not None and self.thumbnail != old_instance.thumbnail:
+        elif self.thumbnail is not None and bool(self.thumbnail.name) and old_instance is not None and self.thumbnail != old_instance.thumbnail:
             self.thumbnail = create_thumbnail(self.thumbnail, 325, 70)
 
 

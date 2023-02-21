@@ -15,6 +15,10 @@
     svg:hover {
         fill: #424242;
     }
+
+    a {
+        display: flex;
+    }
 }
 .informations__buttons {
     &-big {
