@@ -6,6 +6,6 @@ from django.views.decorators.http import require_GET
 def robots_txt(request):
     lines = [
         "User-agent: *",
-        "Disallow: /",
+        "Disallow: /static",
     ]
     return HttpResponse("\n".join(lines), content_type="text/plain")
