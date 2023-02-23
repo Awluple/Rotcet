@@ -29,6 +29,15 @@ const FullArticle = () => {
         })
     }, [])
 
+    useEffect(() => {
+        if(article != null) {
+            document.title = article.title
+        }
+        return () => {
+            document.title = "Rotcet Cinema"
+        }
+    }, [article])
+
     if(article === null) {
         return (
             <div className='full_article'>

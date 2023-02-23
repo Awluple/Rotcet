@@ -1,10 +1,24 @@
 .footer {
     @include flex-center(row);
-    margin-top: 25px;
+    margin-top: 100px !important;
     justify-content: space-around;
     padding: 50px 0px;
     background: #2C1111;
     margin-top: auto;
+
+    @media only screen and (max-width: 1024px) {
+        flex-direction: column;
+        padding-bottom: 25px;
+        margin-top: 50px;
+        ul {
+            height: auto;
+            align-items: center;
+        }
+    }
+    @media only screen and (min-width: 2160px) {
+        margin-top: auto !important;
+    }
+
     ul {
         @include flex-center(column, true);
         align-items: flex-start;
@@ -43,13 +57,4 @@
     }
 }
 
-@media only screen and (max-width: 1024px) {
-    .footer {
-        flex-direction: column;
-        padding-bottom: 25px;
-        ul {
-            height: auto;
-            align-items: center;
-        }
-    }
-}
+

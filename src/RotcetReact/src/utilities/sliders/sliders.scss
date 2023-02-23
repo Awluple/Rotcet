@@ -83,25 +83,27 @@
     background: $main-red;
 
     svg {
-        width: 50px;
+        width: 60px;
+        fill: white
     }
     button {
         @include delete-border;
-        padding: 15px;
-        border-radius: 50%;
+        padding: 10px;
         position: absolute;
-        top: calc(50% - 50px);
-        background: $darker-red;
-        opacity: 0.6;
+        top: calc(0% - 51px);
+        background: #151d23;
+        opacity: 0.85;
         z-index: 1001;
+        height: 115%;
+        cursor: pointer;
 
         &:first-child {
-            left: 20px;
+            left: 0px;
             transform: scaleX(-1);
         }
 
         &:last-child {
-            right: 20px;
+            right: 0px;
         }
 
         &:hover {

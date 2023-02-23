@@ -43,6 +43,13 @@ class Show(models.Model):
         elif self.marathon:
             return self.marathon.name
         return self.type
+    
+    def get_show_slug(self):
+        if self.movie:
+            return self.movie.slug
+        elif self.marathon:
+            return self.marathon.slug
+        return self.type
 
 class Screening(models.Model):
     show = models.ForeignKey(Show, related_name='screenings', on_delete=models.CASCADE)

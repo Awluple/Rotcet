@@ -20,7 +20,7 @@ const Account = () => {
 
 
     useEffect(() => {
-
+        document.title = `Your account`
         if(userLoggedContext === true) {
             setUser({
                 logged: userLoggedContext,

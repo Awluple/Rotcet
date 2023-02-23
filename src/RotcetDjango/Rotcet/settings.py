@@ -138,12 +138,37 @@ CSRF_COOKIE_NAME = "XSRF-TOKEN"
 
 STATIC_URL = '/static/'
 
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),
-    'Rotcet/static/',
-]
-
+if DEBUG == True:
+    STATICFILES_DIRS = [
+        os.path.join(BASE_DIR, "static"),
+        'Rotcet/static/',
+    ]
+else:
+    STATIC_ROOT = os.path.join(BASE_DIR, "static")
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+
+if DEBUG != True:
+
+    LOGGING = {
+        'version': 1,
+        'disable_existing_loggers': False,
+        'handlers': {
+            'file': {
+                'level': 'WARNING',
+                'class': 'logging.handlers.RotatingFileHandler',
+                'maxBytes': 20024,
+                'backupCount': 3,
+                'filename': os.path.join(BASE_DIR, "logs/warning.log")
+            },
+        },
+        'loggers': {
+            'django': {
+                'handlers': ['file'],
+                'level': 'WARNING',
+                'propagate': True,
+            },
+        },
+    }

@@ -33,13 +33,13 @@ const Movie = props => {
     if (screeningsDates){
         return (
             <li className='movies__movie'>
-                <Link to={`/movie/${props.show.name.replace(" ", "-")}-${props.show.type}-${props.show.id}`}>
+                <Link to={`/movie/${props.show.slug}-${props.show.type}-${props.show.id}`}>
                     <h3>{props.show.name}</h3>
                 </Link>
                 <div className='movies__details'>
 
                     <div className='movies__image'>
-                        <Link to={`/movie/${props.show.name.replace(" ", "-")}-${props.show.type}-${props.show.id}`}>
+                        <Link to={`/movie/${props.show.slug}-${props.show.type}-${props.show.id}`}>
                             <img src={props.show.thumbnail ? props.show.thumbnail : "/static/images/logo.png"} alt="movie image"/>
                         </Link>
                     </div>
@@ -55,10 +55,10 @@ const Movie = props => {
                 <div className='movies__all_times'>
                     <Link className='shadow-small'
                     to={{
-                        pathname: `/movie/${props.show.name.replace(" ", "-")}-${props.show.type}-${props.show.id}`,
+                        pathname: `/movie/${props.show.slug}-${props.show.type}-${props.show.id}`,
                         hash: "#tickets",
                       }} >
-                        All times
+                        Full Schedule
                     </Link>
                 </div>
             </li>

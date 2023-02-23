@@ -70,7 +70,6 @@ const Movie = (props) => {
         }
         setTrailers(trailers)
     }, [movie])
-
     if(movie){
         return (
             <div className='movie'>
@@ -80,7 +79,7 @@ const Movie = (props) => {
                     </Route>
                 </Routes> */
                 <Details scrollToTickets={scrollToTickets} name={movie.name} description={movie.description} shortDescription={movie.short_description}
-                image={movie.main_image} tickets={movie.tickets_sale_date} />
+                image={movie.main_image} tickets={movie.tickets_sale_date} releaseDate={movie.release_date ? movie.release_date : null} />
                 { type == 'MV' && movie.images.length > 0 &&
                     <Images images={movie.images} />
                 }

@@ -12,8 +12,8 @@ const Upcoming = () => {
         return axios.get('/api/movies', {
             params: {
                 has_tickets_sale_date: false,
-                relese_date__gt: `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`,
-                fields: 'id,name,thumbnail'
+                release_date__gt: `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`,
+                fields: 'id,name,thumbnail,slug'
             }
         }).then(
             res => { return res.data.results }
@@ -49,7 +49,6 @@ const Upcoming = () => {
                             return <Movie key={movie.id} movie={movie} />
                         })}
                     </div>
-                }
             </div>
         )
 }}

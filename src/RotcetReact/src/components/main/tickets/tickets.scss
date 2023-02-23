@@ -67,6 +67,7 @@
             background: #008000;
             color: white;
             font-weight: 400;
+            cursor: pointer;
         }
     }
 
@@ -84,6 +85,10 @@
     top: 0px;
     background: rgba($color: #565582, $alpha: 0.7);
     z-index: 10000;
+    
+    button {
+        cursor: pointer;
+    }
 
     .seats__panel {
         @include flex-center(column);

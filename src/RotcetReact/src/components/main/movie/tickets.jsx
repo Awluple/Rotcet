@@ -68,7 +68,6 @@ const Tickets = React.forwardRef((props,ref) => {
     return (
         <div ref={ref} className='movie__tickets'>
             <h2 ref={measuredRef} className='header header--medium shadow-tiny'>Shedule and tickets</h2>
-            <Link className='button tickets__button shadow-tiny' to='/pricing' target="_blank">Pricing</Link>
             <ul className='tickets__list'>
                 {dates.map(date => {
                     return (

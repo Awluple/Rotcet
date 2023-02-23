@@ -13,7 +13,7 @@ const Highlight = () => {
         return axios.get('/api/movies', {
             params: {
                 'highlight': true,
-                'fields': 'id,name,main_trailer,thumbnail,short_description,trailer_thumbnail,screenings'
+                'fields': 'id,name,main_trailer,thumbnail,short_description,trailer_thumbnail,screenings,slug'
             }
         }).then(
             res => { return res.data.results }
@@ -38,7 +38,7 @@ const Highlight = () => {
 
     return (
         <div className='highlight'>
-            <h2 className='header header--big'>Highlight</h2>
+            <h2 className='header header--big'>Highlights</h2>
             <div className='highlight__movies'>
                 {highlights.map((movie, index) => {
                     return <Movie key={movie.id} movie={movie} index={index} />

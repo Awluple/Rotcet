@@ -26,7 +26,7 @@ class Schedule extends Component {
         const seconds = addZeroForBelowTen(time.getUTCSeconds())
 
         const query = {
-            'fields': 'id,name,type,has_3D,screenings,thumbnail',
+            'fields': 'id,name,type,has_3D,screenings,thumbnail,slug',
             'screenings_min': `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`,
             'page_size': 100
         }

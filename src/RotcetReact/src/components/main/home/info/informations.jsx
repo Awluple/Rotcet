@@ -15,13 +15,13 @@ const Informations = () => {
         <div className='informations'>
             <div className='informations__buttons-big'>
                 <div className='informations__social_media informations__link informations__link--big'>
-                    <a rel="noopener" target='blank' href="https://www.facebook.com"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <a aria-label="Facebook" rel="noopener" target='blank' href="https://www.facebook.com"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                         <path d={svgs.facebook} /></svg></a>
-                    <a rel="noopener" target='blank' href="https://www.twitter.com"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <a aria-label="Twitter" rel="noopener" target='blank' href="https://www.twitter.com"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                         <path d={svgs.twitter} /></svg></a>
-                    <a rel="noopener" target='blank' href="https://www.youtube.com"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <a aria-label="Youtube" rel="noopener" target='blank' href="https://www.youtube.com"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                         <path d={svgs.youtube} /></svg></a>
-                    <a rel="noopener" target='blank' href="https://www.instagram.com"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <a aria-label="Instagram" rel="noopener" target='blank' href="https://www.instagram.com"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                         <path d={svgs.instagram} /></svg></a>
                 </div>
                 <a className='informations__link informations__link--big' target='_blank' href='https://www.google.com/maps/search/?api=1&query=51.5088389,-0.0738984'><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d={svgs.map} /></svg>Location</a>

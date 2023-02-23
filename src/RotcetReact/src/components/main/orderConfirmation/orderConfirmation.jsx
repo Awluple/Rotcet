@@ -114,7 +114,7 @@ const OrderConfirmation = props => {
     }
 
     return (
-        <div className='ticket'>
+        <div className='ticket order-confirmation'>
             <h1 className='ticket__header'>Summary</h1>
             {error ? <p className='tickets__error'>{errors[error]}</p> : ''}
             <div className='ticket__info'>

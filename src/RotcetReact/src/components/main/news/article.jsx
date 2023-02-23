@@ -5,6 +5,7 @@ import {Link} from 'react-router-dom'
 import {useScreenWidth} from 'utilities/hooks/hooks.js'
 
 const Article = props => {
+    
     const smallDevice = useScreenWidth(600)
     return (
         <li className='news__article'>

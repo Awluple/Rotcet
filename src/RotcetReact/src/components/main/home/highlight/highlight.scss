@@ -38,6 +38,7 @@
         }
     }
     .movie__graphic {
+        display: grid;
         &--has_trailer {
             width: 750px;
             height: 422px;
@@ -45,6 +46,7 @@
     }
     .movie__trailer_thumbnail {
         position: relative;
+        cursor: pointer;
 
         .youtube-button {
             position: absolute;
