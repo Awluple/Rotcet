@@ -2,7 +2,7 @@
 A cinema website
 
 ## Live version
-[Rotcet Cinema Demo](https://rotcetcinemademo.com)
+[Rotcet Cinema Demo](https://www.rotcetcinemademo.com)
 
 ## Prerequisites
 
